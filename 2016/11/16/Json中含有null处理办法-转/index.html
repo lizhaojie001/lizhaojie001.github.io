@@ -1,0 +1,598 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Json中含有null处理办法(转) | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="关于Json中null的问题以及宏的返回值 在iOS开发过程中经常需要与服务器进行数据通讯，Json就是一种常用的高效简洁的数据格式。问题现象  但是几个项目下来一直遇到一个坑爹的问题，程序在获取某些数据之后莫名崩溃。其实很早就发现了原因：由于服务器的数据库中有些字段为空，然后以Json形式返回给客户端时就会出现这样的数据：1&quot;somevalue&quot;:null 通过JsonKit 这个第三方库解析出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Json中含有null处理办法(转)">
+<meta property="og:url" content="https://lizhaojie001.github.io/2016/11/16/Json中含有null处理办法-转/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="关于Json中null的问题以及宏的返回值 在iOS开发过程中经常需要与服务器进行数据通讯，Json就是一种常用的高效简洁的数据格式。问题现象  但是几个项目下来一直遇到一个坑爹的问题，程序在获取某些数据之后莫名崩溃。其实很早就发现了原因：由于服务器的数据库中有些字段为空，然后以Json形式返回给客户端时就会出现这样的数据：1&quot;somevalue&quot;:null 通过JsonKit 这个第三方库解析出">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2016-11-16T03:28:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Json中含有null处理办法(转)">
+<meta name="twitter:description" content="关于Json中null的问题以及宏的返回值 在iOS开发过程中经常需要与服务器进行数据通讯，Json就是一种常用的高效简洁的数据格式。问题现象  但是几个项目下来一直遇到一个坑爹的问题，程序在获取某些数据之后莫名崩溃。其实很早就发现了原因：由于服务器的数据库中有些字段为空，然后以Json形式返回给客户端时就会出现这样的数据：1&quot;somevalue&quot;:null 通过JsonKit 这个第三方库解析出">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/16/Json中含有null处理办法-转/" title="Json中含有null处理办法(转)" itemprop="url">Json中含有null处理办法(转)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-16T03:25:15.000Z" itemprop="datePublished"> 发表于 2016-11-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于Json中null的问题以及宏的返回值"><span class="toc-number">1.</span> <span class="toc-text">关于Json中null的问题以及宏的返回值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">1.1.</span> <span class="toc-text">解决方法</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="关于Json中null的问题以及宏的返回值"><a href="#关于Json中null的问题以及宏的返回值" class="headerlink" title="关于Json中null的问题以及宏的返回值"></a>关于Json中null的问题以及宏的返回值</h1><blockquote>
+<p>在iOS开发过程中经常需要与服务器进行数据通讯，Json就是一种常用的高效简洁的数据格式。<br>问题现象</p>
+</blockquote>
+<p>但是几个项目下来一直遇到一个坑爹的问题，程序在获取某些数据之后莫名崩溃。其实很早就发现了原因：由于服务器的数据库中有些字段为空，然后以Json形式返回给客户端时就会出现这样的数据：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">"somevalue":</span><span class="literal">null</span></span><br></pre></td></tr></table></figure></p>
+<p>通过JsonKit 这个第三方库解析出来的数据就成了<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">somevalue</span> = <span class="string">"&lt;null&gt;"</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>这个数据类型不是nil 也不是 String。 解析成对象之后，如果直接向这个对象发送消息（eg：length，count 等等）就会直接崩溃。提示错误为：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-[NSNull length]: unrecognized selector sent <span class="keyword">to</span><span class="built_in"> instance </span>0x388a4a70</span><br></pre></td></tr></table></figure></p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>其实一直没有找到完美的解决办法，坑了我很久。</p>
+<ul>
+<li>1、最开始的解决方法就是为了应付当前遇到的崩溃，看看哪个字段可能为空，那么就对该字段使用前进行判断，通过崩溃时的错误提示可以看出，这样的字段解析成的对象是 NSNull 类型的，所以可以直接判断是不是此类型：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (![<span class="string">isKindOfClass:</span>[NSNull <span class="class"><span class="keyword">class</span>]])&#123;</span>xxxxxxx;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>因为字段实在太多，就找一个补一个。</p>
+<ul>
+<li>2、后来想彻底解决这问题，就打算从数据源下手，其实应该可以用正则表达式匹配这个null ，然后进行替换，奈何正则是我的硬伤啊。于是就相出了一个山寨方法：字符串匹配。在获取到服务器返回的Json时，返回结果时string对象，于是就先替换 null 为 为空字符””，然后再解析。<br>json = [jsonStr  stringByReplacingOccurrencesOfString:@”:null” withString:@”:\”\””];</li>
+</ul>
+<p>这个方法本来很奏效，但是我这里的服务器返回极不简洁，各种垃圾数据（不吐槽这了）。。。反正这样会导致json无法解析了。</p>
+<ul>
+<li>3、最后没有办法，只能在解析的时候下手，把是NSNull 类型的值替换成nil。 一般就写个tool方法，然后解析时调用。但是嫌太麻烦，就想弄写个宏，通过搜索惊奇的发现宏也是可以有返回值的，结果如下：</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define VerifyValue(value)\</span></span><br><span class="line">(&#123;<span class="keyword">id</span> tmp;\</span><br><span class="line"><span class="keyword">if</span> ([value isKindOfClass:[<span class="built_in">NSNull</span> <span class="keyword">class</span>]])\</span><br><span class="line">tmp = <span class="literal">nil</span>;\</span><br><span class="line"><span class="keyword">else</span>\</span><br><span class="line">tmp = value;\</span><br><span class="line">tmp;\</span><br><span class="line">&#125;)\</span><br></pre></td></tr></table></figure>
+<p>宏里的最后一句语句便是返回值。然后在解析数据时调用宏：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">contact.contactPhone = VerifyValue(contactDic[@<span class="string">"send_ContactPhone"</span>])<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>4、如果你使用AFNetwork 这个库做网络请求的话，可以用以下代码，自动帮你去掉这个讨厌的空值<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.removesKeysWithNullValues = <span class="literal">YES</span>;</span><br></pre></td></tr></table></figure></p>
+<p>5、终极方案<br>终于找到了一劳永逸的方案，牛逼的老外写了一个Category，叫做NullSafe ，在运行时操作，把这个讨厌的空值置为nil，而nil是安全的，可以向nil对象发送任何message而不会奔溃。这个category使用起来非常方便，只要加入到了工程中就可以了，你其他的什么都不用做，对，就是这么简单。详细的请去Github上查看；<br><a href="https://github.com/nicklockwood/NullSafe" target="_blank" rel="noopener">https://github.com/nicklockwood/NullSafe</a></p>
+<p>转自<a href="http://www.pan-apps.com/668.html#comment-94781" target="_blank" rel="noopener">LP 的移动应用开发</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2016/11/16/Json中含有null处理办法-转/" data-title="Json中含有null处理办法(转) | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/21/Top 10 Core Data Tools and Libraries/" title="Top 10 Core Data Tools and Libraries">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Top 10 Core Data Tools and Libraries</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/11/15/如何关闭xcode8-0-logs/"  title="慢慢适配Xcode8.0+">
+ <strong>下一篇：</strong><br/> 
+ <span>慢慢适配Xcode8.0+
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/16/Json中含有null处理办法-转/" data-title="Json中含有null处理办法(转)" data-url="https://lizhaojie001.github.io/2016/11/16/Json中含有null处理办法-转/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于Json中null的问题以及宏的返回值"><span class="toc-number">1.</span> <span class="toc-text">关于Json中null的问题以及宏的返回值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">1.1.</span> <span class="toc-text">解决方法</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

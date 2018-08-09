@@ -1,0 +1,663 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>证书相关 | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="Xcode 7 真机调试 登录开发者主页 生产cer证书 :cer是一个和电脑关联的证书,让电脑具备调试功能呢 添加调试AppID 注册真机设备:让这个设备具备调试能力 生成MobileProvision文件:结合2,3,4生成一个手机规定文件  创见开发者证书 选择类型 本地生成CSR请求文件 上传CSR请求文件 下载证书  描述文件Provisioning Profiles 安装到xcode中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="证书相关">
+<meta property="og:url" content="https://lizhaojie001.github.io/2017/06/03/证书相关/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="Xcode 7 真机调试 登录开发者主页 生产cer证书 :cer是一个和电脑关联的证书,让电脑具备调试功能呢 添加调试AppID 注册真机设备:让这个设备具备调试能力 生成MobileProvision文件:结合2,3,4生成一个手机规定文件  创见开发者证书 选择类型 本地生成CSR请求文件 上传CSR请求文件 下载证书  描述文件Provisioning Profiles 安装到xcode中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-06-04T02:59:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="证书相关">
+<meta name="twitter:description" content="Xcode 7 真机调试 登录开发者主页 生产cer证书 :cer是一个和电脑关联的证书,让电脑具备调试功能呢 添加调试AppID 注册真机设备:让这个设备具备调试能力 生成MobileProvision文件:结合2,3,4生成一个手机规定文件  创见开发者证书 选择类型 本地生成CSR请求文件 上传CSR请求文件 下载证书  描述文件Provisioning Profiles 安装到xcode中">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/06/03/证书相关/" title="证书相关" itemprop="url">证书相关</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-03T12:36:31.000Z" itemprop="datePublished"> 发表于 2017-06-03</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xcode-7-真机调试"><span class="toc-number">1.</span> <span class="toc-text">Xcode 7 真机调试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创见开发者证书"><span class="toc-number">1.1.</span> <span class="toc-text">创见开发者证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#描述文件Provisioning-Profiles"><span class="toc-number">1.2.</span> <span class="toc-text">描述文件Provisioning Profiles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导出p12文件的前提"><span class="toc-number">1.3.</span> <span class="toc-text">导出p12文件的前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用程序发布-发布应用程序"><span class="toc-number">1.4.</span> <span class="toc-text">应用程序发布:发布应用程序</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Xcode-7-真机调试"><a href="#Xcode-7-真机调试" class="headerlink" title="Xcode 7 真机调试"></a>Xcode 7 真机调试</h1><ol>
+<li>登录开发者主页</li>
+<li>生产cer证书 :cer是一个和电脑关联的证书,让电脑具备调试功能呢</li>
+<li>添加调试AppID</li>
+<li>注册真机设备:让这个设备具备调试能力</li>
+<li>生成MobileProvision文件:结合2,3,4生成一个手机规定文件</li>
+</ol>
+<h2 id="创见开发者证书"><a href="#创见开发者证书" class="headerlink" title="创见开发者证书"></a>创见<code>开发者</code>证书</h2><ol>
+<li>选择类型</li>
+<li>本地生成CSR请求文件</li>
+<li>上传CSR请求文件</li>
+<li>下载证书</li>
+</ol>
+<h2 id="描述文件Provisioning-Profiles"><a href="#描述文件Provisioning-Profiles" class="headerlink" title="描述文件Provisioning Profiles"></a>描述文件<code>Provisioning Profiles</code></h2><ol>
+<li>安装到xcode中,让设备具有真机调试的能力的资格</li>
+<li>配置文件安装成功后,运行xcode会访问钥匙串,其实就是访问证书</li>
+</ol>
+<h2 id="导出p12文件的前提"><a href="#导出p12文件的前提" class="headerlink" title="导出p12文件的前提"></a>导出p12文件的前提</h2><p>1.创建的开发者证书是在最初的电脑可导出</p>
+<h2 id="应用程序发布-发布应用程序"><a href="#应用程序发布-发布应用程序" class="headerlink" title="应用程序发布:发布应用程序"></a>应用程序发布:发布应用程序</h2><p>*developer.apple.com : 开发者主页, 配置证书\AppId\描述文件<br>1&gt;        发布的证书, 说清楚哪台电脑可以发布程序<br>2&gt;        添加发布的描述文件，描述在哪台计算机上能够发布哪些应用程序</p>
+<ol start="2">
+<li>iTunesConnect网站(专门用来发布应用程序)<br><a href="https://itunesconnect.apple.com" target="_blank" rel="noopener">https://itunesconnect.apple.com</a></li>
+</ol>
+<p>1&gt;    如果想挣钱，先设置在Agreements, Tax, and Banking设置个人储蓄卡信息<br>做一次就行</p>
+<p>2&gt; 添加应用程序</p>
+<p>－ 名称，不能重复，可以使用 - 添加一些后缀信息<br>－ 关键字，增加软件被搜中的几率，使用英文的都好分隔，不能超过255个字节<br>－图片，图片文件名称中不能有中文<br>－ Rating，设置应用程序的等级，默认都选择最低的，成人，赌博……</p>
+<p>－ App Review Information<br>提供给苹果的审核人员，来辅助测试使用的。<br>如果有测试帐号，必须提供！<br>如果有测试数据，需要提供给苹果，例如快递查询！<br>需要提供联系人的联系方式，电子邮件，电话需要添加国际区号，+86</p>
+<p>3&gt; 从Xcode6开始，上传完应用程序之后，程序默认会在prerelease中，需要等待5～50分钟不等。</p>
+<p>只有Prerelease中的状态变化后，才能够在Versions中添加Build，提示，这个过程中，不要重复在Xcode中上传。</p>
+<p>4&gt; 所有准备就绪后，点Submit按钮提交应用程序，出现的三个选项，都选择No。<br>卡通形象，第三方内容，商标！</p>
+<p>5&gt; 等待，2天～20天不等……</p>
+<p>在开发应用程序中，一些注意事项！</p>
+<p>1&gt;    每一个应用程序，苹果都会审核，但是是不会审核，是否有逻辑问题，内存泄漏……</p>
+<p>2&gt;    发布应用程序之前，一定要用真机测试！<br>＊    因为有时候，有些界面在模拟器和真机上会略微有一些差异！<br>＊    有的时候，在真机上，因为内存原因，更容易让程序崩溃！</p>
+<p>苹果的审核人员，如果在审核过程中，出现崩溃，会直接拒绝！</p>
+<p>苹果的底线：<br>－ 不崩溃<br>－ 无盗版，如果设计到第三方登陆，也需要协商隐私策略，保证开发商不泄漏用户信息<br>－ 用户群体，如果小众，需要描述清楚，用户在哪里<br>－ 广告！“友盟”第三方框架，做后台统计，使用到广告标识符，如果发现有广告标识符，但是界面上没有出现广告，也会拒绝！<br>－ 血腥、色情！</p>
+<p>/<strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong> 一下内容iOS8以及变化了<strong><strong><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong></strong></strong>/</p>
+<p>1.填写完应用信息</p>
+<ul>
+<li>状态名 : Prepare for Upload</li>
+<li>状态颜色 : 黄色</li>
+<li>含义 : 让开发者准备上传自己的应用(打包好的程序)</li>
+<li>注意 : 这个状态下, 还是不允许上传打包好的程序</li>
+</ul>
+<p>2.利用Product -&gt; Archive将app打包准备完毕</p>
+<p>3.点击”Ready to Upload Binary”</p>
+<ul>
+<li>状态名 : Waiting For Upload</li>
+<li>状态颜色 : 黄色</li>
+<li>含义 : 告诉苹果已经准备好了, 随时可以上传, 苹果等待开发者上传程序</li>
+<li>注意 : 这个状态下才允许上传程序</li>
+</ul>
+<p>4.利用Window -&gt; Organizer -&gt; 选择打包好的程序 -&gt; Distribute<br>-&gt; …App Store… -&gt; 输入账号密码 -&gt; 选择应用和描述文件 -&gt; Submit<br>1&gt; 上传中途可能会遇到一些问题</p>
+<ul>
+<li>图片尺寸不符合</li>
+<li>图片格式不符合(表面上是png, 实际上时jpg)</li>
+<li>所上传应用的Bundle Identifier 跟 官网上所创应用的Bundle ID不一致</li>
+<li>所上传应用的版本号 跟 官网上所创应用的版本号不一致</li>
+<li>……</li>
+</ul>
+<p>5.如果没有出现任何问题, 就耐心等待上传</p>
+<p>6.上传完毕, 准备审核</p>
+<ul>
+<li>状态名 : Prepare For Review</li>
+<li>状态颜色 : 黄色</li>
+<li>含义 : 苹果正在准备这个应用的审核工作</li>
+</ul>
+<p>7.上传完毕几分钟后, 等待审核</p>
+<ul>
+<li>状态名 : Waiting For Review</li>
+<li>状态颜色 : 黄色</li>
+<li>含义 : 开发者开始等待苹果”漫长”的审核工作 (一般至少2~30)</li>
+</ul>
+<p>7.审核完毕<br>1&gt; 审核通过</p>
+<ul>
+<li>状态名 : Ready For Sale</li>
+<li>状态颜色 : 绿色</li>
+<li>含义 : 随时都可以出现在App Store(何时出现取决于当初设定的上线日期)</li>
+</ul>
+<p>2&gt; 审核失败</p>
+<ul>
+<li>状态名 : Rejected (应用本身有问题)</li>
+<li>状态颜色 : 红色</li>
+<li><p>含义 : 被苹果拒绝了, 需要根据苹果的反馈信息, 修正自己应用的内容, 后面再次上传</p>
+</li>
+<li><p>状态名 : Metadata Rejected (网站上填写应用信息有问题)</p>
+</li>
+<li>状态颜色 : 红色</li>
+<li>含义 : 被苹果拒绝了, 需要根据苹果的反馈信息, 修正自己应用的描述信息, 不需要再次上传</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2017/06/03/证书相关/" data-title="证书相关 | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/06/10/MDM证书/" title="MDM证书">
+  <strong>上一篇：</strong><br/>
+  <span>
+  MDM证书</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/06/02/3D变换/"  title="3D变换">
+ <strong>下一篇：</strong><br/> 
+ <span>3D变换
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/06/03/证书相关/" data-title="证书相关" data-url="https://lizhaojie001.github.io/2017/06/03/证书相关/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xcode-7-真机调试"><span class="toc-number">1.</span> <span class="toc-text">Xcode 7 真机调试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创见开发者证书"><span class="toc-number">1.1.</span> <span class="toc-text">创见开发者证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#描述文件Provisioning-Profiles"><span class="toc-number">1.2.</span> <span class="toc-text">描述文件Provisioning Profiles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导出p12文件的前提"><span class="toc-number">1.3.</span> <span class="toc-text">导出p12文件的前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用程序发布-发布应用程序"><span class="toc-number">1.4.</span> <span class="toc-text">应用程序发布:发布应用程序</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

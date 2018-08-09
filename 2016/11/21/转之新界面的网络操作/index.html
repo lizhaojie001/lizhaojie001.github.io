@@ -1,0 +1,606 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>转之新界面的网络操作 | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="利用蒙版时间来加载数据，其中轻量级蒙版SVP中有两种模式，一种带有暗色背景，加载蒙版时是不可以点击其他的maskType类型，另一种是不带有后背景的，推测是一个显示级别较高的window，（没条件验证当下），解析数据用AFNetworking中session，其中反馈成功和失败的信息，当然蒙版也是等到数据加载完之后取消。   数据解析，查看返回的数据，建立相应的模型，对于模型中的key值和系统关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="转之新界面的网络操作">
+<meta property="og:url" content="https://lizhaojie001.github.io/2016/11/21/转之新界面的网络操作/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="利用蒙版时间来加载数据，其中轻量级蒙版SVP中有两种模式，一种带有暗色背景，加载蒙版时是不可以点击其他的maskType类型，另一种是不带有后背景的，推测是一个显示级别较高的window，（没条件验证当下），解析数据用AFNetworking中session，其中反馈成功和失败的信息，当然蒙版也是等到数据加载完之后取消。   数据解析，查看返回的数据，建立相应的模型，对于模型中的key值和系统关">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2016-11-21T05:18:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="转之新界面的网络操作">
+<meta name="twitter:description" content="利用蒙版时间来加载数据，其中轻量级蒙版SVP中有两种模式，一种带有暗色背景，加载蒙版时是不可以点击其他的maskType类型，另一种是不带有后背景的，推测是一个显示级别较高的window，（没条件验证当下），解析数据用AFNetworking中session，其中反馈成功和失败的信息，当然蒙版也是等到数据加载完之后取消。   数据解析，查看返回的数据，建立相应的模型，对于模型中的key值和系统关">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/21/转之新界面的网络操作/" title="转之新界面的网络操作" itemprop="url">转之新界面的网络操作</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-21T02:09:25.000Z" itemprop="datePublished"> 发表于 2016-11-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#蒙版加载相关代码"><span class="toc-number">1.</span> <span class="toc-text">蒙版加载相关代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对于关联tableView的操作"><span class="toc-number"></span> <span class="toc-text">对于关联tableView的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#附上部分代码"><span class="toc-number">1.</span> <span class="toc-text">附上部分代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于解析数据"><span class="toc-number"></span> <span class="toc-text">关于解析数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改MJRefresh的忽略高度"><span class="toc-number"></span> <span class="toc-text">修改MJRefresh的忽略高度</span></a>
+		
+		</div>
+		
+		<ul>
+<li>利用蒙版时间来加载数据，其中轻量级蒙版SVP中有两种模式，一种带有暗色背景，加载蒙版时是不可以点击其他的maskType类型，另一种是不带有后背景的，推测是一个显示级别较高的window，（没条件验证当下），解析数据用AFNetworking中session，其中反馈成功和失败的信息，当然蒙版也是等到数据加载完之后取消。</li>
+</ul>
+<ul>
+<li>数据解析，查看返回的数据，建立相应的模型，对于模型中的key值和系统关键字重复，MJExtesion和YYKit中都有相应的处理办法。</li>
+</ul>
+<h2 id="蒙版加载相关代码"><a href="#蒙版加载相关代码" class="headerlink" title="蒙版加载相关代码"></a>蒙版加载相关代码</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载左边数据</span></span><br><span class="line">-(<span class="keyword">void</span>)loadCategories &#123;</span><br><span class="line">    [SVProgressHUD show];</span><br><span class="line">    XMGRecommendCategoriesParam *param = [[XMGRecommendCategoriesParam alloc] init];</span><br><span class="line">    param.a = @<span class="string">"category"</span>;</span><br><span class="line">    param.c = @<span class="string">"subscribe"</span>;</span><br><span class="line">    [XMGRecommendTool <span class="string">recommendCategoriesWithParam:</span>param <span class="string">success:</span>^(XMGRecommendCategoriesResult *result) &#123;</span><br><span class="line">        [SVProgressHUD dismiss];</span><br><span class="line">        </span><br><span class="line">        self.categories = result.list;</span><br><span class="line">        [self.categoryTableView reloadData];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 选中首行</span></span><br><span class="line">        [self.categoryTableView <span class="string">selectRowAtIndexPath:</span>[NSIndexPath <span class="string">indexPathForRow:</span><span class="number">0</span> <span class="string">inSection:</span><span class="number">0</span>] <span class="string">animated:</span>NO <span class="string">scrollPosition:</span>UITableViewScrollPositionTop];</span><br><span class="line">        [self.userTableView.header beginRefreshing];</span><br><span class="line">    &#125; <span class="string">failure:</span>^(NSError *error) &#123;</span><br><span class="line">        [SVProgressHUD dismiss];</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对于关联tableView的操作"><a href="#对于关联tableView的操作" class="headerlink" title="对于关联tableView的操作"></a>对于关联tableView的操作</h1><blockquote>
+<p>设置点中是cell的状态，如果是文字可以利用他的属性来设置cell自身textlabel的<code>textheightlightColor</code>和<code>textColor</code>，当然，如果你的cell的<code>sectionStyle</code>设置的为none，此时cell自带空间的高亮属性将不起作用，当然这也是还可以有其他办法，比如，在<code>- (void)setSelected:(BOOL)selected animated:(BOOL)animated</code>方法中设置textColor在<code>selected</code>和<code>！selected</code>情况下的状态设置不同颜色，再者<code>- (void)setSelected:(BOOL)selected animated:(BOOL)animated</code>方法是每次点击cell之后会自动取消之前选中cell的点击状态，之后再改变当前选中cell的状态。</p>
+</blockquote>
+<h2 id="附上部分代码"><a href="#附上部分代码" class="headerlink" title="附上部分代码"></a>附上部分代码</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-(void)setSelected:(<span class="keyword">BOOL)selected </span>animated:(<span class="keyword">BOOL)animated </span>&#123;</span><br><span class="line">    [super setSelected:<span class="keyword">selected </span>animated:animated]<span class="comment">;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">self.selectedIndicator.hidden </span>= !<span class="keyword">selected;</span></span><br><span class="line"><span class="keyword"> </span>   </span><br><span class="line">    <span class="keyword">self.textLabel.textColor </span>= <span class="keyword">selected?XMGColor(192, </span><span class="number">62</span>, <span class="number">66</span>):[UIColor darkGrayColor]<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当然有表现形式就要有实际内容，此时就要给cell中的属性赋值，止痒就需要一个模型，可以利用模型的属性给各个属性赋值，同样，在控制器中也可以用模型直接为cell赋值。</li>
+</ul>
+<h1 id="关于解析数据"><a href="#关于解析数据" class="headerlink" title="关于解析数据"></a>关于解析数据</h1><blockquote>
+<p>这里使用MJExtension和AFNetworking</p>
+</blockquote>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="name">AFHTTPSessionManager</span> manager] GET:@<span class="string">"http://api.budejie.com/api/api_open.php"</span> parameters:params success:^(<span class="name">NSURLSessionDataTask</span> *task, id responseObject) &#123;</span><br><span class="line">    // 隐藏指示器</span><br><span class="line">    [<span class="name">SVProgressHUD</span> dismiss]<span class="comment">;</span></span><br><span class="line">    </span><br><span class="line">    // 服务器返回的JSON数据</span><br><span class="line">    self.categories = [<span class="name">XMGRecommendCategory</span> objectArrayWithKeyValuesArray:responseObject[<span class="name">@</span><span class="string">"list"</span>]]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在cell的模型中设置其他属性的值，目的是在有数据就给数据</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)setCategory:(XMGRecommendCategory *)category</span><br><span class="line">&#123;</span><br><span class="line">    _category = category<span class="comment">;</span></span><br><span class="line">    </span><br><span class="line">    self.textLabel<span class="meta">.text</span> = category.name<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>联动思路：在点击左侧的cell时，刷新（发送网络请求（网络请求延迟造成的数据显示延迟），或者从本地取）右侧cell的数据。根据tableview的不同，在一套公用的代理方法中设置左右两侧的cell数据（分组/行数/cell类型）</p>
+<p>自定义分割线思路：将原来cell的separate设置为none，自己加一个uiview在底部</p>
+<p>点击不同分类请求不同数据，避免之前点击过的重复发送请求：解决方案思路：在左侧模型中设置一个可变数组，利用 self.tableview.indexforTheselectedRow.row获取当前的分类中数组中的数据，也就是对应的右侧的tableview中的数据，具体见示例代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (tableView == <span class="keyword">self</span>.categoryTableView) &#123; <span class="comment">// 左边的类别表格</span></span><br><span class="line">        XMGRecommendCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:XMGCategoryId];</span><br><span class="line">        cell.category = <span class="keyword">self</span>.categories[indexPath.row];</span><br><span class="line">        <span class="keyword">return</span> cell;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 右边的用户表格</span></span><br><span class="line">        XMGRecommendUserCell *cell = [tableView dequeueReusableCellWithIdentifier:XMGUserId];</span><br><span class="line">        XMGRecommendCategory *c = <span class="keyword">self</span>.categories[<span class="keyword">self</span>.categoryTableView.indexPathForSelectedRow.row];</span><br><span class="line">        cell.user = c.users[indexPath.row];</span><br><span class="line">        <span class="keyword">return</span> cell;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="修改MJRefresh的忽略高度"><a href="#修改MJRefresh的忽略高度" class="headerlink" title="修改MJRefresh的忽略高度"></a>修改MJRefresh的忽略高度</h1><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/** 忽略多少scrollView的contentInset的top */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) <span class="built_in">CGFloat</span> ignoredScrollViewContentInsetTop;</span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/网络/">网络</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2016/11/21/转之新界面的网络操作/" data-title="转之新界面的网络操作 | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/21/xib的使用/" title="xib的使用">
+  <strong>上一篇：</strong><br/>
+  <span>
+  xib的使用</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/11/21/正则学习/"  title="正则学习">
+ <strong>下一篇：</strong><br/> 
+ <span>正则学习
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/21/转之新界面的网络操作/" data-title="转之新界面的网络操作" data-url="https://lizhaojie001.github.io/2016/11/21/转之新界面的网络操作/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#蒙版加载相关代码"><span class="toc-number">1.</span> <span class="toc-text">蒙版加载相关代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对于关联tableView的操作"><span class="toc-number"></span> <span class="toc-text">对于关联tableView的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#附上部分代码"><span class="toc-number">1.</span> <span class="toc-text">附上部分代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于解析数据"><span class="toc-number"></span> <span class="toc-text">关于解析数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改MJRefresh的忽略高度"><span class="toc-number"></span> <span class="toc-text">修改MJRefresh的忽略高度</span></a>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

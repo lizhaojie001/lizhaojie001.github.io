@@ -1,0 +1,907 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JavaScript进阶(三)之认识DOM | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="前言 文档对象模型DOM（Document Object Model）定义访问和处理HTML文档的标准方法。DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。   先来看看下面代码:将HTML代码分解为DOM节点层次图:HTML文档可以说由节点构成的集合，DOM节点有:12345元素节点：上图中&amp;lt;html&amp;gt;、&amp;lt;body&amp;gt;、&amp;lt;p&amp;gt;等都是元素节点，">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript进阶(三)之认识DOM">
+<meta property="og:url" content="https://lizhaojie001.github.io/2016/10/27/认识DOM/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="前言 文档对象模型DOM（Document Object Model）定义访问和处理HTML文档的标准方法。DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。   先来看看下面代码:将HTML代码分解为DOM节点层次图:HTML文档可以说由节点构成的集合，DOM节点有:12345元素节点：上图中&amp;lt;html&amp;gt;、&amp;lt;body&amp;gt;、&amp;lt;p&amp;gt;等都是元素节点，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.mukewang.com/5375ca640001c67307860420.jpg">
+<meta property="og:image" content="http://img.mukewang.com/5375ca7e0001dd8d04830279.jpg">
+<meta property="og:image" content="http://img.mukewang.com/5375c953000117ee05240129.jpg">
+<meta property="og:image" content="http://img.mukewang.com/53f17a6400017d2905230219.jpg">
+<meta property="og:image" content="http://img.mukewang.com/538d29da000152db05360278.jpg">
+<meta property="og:image" content="http://img.mukewang.com/5405263300018bcf05760129.jpg">
+<meta property="og:image" content="http://img.mukewang.com/538d242700019ec809330432.jpg">
+<meta property="og:image" content="http://img.mukewang.com/538405fa00010e6c05630357.jpg">
+<meta property="og:image" content="http://img.mukewang.com/538d2b8a000163e303430127.jpg">
+<meta property="og:image" content="http://img.mukewang.com/5386e3c80001c25607010856.jpg">
+<meta property="og:image" content="http://img.mukewang.com/5395318100010c6806960431.jpg">
+<meta property="og:image" content="http://img.mukewang.com/5399744d000153a306060342.jpg">
+<meta property="og:image" content="http://img.mukewang.com/539975a800017c8e04790082.jpg">
+<meta property="og:image" content="http://img.mukewang.com/539557d70001c3ee07190429.jpg">
+<meta property="og:image" content="http://img.mukewang.com/53951c200001d32d07130554.jpg">
+<meta property="og:image" content="http://img.mukewang.com/53951c720001996d04080225.jpg">
+<meta property="og:image" content="http://img.mukewang.com/5347b2b10001e1a307520686.jpg">
+<meta property="og:updated_time" content="2016-10-28T13:17:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript进阶(三)之认识DOM">
+<meta name="twitter:description" content="前言 文档对象模型DOM（Document Object Model）定义访问和处理HTML文档的标准方法。DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。   先来看看下面代码:将HTML代码分解为DOM节点层次图:HTML文档可以说由节点构成的集合，DOM节点有:12345元素节点：上图中&amp;lt;html&amp;gt;、&amp;lt;body&amp;gt;、&amp;lt;p&amp;gt;等都是元素节点，">
+<meta name="twitter:image" content="http://img.mukewang.com/5375ca640001c67307860420.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/10/27/认识DOM/" title="JavaScript进阶(三)之认识DOM" itemprop="url">JavaScript进阶(三)之认识DOM</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2016-10-27T09:42:37.000Z" itemprop="datePublished"> 发表于 2016-10-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#getElementsByName-方法"><span class="toc-number">1.1.</span> <span class="toc-text">getElementsByName()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getElementsByTagName-方法"><span class="toc-number">1.2.</span> <span class="toc-text">getElementsByTagName()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区别getElementByID-getElementsByName-getElementsByT"><span class="toc-number">1.3.</span> <span class="toc-text">区别getElementByID,getElementsByName,getElementsByT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getAttribute-方法"><span class="toc-number">1.4.</span> <span class="toc-text">getAttribute()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#节点属性"><span class="toc-number">1.5.</span> <span class="toc-text">节点属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问子结点childNodes"><span class="toc-number">1.6.</span> <span class="toc-text">访问子结点childNodes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问子结点的第一和最后项"><span class="toc-number">1.7.</span> <span class="toc-text">访问子结点的第一和最后项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#头晕-理一理"><span class="toc-number">1.8.</span> <span class="toc-text">头晕 理一理 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问父节点parentNode"><span class="toc-number">1.9.</span> <span class="toc-text">访问父节点parentNode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问兄弟节点"><span class="toc-number">1.10.</span> <span class="toc-text">访问兄弟节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入节点appendChild"><span class="toc-number">1.11.</span> <span class="toc-text">插入节点appendChild()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入节点insertBefore"><span class="toc-number">1.12.</span> <span class="toc-text">插入节点insertBefore()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除节点removeChild"><span class="toc-number">1.13.</span> <span class="toc-text">删除节点removeChild()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换元素节点replaceChild"><span class="toc-number">1.14.</span> <span class="toc-text">替换元素节点replaceChild()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建元素节点createElement"><span class="toc-number">1.15.</span> <span class="toc-text">创建元素节点createElement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建文本节点createTextNode"><span class="toc-number">1.16.</span> <span class="toc-text">创建文本节点createTextNode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器窗口可视区域大小"><span class="toc-number">1.17.</span> <span class="toc-text">浏览器窗口可视区域大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页尺寸scrollHeight"><span class="toc-number">1.18.</span> <span class="toc-text">网页尺寸scrollHeight</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页尺寸offsetHeight"><span class="toc-number">1.19.</span> <span class="toc-text">网页尺寸offsetHeight</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页卷去的距离与偏移量"><span class="toc-number">1.20.</span> <span class="toc-text">网页卷去的距离与偏移量</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>文档对象模型DOM（Document Object Model）定义访问和处理HTML文档的标准方法。DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。</p>
+</blockquote>
+<p> 先来看看下面代码:<br><img src="http://img.mukewang.com/5375ca640001c67307860420.jpg" alt=""><br>将HTML代码分解为DOM节点层次图:<br><img src="http://img.mukewang.com/5375ca7e0001dd8d04830279.jpg" alt=""><br>HTML文档可以说由节点构成的集合，DOM节点有:<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">元素节点：上图中<span class="variable">&lt;html&gt;</span>、<span class="variable">&lt;body&gt;</span>、<span class="variable">&lt;p&gt;</span>等都是元素节点，即'标签'。 </span><br><span class="line"></span><br><span class="line">文本节点:向用户展示的内容，如'<span class="variable">&lt;li&gt;</span>...<span class="variable">&lt;/li&gt;</span>'中的JavaScript、DOM、CSS等文本。 </span><br><span class="line"></span><br><span class="line">属性节点:元素属性，如<span class="variable">&lt;a&gt;</span>标签的链接属性href=<span class="string">"http://www.baidu.com"</span>。</span><br></pre></td></tr></table></figure></p>
+<p>节点属性:<br><img src="http://img.mukewang.com/5375c953000117ee05240129.jpg" alt=""></p>
+<p>遍历节点树:<br><img src="http://img.mukewang.com/53f17a6400017d2905230219.jpg" alt=""><br>以上图ul为例，它的父级节点body,它的子节点3个li,它的兄弟结点h2、P。</p>
+<p>DOM操作:<br><img src="http://img.mukewang.com/538d29da000152db05360278.jpg" alt=""><br>注意:前两个是document方法。</p>
+<h2 id="getElementsByName-方法"><a href="#getElementsByName-方法" class="headerlink" title="getElementsByName()方法"></a>getElementsByName()方法</h2><blockquote>
+<p>返回带有指定名称的节点对象的<strong>“集合”</strong>。</p>
+</blockquote>
+<p>语法：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementsByName(<span class="built_in">name</span>)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>与getElementById() 方法不同的是，通过元素的 name 属性查询元素，而不是通过 id 属性。</p>
+</blockquote>
+<p>注意:</p>
+<ol>
+<li><p>因为文档中的 name 属性可能不唯一，所有 getElementsByName() 方法返回的是<code>元素的数组</code>，而不是一个元素。</p>
+</li>
+<li><p>和数组类似也有length属性，可以和访问数组一样的方法来访问，<strong>从0开始</strong>。</p>
+</li>
+</ol>
+<h2 id="getElementsByTagName-方法"><a href="#getElementsByTagName-方法" class="headerlink" title="getElementsByTagName()方法"></a>getElementsByTagName()方法</h2><p>返回带有指定标签名的节点对象的集合。返回元素的顺序是它们在文档中的顺序。</p>
+<p>语法:<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementsByTagName(Tagname)</span><br></pre></td></tr></table></figure></p>
+<p>说明:</p>
+<ol>
+<li><p>Tagname是标签的名称，如p、a、img等标签名。</p>
+</li>
+<li><p>和数组类似也有length属性，可以和访问数组一样的方法来访问，所以从0开始。</p>
+</li>
+</ol>
+<p>看看下面代码，通过getElementsByTagName()获取节点。</p>
+<h2 id="区别getElementByID-getElementsByName-getElementsByT"><a href="#区别getElementByID-getElementsByName-getElementsByT" class="headerlink" title="区别getElementByID,getElementsByName,getElementsByT"></a>区别getElementByID,getElementsByName,getElementsByT</h2><p><img src="http://img.mukewang.com/5405263300018bcf05760129.jpg" alt=""></p>
+<h2 id="getAttribute-方法"><a href="#getAttribute-方法" class="headerlink" title="getAttribute()方法"></a>getAttribute()方法</h2><blockquote>
+<p>通过元素节点的属性名称获取属性的值。</p>
+</blockquote>
+<p>语法：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">elementNode.getAttribute(<span class="built_in">name</span>)</span><br></pre></td></tr></table></figure></p>
+<p>说明:</p>
+<ol>
+<li><p>elementNode：使用getElementById()、getElementsByTagName()等方法，获取到的元素节点。</p>
+</li>
+<li><p>name：要想查询的元素节点的属性名字</p>
+</li>
+</ol>
+<p>看看下面的代码，获取h1标签的属性值：<br><img src="http://img.mukewang.com/538d242700019ec809330432.jpg" alt=""><br>运行结果:<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h1标签的ID ：alink</span><br><span class="line">h1标签的<span class="built_in">title</span> ：getAttribute()获取标签的属值</span><br></pre></td></tr></table></figure></p>
+<h2 id="节点属性"><a href="#节点属性" class="headerlink" title="节点属性"></a>节点属性</h2><blockquote>
+<p>在文档对象模型 (DOM) 中，每个节点都是一个对象。DOM 节点有三个重要的属性 ：</p>
+</blockquote>
+<ol>
+<li><p>nodeName : 节点的名称</p>
+</li>
+<li><p>nodeValue ：节点的值</p>
+</li>
+<li><p>nodeType ：  节点的类型</p>
+</li>
+</ol>
+<p>一、nodeName 属性: 节点的名称，是只读的。</p>
+<ol>
+<li>元素节点的 nodeName 与标签名相同</li>
+<li>属性节点的 nodeName 是属性的名称</li>
+<li>文本节点的 nodeName 永远是 #text</li>
+<li>文档节点的 nodeName 永远是 #document</li>
+</ol>
+<p>二、nodeValue 属性：节点的值</p>
+<ol>
+<li>元素节点的 nodeValue 是 undefined 或 null</li>
+<li>文本节点的 nodeValue 是文本自身</li>
+<li>属性节点的 nodeValue 是属性的值</li>
+</ol>
+<p>三、nodeType 属性: 节点的类型，是只读的。以下常用的几种结点类型:</p>
+<table>
+<thead>
+<tr>
+<th>元素类型</th>
+<th><strong> 节点类型</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  元素</td>
+<td>1</td>
+</tr>
+<tr>
+<td>  属性</td>
+<td>2</td>
+</tr>
+<tr>
+<td>  文本</td>
+<td>3</td>
+</tr>
+<tr>
+<td>  注释</td>
+<td>8</td>
+</tr>
+<tr>
+<td>  文档</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="访问子结点childNodes"><a href="#访问子结点childNodes" class="headerlink" title="访问子结点childNodes"></a>访问子结点childNodes</h2><p>访问选定元素节点下的所有子节点的列表，返回的值可以看作是一个数组，他具有length属性。</p>
+<p>语法：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">elementNode</span><span class="selector-class">.childNodes</span></span><br></pre></td></tr></table></figure></p>
+<p>注意：</p>
+<p>如果选定的节点没有子节点，则该属性返回不包含节点的 NodeList。</p>
+<p><img src="http://img.mukewang.com/538405fa00010e6c05630357.jpg" alt=""></p>
+<p><strong>运行结果:</strong></p>
+<p>IE:</p>
+<p>  UL子节点个数:3<br>  节点类型:1</p>
+<p>其它浏览器:</p>
+<p>   UL子节点个数:7<br>   节点类型:3</p>
+<p>注意:</p>
+<ol>
+<li><p>IE全系列、firefox、chrome、opera、safari兼容问题</p>
+</li>
+<li><p>节点之间的空白符，在firefox、chrome、opera、safari浏览器是文本节点，所以IE是3，其它浏览器是7，如下图所示:</p>
+</li>
+</ol>
+<p><img src="http://img.mukewang.com/538d2b8a000163e303430127.jpg" alt=""></p>
+<p>如果把代码改成这样:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;ul&gt;<span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>javascript<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>jQuery<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>PHP<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>运行结果:（IE和其它浏览器结果是一样的）</p>
+<p>  UL子节点个数:3<br>  节点类型:1</p>
+<h2 id="访问子结点的第一和最后项"><a href="#访问子结点的第一和最后项" class="headerlink" title="访问子结点的第一和最后项"></a>访问子结点的第一和最后项</h2><blockquote>
+<p>一、firstChild 属性返回‘childNodes’数组的第一个子节点。如果选定的节点没有子节点，则该属性返回 NULL。</p>
+</blockquote>
+<p>语法：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">node</span>.<span class="title">firstChild</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：与elementNode.childNodes[0]是同样的效果。 </p>
+<blockquote>
+<p>二、 lastChild 属性返回‘childNodes’数组的最后一个子节点。如果选定的节点没有子节点，则该属性返回 NULL。</p>
+</blockquote>
+<p>语法：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">node</span>.<span class="title">lastChild</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：与elementNode.childNodes[elementNode.childNodes.length-1]是同样的效果。 </p>
+<p>注意: 上一节中，我们知道Internet Explorer 会忽略节点之间生成的空白文本节点，而其它浏览器不会。我们可以通过检测节点类型，过滤子节点。</p>
+<h2 id="头晕-理一理"><a href="#头晕-理一理" class="headerlink" title="头晕 理一理 "></a>头晕 理一理 </h2><p>DOM的三种节点:</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">元素节点：上图中<span class="variable">&lt;html&gt;</span>、<span class="variable">&lt;body&gt;</span>、<span class="variable">&lt;p&gt;</span>等都是元素节点，即'标签'。 </span><br><span class="line"></span><br><span class="line">文本节点:向用户展示的内容，如'<span class="variable">&lt;li&gt;</span>...<span class="variable">&lt;/li&gt;</span>'中的JavaScript、DOM、CSS等文本。 </span><br><span class="line"></span><br><span class="line">属性节点:元素属性，如<span class="variable">&lt;a&gt;</span>标签的链接属性href=<span class="string">"http://www.baidu.com"</span>。</span><br></pre></td></tr></table></figure>
+<p>DOM节点三个重要的属性:</p>
+<ol>
+<li><p>nodeName : 节点的名称</p>
+</li>
+<li><p>nodeValue ：节点的值</p>
+</li>
+<li><p>nodeType ：  节点的类型</p>
+</li>
+</ol>
+<p>每种节点都有以上三种属性,其中</p>
+<p>一、nodeName 属性: 节点的名称，是只读的。</p>
+<ol>
+<li>元素节点的 nodeName 与标签名相同</li>
+<li>属性节点的 nodeName 是属性的名称</li>
+<li>文本节点的 nodeName 永远是 #text</li>
+<li>文档节点的 nodeName 永远是 #document</li>
+</ol>
+<p>二、nodeValue 属性：节点的值</p>
+<ol>
+<li>元素节点的 nodeValue 是 undefined 或 null</li>
+<li>文本节点的 nodeValue 是文本自身</li>
+<li>属性节点的 nodeValue 是属性的值</li>
+</ol>
+<p>三、nodeType 属性: 节点的类型，是只读的。以下常用的几种结点类型:</p>
+<table>
+<thead>
+<tr>
+<th>元素类型</th>
+<th><strong> 节点类型</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  元素</td>
+<td>1</td>
+</tr>
+<tr>
+<td>  属性</td>
+<td>2</td>
+</tr>
+<tr>
+<td>  文本</td>
+<td>3</td>
+</tr>
+<tr>
+<td>  注释</td>
+<td>8</td>
+</tr>
+<tr>
+<td>  文档</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="访问父节点parentNode"><a href="#访问父节点parentNode" class="headerlink" title="访问父节点parentNode"></a>访问父节点parentNode</h2><blockquote>
+<p>获取指定节点的父节点</p>
+</blockquote>
+<p>语法：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">elementNode</span><span class="selector-class">.parentNode</span></span><br></pre></td></tr></table></figure></p>
+<p>注意:父节点只能有一个。</p>
+<p>看看下面的例子,获取 P 节点的父节点，代码如下:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"con"</span>&gt;</span> parentNode 获取指点节点的父节点<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> mynode= <span class="built_in">document</span>.getElementById(<span class="string">"con"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.write(mynode.parentNode.nodeName);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>运行结果:<br><figure class="highlight cal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">parentNode 获取指点节点的父节点</span><br><span class="line"><span class="keyword">DIV</span></span><br></pre></td></tr></table></figure></p>
+<p>访问祖节点:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">elementNode<span class="selector-class">.parentNode</span><span class="selector-class">.parentNode</span></span><br></pre></td></tr></table></figure></p>
+<p>看看下面的代码:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"text"</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    parentNode      </span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"con"</span>&gt;</span> 获取指点节点的父节点<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> mynode= <span class="built_in">document</span>.getElementById(<span class="string">"con"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.write(mynode.parentNode.parentNode.nodeName);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>运行结果:<br><figure class="highlight cal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">parentNode获取指点节点的父节点</span><br><span class="line"><span class="keyword">DIV</span></span><br></pre></td></tr></table></figure></p>
+<p>注意: 浏览器兼容问题，chrome、firefox等浏览器标签之间的空白也算是一个文本节点。</p>
+<h2 id="访问兄弟节点"><a href="#访问兄弟节点" class="headerlink" title="访问兄弟节点"></a>访问兄弟节点</h2><ol>
+<li>nextSibling 属性可返回某个节点之后紧跟的节点（处于同一树层级中）。</li>
+</ol>
+<p>语法：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nodeObject</span><span class="selector-class">.nextSibling</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：如果无此节点，则该属性返回 null。</p>
+<ol start="2">
+<li>previousSibling 属性可返回某个节点之前紧跟的节点（处于同一树层级中）。</li>
+</ol>
+<p>语法：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nodeObject</span><span class="selector-class">.previousSibling</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：如果无此节点，则该属性返回 null。</p>
+<p>注意: 两个属性获取的是节点。Internet Explorer 会忽略节点间生成的空白文本节点（例如，换行符号），而其它浏览器不会忽略。</p>
+<p>解决问题方法:</p>
+<p>判断节点nodeType是否为1, 如是为元素节点，跳过。<br><img src="http://img.mukewang.com/5386e3c80001c25607010856.jpg" alt=""><br>运行结果:</p>
+<p>LI = javascript<br>nextsibling: LI = jquery</p>
+<h2 id="插入节点appendChild"><a href="#插入节点appendChild" class="headerlink" title="插入节点appendChild()"></a>插入节点appendChild()</h2><p>在指定节点的最后一个子节点列表之后添加一个新的子节点。</p>
+<p>语法:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">appendChild</span><span class="params">(newnode)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>参数:</p>
+<p>newnode：指定追加的节点。</p>
+<p>我们来看看，div标签内创建一个新的 P 标签，代码如下:</p>
+<p>运行结果:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTML</span><br><span class="line">JavaScript</span><br><span class="line">This <span class="keyword">is</span> a <span class="keyword">new</span> p</span><br></pre></td></tr></table></figure></p>
+<h2 id="插入节点insertBefore"><a href="#插入节点insertBefore" class="headerlink" title="插入节点insertBefore()"></a>插入节点insertBefore()</h2><p>insertBefore() 方法可在已有的子节点前插入一个新的子节点。</p>
+<p>语法:<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insertBefore(newnode,<span class="keyword">node</span><span class="title">);</span></span><br></pre></td></tr></table></figure></p>
+<p>参数:</p>
+<p>newnode: 要插入的新节点。</p>
+<p>node: 指定此节点前插入节点。</p>
+<p>我们在来看看下面代码，在指定节点前插入节点。<br><img src="http://img.mukewang.com/5395318100010c6806960431.jpg" alt=""><br>运行结果:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">This is <span class="selector-tag">a</span> new p</span><br><span class="line">JavaScript</span><br><span class="line">HTML</span><br></pre></td></tr></table></figure></p>
+<p>注意: otest.insertBefore(newnode,node); 也可以改为:  otest.insertBefore(newnode,otest.childNodes[0]); </p>
+<h2 id="删除节点removeChild"><a href="#删除节点removeChild" class="headerlink" title="删除节点removeChild()"></a>删除节点removeChild()</h2><p>removeChild() 方法从子节点列表中删除某个节点。如删除成功，此方法可返回被删除的节点，如失败，则返回 NULL。</p>
+<p>语法:</p>
+<p>nodeObject.removeChild(node)</p>
+<p>参数:</p>
+<p>node ：必需，指定需要删除的节点。</p>
+<p>我们来看看下面代码，删除子点。<br><img src="http://img.mukewang.com/5399744d000153a306060342.jpg" alt=""><br>运行结果:</p>
+<p>HTML<br>删除节点的内容: javascript</p>
+<p>注意: 把删除的子节点赋值给 x，这个子节点不在DOM树中，但是还存在内存中，可通过 x 操作。</p>
+<p>如果要完全删除对象，给 x 赋 null 值，代码如下:<br><img src="http://img.mukewang.com/539975a800017c8e04790082.jpg" alt=""></p>
+<h2 id="替换元素节点replaceChild"><a href="#替换元素节点replaceChild" class="headerlink" title="替换元素节点replaceChild()"></a>替换元素节点replaceChild()</h2><p>replaceChild 实现子节点(对象)的替换。返回被替换对象的引用。 </p>
+<p>语法：</p>
+<p>node.replaceChild (newnode,oldnew ) </p>
+<p>参数：</p>
+<p>newnode : 必需，用于替换 oldnew 的对象。<br>oldnew : 必需，被 newnode 替换的对象。</p>
+<p>我们来看看下面的代码:<br><img src="http://img.mukewang.com/539557d70001c3ee07190429.jpg" alt=""></p>
+<p>效果: 将文档中的 Java 改为 JavaScript。</p>
+<p>注意: </p>
+<ol>
+<li><p>当 oldnode 被替换时，所有与之相关的属性内容都将被移除。 </p>
+</li>
+<li><p>newnode 必须先被建立。 </p>
+</li>
+</ol>
+<h2 id="创建元素节点createElement"><a href="#创建元素节点createElement" class="headerlink" title="创建元素节点createElement"></a>创建元素节点createElement</h2><blockquote>
+<p>createElement()方法可创建元素节点。此方法可返回一个 Element 对象。</p>
+</blockquote>
+<p>语法：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.createElement(tagName)</span><br></pre></td></tr></table></figure></p>
+<p>参数:</p>
+<p>tagName：字符串值，这个字符串用来指明创建元素的类型。</p>
+<p>注意：要与appendChild() 或 insertBefore()方法联合使用，将元素显示在页面中。</p>
+<p>我们来创建一个按钮，代码如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> body = <span class="built_in">document</span>.body; </span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> input = <span class="built_in">document</span>.createElement(<span class="string">"input"</span>);  </span></span><br><span class="line"><span class="actionscript">   input.type = <span class="string">"button"</span>;  </span></span><br><span class="line"><span class="actionscript">   input.value = <span class="string">"创建一个按钮"</span>;  </span></span><br><span class="line"><span class="undefined">   body.appendChild(input);  </span></span><br><span class="line"><span class="undefined"> </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>效果：在HTML文档中，创建一个按钮。</p>
+<p>我们也可以使用setAttribute来设置属性，代码如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined">  </span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> body= <span class="built_in">document</span>.body;             </span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> btn = <span class="built_in">document</span>.createElement(<span class="string">"input"</span>);  </span></span><br><span class="line"><span class="actionscript">   btn.setAttribute(<span class="string">"type"</span>, <span class="string">"text"</span>);  </span></span><br><span class="line"><span class="actionscript">   btn.setAttribute(<span class="string">"name"</span>, <span class="string">"q"</span>);  </span></span><br><span class="line"><span class="actionscript">   btn.setAttribute(<span class="string">"value"</span>, <span class="string">"使用setAttribute"</span>);  </span></span><br><span class="line"><span class="actionscript">   btn.setAttribute(<span class="string">"onclick"</span>, <span class="string">"javascript:alert('This is a text!');"</span>);       </span></span><br><span class="line"><span class="undefined">   body.appendChild(btn);  </span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>效果：在HTML文档中，创建一个文本框，使用setAttribute设置属性值。 当点击这个文本框时，会弹出对话框“This is a text!”。</p>
+<h2 id="创建文本节点createTextNode"><a href="#创建文本节点createTextNode" class="headerlink" title="创建文本节点createTextNode"></a>创建文本节点createTextNode</h2><p>createTextNode() 方法创建新的文本节点，返回新创建的 Text 节点。</p>
+<p>语法：</p>
+<p>document.createTextNode(data)</p>
+<p>参数：</p>
+<p>data : 字符串值，可规定此节点的文本。</p>
+<p>我们来创建一个<div>元素并向其中添加一条消息，代码如下：<br><img src="http://img.mukewang.com/53951c200001d32d07130554.jpg" alt=""><br>运行结果:<br><img src="http://img.mukewang.com/53951c720001996d04080225.jpg" alt=""></div></p>
+<h2 id="浏览器窗口可视区域大小"><a href="#浏览器窗口可视区域大小" class="headerlink" title="浏览器窗口可视区域大小"></a>浏览器窗口可视区域大小</h2><p>获得浏览器窗口的尺寸（浏览器的视口，不包括工具栏和滚动条）的方法:</p>
+<p>一、对于IE9+、Chrome、Firefox、Opera 以及 Safari：</p>
+<p>•  window.innerHeight - 浏览器窗口的内部高度</p>
+<p>•  window.innerWidth - 浏览器窗口的内部宽度</p>
+<p>二、对于 Internet Explorer 8、7、6、5：</p>
+<p>•  document.documentElement.clientHeight表示HTML文档所在窗口的当前高度。</p>
+<p>•  document.documentElement.clientWidth表示HTML文档所在窗口的当前宽度。</p>
+<p>或者</p>
+<p>Document对象的body属性对应HTML文档的<body>标签</body></p>
+<p>•  document.body.clientHeight</p>
+<p>•  document.body.clientWidth</p>
+<p>在不同浏览器都实用的 JavaScript 方案：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> w= <span class="built_in">document</span>.documentElement.clientWidth</span><br><span class="line">      || <span class="built_in">document</span>.body.clientWidth;</span><br><span class="line"><span class="keyword">var</span> h= <span class="built_in">document</span>.documentElement.clientHeight</span><br><span class="line">      || <span class="built_in">document</span>.body.clientHeight;</span><br></pre></td></tr></table></figure></p>
+<h2 id="网页尺寸scrollHeight"><a href="#网页尺寸scrollHeight" class="headerlink" title="网页尺寸scrollHeight"></a>网页尺寸scrollHeight</h2><p>scrollHeight和scrollWidth，获取网页内容高度和宽度。</p>
+<p>一、针对IE、Opera:</p>
+<p>scrollHeight 是网页内容实际高度，可以小于 clientHeight。</p>
+<p>二、针对NS、FF:</p>
+<p>scrollHeight 是网页内容高度，不过最小值是 clientHeight。也就是说网页内容实际高度小于 clientHeight 时，scrollHeight 返回 clientHeight 。</p>
+<p>三、浏览器兼容性<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> w=<span class="built_in">document</span>.documentElement.scrollWidth</span><br><span class="line">   || <span class="built_in">document</span>.body.scrollWidth;</span><br><span class="line"><span class="keyword">var</span> h=<span class="built_in">document</span>.documentElement.scrollHeight</span><br><span class="line">   || <span class="built_in">document</span>.body.scrollHeight;</span><br></pre></td></tr></table></figure></p>
+<p>注意:区分大小写</p>
+<p>scrollHeight和scrollWidth还可获取Dom元素中内容实际占用的高度和宽度。</p>
+<h2 id="网页尺寸offsetHeight"><a href="#网页尺寸offsetHeight" class="headerlink" title="网页尺寸offsetHeight"></a>网页尺寸offsetHeight</h2><blockquote>
+<p>offsetHeight和offsetWidth，获取网页内容高度和宽度(包括滚动条等边线，会随窗口的显示大小改变)。</p>
+</blockquote>
+<p>一、值</p>
+<p>offsetHeight = clientHeight + 滚动条 + 边框。</p>
+<p>二、浏览器兼容性<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> w= <span class="built_in">document</span>.documentElement.offsetWidth</span><br><span class="line">    || <span class="built_in">document</span>.body.offsetWidth;</span><br><span class="line"><span class="keyword">var</span> h= <span class="built_in">document</span>.documentElement.offsetHeight</span><br><span class="line">    || <span class="built_in">document</span>.body.offsetHeight;</span><br></pre></td></tr></table></figure></p>
+<h2 id="网页卷去的距离与偏移量"><a href="#网页卷去的距离与偏移量" class="headerlink" title="网页卷去的距离与偏移量"></a>网页卷去的距离与偏移量</h2><p>我们先来看看下面的图：<br><img src="http://img.mukewang.com/5347b2b10001e1a307520686.jpg" alt=""></p>
+<p><strong>scrollLeft:</strong>设置或获取位于给定对象左边界与窗口中目前可见内容的最左端之间的距离 ，即左边灰色的内容。</p>
+<p><strong>scrollTop:</strong>设置或获取位于对象最顶端与窗口中可见内容的最顶端之间的距离 ，即上边灰色的内容。</p>
+<p><strong>offsetLeft</strong>:获取指定对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置 。</p>
+<p><strong>offsetTop:</strong>获取指定对象相对于版面或由 offsetParent 属性指定的父坐标的计算顶端位置 。</p>
+<p>注意:</p>
+<ol>
+<li><p>区分大小写</p>
+</li>
+<li><p>offsetParent：布局中设置postion属性(Relative、Absolute、fixed)的父容器，从最近的父节点开始，一层层向上找，直到HTML的body。</p>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/技术/">技术</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2016/10/27/认识DOM/" data-title="JavaScript进阶(三)之认识DOM | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/01/帧频/" title="帧频">
+  <strong>上一篇：</strong><br/>
+  <span>
+  帧频</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/10/27/JavaScript进阶-2/"  title="JavaScript进阶(二)">
+ <strong>下一篇：</strong><br/> 
+ <span>JavaScript进阶(二)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/10/27/认识DOM/" data-title="JavaScript进阶(三)之认识DOM" data-url="https://lizhaojie001.github.io/2016/10/27/认识DOM/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#getElementsByName-方法"><span class="toc-number">1.1.</span> <span class="toc-text">getElementsByName()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getElementsByTagName-方法"><span class="toc-number">1.2.</span> <span class="toc-text">getElementsByTagName()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区别getElementByID-getElementsByName-getElementsByT"><span class="toc-number">1.3.</span> <span class="toc-text">区别getElementByID,getElementsByName,getElementsByT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getAttribute-方法"><span class="toc-number">1.4.</span> <span class="toc-text">getAttribute()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#节点属性"><span class="toc-number">1.5.</span> <span class="toc-text">节点属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问子结点childNodes"><span class="toc-number">1.6.</span> <span class="toc-text">访问子结点childNodes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问子结点的第一和最后项"><span class="toc-number">1.7.</span> <span class="toc-text">访问子结点的第一和最后项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#头晕-理一理"><span class="toc-number">1.8.</span> <span class="toc-text">头晕 理一理 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问父节点parentNode"><span class="toc-number">1.9.</span> <span class="toc-text">访问父节点parentNode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问兄弟节点"><span class="toc-number">1.10.</span> <span class="toc-text">访问兄弟节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入节点appendChild"><span class="toc-number">1.11.</span> <span class="toc-text">插入节点appendChild()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入节点insertBefore"><span class="toc-number">1.12.</span> <span class="toc-text">插入节点insertBefore()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除节点removeChild"><span class="toc-number">1.13.</span> <span class="toc-text">删除节点removeChild()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换元素节点replaceChild"><span class="toc-number">1.14.</span> <span class="toc-text">替换元素节点replaceChild()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建元素节点createElement"><span class="toc-number">1.15.</span> <span class="toc-text">创建元素节点createElement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建文本节点createTextNode"><span class="toc-number">1.16.</span> <span class="toc-text">创建文本节点createTextNode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器窗口可视区域大小"><span class="toc-number">1.17.</span> <span class="toc-text">浏览器窗口可视区域大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页尺寸scrollHeight"><span class="toc-number">1.18.</span> <span class="toc-text">网页尺寸scrollHeight</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页尺寸offsetHeight"><span class="toc-number">1.19.</span> <span class="toc-text">网页尺寸offsetHeight</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页卷去的距离与偏移量"><span class="toc-number">1.20.</span> <span class="toc-text">网页卷去的距离与偏移量</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

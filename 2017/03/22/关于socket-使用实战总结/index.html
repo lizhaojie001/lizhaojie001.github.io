@@ -1,0 +1,620 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于socket 使用实战总结 | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="写在前面 做了一个向中间件发送字符指令的应用,本着实用的原则,socket的基本原理我只用一张图代替.socket的使用我将以四中形式展现,  首先要知道的:socket传输 分为输入流也叫写入流(针对于客户端而言的,来源于服务器端),输出流(从客户端输出,发送至服务器端)  C语言 BSDSocket NSStream GCDAsyncSocket  C语言 客户端  1234567891011">
+<meta name="keywords" content="socket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于socket 使用实战总结">
+<meta property="og:url" content="https://lizhaojie001.github.io/2017/03/22/关于socket-使用实战总结/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="写在前面 做了一个向中间件发送字符指令的应用,本着实用的原则,socket的基本原理我只用一张图代替.socket的使用我将以四中形式展现,  首先要知道的:socket传输 分为输入流也叫写入流(针对于客户端而言的,来源于服务器端),输出流(从客户端输出,发送至服务器端)  C语言 BSDSocket NSStream GCDAsyncSocket  C语言 客户端  1234567891011">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://my.csdn.net/uploads/201204/10/1334028481_7031.jpg">
+<meta property="og:updated_time" content="2017-03-27T20:25:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于socket 使用实战总结">
+<meta name="twitter:description" content="写在前面 做了一个向中间件发送字符指令的应用,本着实用的原则,socket的基本原理我只用一张图代替.socket的使用我将以四中形式展现,  首先要知道的:socket传输 分为输入流也叫写入流(针对于客户端而言的,来源于服务器端),输出流(从客户端输出,发送至服务器端)  C语言 BSDSocket NSStream GCDAsyncSocket  C语言 客户端  1234567891011">
+<meta name="twitter:image" content="http://my.csdn.net/uploads/201204/10/1334028481_7031.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/03/22/关于socket-使用实战总结/" title="关于socket 使用实战总结" itemprop="url">关于socket 使用实战总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-21T16:00:42.000Z" itemprop="datePublished"> 发表于 2017-03-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C语言"><span class="toc-number">2.</span> <span class="toc-text">C语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BSDSocket"><span class="toc-number">3.</span> <span class="toc-text">BSDSocket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSStream"><span class="toc-number">4.</span> <span class="toc-text">NSStream</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CocoaAsyncSocket"><span class="toc-number">5.</span> <span class="toc-text">CocoaAsyncSocket</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.1.</span> <span class="toc-text">创建socket </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.2.</span> <span class="toc-text">链接服务器或者中间件(物联网设备中间控制)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.3.</span> <span class="toc-text">执行代理方法—GCDAsyncSocketDelegate</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">7.</span> <span class="toc-text">写在后面</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><blockquote>
+<p>做了一个向中间件发送字符指令的应用,本着实用的原则,socket的基本原理我只用一张图代替.socket的使用我将以四中形式展现,</p>
+</blockquote>
+<p>首先要知道的:socket传输 分为输入流也叫写入流(<code>针对于客户端而言的,来源于服务器端</code>),输出流(<code>从客户端输出,发送至服务器端</code>)</p>
+<ul>
+<li>C语言</li>
+<li>BSDSocket</li>
+<li>NSStream</li>
+<li>GCDAsyncSocket<br><img src="http://my.csdn.net/uploads/201204/10/1334028481_7031.jpg" alt="原理图"></li>
+</ul>
+<h2 id="C语言"><a href="#C语言" class="headerlink" title="C语言"></a>C语言</h2><blockquote>
+<p>客户端</p>
+</blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXRCVLEN 500</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PORTNUM 2348</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">char</span> <span class="built_in">buffer</span>[] = <span class="string">"My name is khan"</span>; <span class="comment">/* +1 so we can add null terminator */</span></span><br><span class="line"><span class="keyword">int</span> len, mysocket;</span><br><span class="line">struct sockaddr_in dest; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysocket = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">memset(&amp;dest, <span class="number">0</span>, <span class="keyword">sizeof</span>(dest));                <span class="comment">/* zero the struct */</span></span><br><span class="line">dest.sin_family = AF_INET;</span><br><span class="line">dest.sin_addr.s_addr = inet_addr(<span class="string">"127.0.0.1"</span>); <span class="comment">/* set destination IP number */</span> </span><br><span class="line">dest.sin_port = htons(PORTNUM);                <span class="comment">/* set destination port number */</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">connect</span>(mysocket, (struct sockaddr *)&amp;dest, <span class="keyword">sizeof</span>(struct sockaddr));</span><br><span class="line"></span><br><span class="line">len = send(mysocket, <span class="built_in">buffer</span>, strlen(<span class="built_in">buffer</span>), <span class="number">0</span>); </span><br><span class="line">perror(<span class="string">"len\n"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* We have to null terminate the received data ourselves */</span></span><br><span class="line"><span class="built_in">buffer</span>[len] = <span class="string">'\0'</span>;</span><br><span class="line"></span><br><span class="line">printf(<span class="string">"sent %s (%d bytes).\n"</span>, <span class="built_in">buffer</span>, len);</span><br><span class="line"></span><br><span class="line"><span class="built_in">close</span>(mysocket);</span><br><span class="line"><span class="built_in">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>服务器端</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PORTNUM 2348</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> bufferLength 500</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> buffer[bufferLength];</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">dest</span>;</span> <span class="comment">/* socket info about the machine connecting to us */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">serv</span>;</span> <span class="comment">/* socket info about our server */</span></span><br><span class="line"><span class="keyword">int</span> mysocket;            <span class="comment">/* socket used to listen for incoming connections */</span></span><br><span class="line"><span class="keyword">socklen_t</span> socksize = <span class="keyword">sizeof</span>(struct sockaddr_in);</span><br><span class="line"></span><br><span class="line"><span class="built_in">memset</span>(&amp;serv, <span class="number">0</span>, <span class="keyword">sizeof</span>(serv));           <span class="comment">/* zero the struct before filling the fields */</span></span><br><span class="line">serv.sin_family = AF_INET;                <span class="comment">/* set the type of connection to TCP/IP */</span></span><br><span class="line">serv.sin_addr.s_addr = htonl(INADDR_ANY); <span class="comment">/* set our address to any interface */</span></span><br><span class="line">serv.sin_port = htons(PORTNUM);           <span class="comment">/* set the server port number */</span>    </span><br><span class="line"></span><br><span class="line">mysocket = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* bind serv information to mysocket */</span></span><br><span class="line">bind(mysocket, (struct sockaddr *)&amp;serv, <span class="keyword">sizeof</span>(struct sockaddr));</span><br><span class="line"></span><br><span class="line"><span class="comment">/* start listening, allowing a queue of up to 1 pending connection */</span></span><br><span class="line">listen(mysocket, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> consocket;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> cpid;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">consocket = accept(mysocket, (struct sockaddr *)&amp;dest, &amp;socksize);</span><br><span class="line"></span><br><span class="line">perror(<span class="string">"consocket\n"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( (cpid = fork()) == <span class="number">0</span> )</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"inside child process\n\n\n"</span>);</span><br><span class="line"></span><br><span class="line">close(mysocket);</span><br><span class="line"></span><br><span class="line">close(consocket);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> recivedBytes = recv(consocket, buffer, bufferLength, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">buffer[recivedBytes] = <span class="string">'\0'</span>; </span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"recieved data %s \n"</span>, buffer);  </span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;   </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">close(consocket);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">close(mysocket);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="BSDSocket"><a href="#BSDSocket" class="headerlink" title="BSDSocket"></a>BSDSocket</h2><p>1.创建一个线程加入事件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSURL</span> * url = [<span class="built_in">NSURL</span> URLWithString:[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@:%d"</span>, HOST, PORT]];</span><br><span class="line"><span class="built_in">NSThread</span> * backgroundThread = [[<span class="built_in">NSThread</span> alloc] initWithTarget:<span class="keyword">self</span>                                                        selector:<span class="keyword">@selector</span>(loadDataFromServerWithURL:)                                                        object:url];</span><br><span class="line">[backgroundThread start];</span><br></pre></td></tr></table></figure>
+<p>2.从发送到响应接受服务器返回数据数据<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)loadDataFromServerWithURL:(<span class="built_in">NSURL</span>*)url&#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSString</span> * host = [url host];</span><br><span class="line"><span class="built_in">NSInteger</span> port = [[url port] integerValue];</span><br><span class="line"><span class="comment">//创建Client</span></span><br><span class="line"><span class="built_in">CFStreamClientContext</span> ctx = &#123;<span class="number">0</span>, (__bridge <span class="keyword">void</span> *)(<span class="keyword">self</span>), <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;;</span><br><span class="line"><span class="comment">//注册回调事件 触发的时机 具体时机在下面的回调函数中一一介绍</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CFOptionFlags</span> registeredEvents = (kCFStreamEventHasBytesAvailable |kCFStreamEventNone|kCFStreamEventOpenCompleted| kCFStreamEventCanAcceptBytes|kCFStreamEventEndEncountered | kCFStreamEventErrorOccurred);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建写入流</span></span><br><span class="line"><span class="built_in">CFWriteStreamRef</span>   writeStream   ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">CFStreamCreatePairWithSocketToHost</span>(kCFAllocatorDefault, (__bridge <span class="built_in">CFStringRef</span>)host, (<span class="built_in">UInt32</span>)port, <span class="literal">NULL</span>, &amp;writeStream)</span><br><span class="line">;</span><br><span class="line"><span class="comment">//加入runloop</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">CFWriteStreamSetClient</span>(  writeStream , registeredEventsTwo, socketCallbackCFWriteStreamRef, &amp;ctx)) &#123;</span><br><span class="line"><span class="built_in">CFWriteStreamScheduleWithRunLoop</span>(  writeStream, <span class="built_in">CFRunLoopGetCurrent</span>(), kCFRunLoopCommonModes);</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">[<span class="keyword">self</span> networkFailedWithErrorMessage:<span class="string">@"CFWriteStreamSetClient Failed to assign callback method"</span>];</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//开启写入流</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">CFWriteStreamOpen</span>( writeStream) == <span class="literal">NO</span>) &#123;</span><br><span class="line">[<span class="keyword">self</span> networkFailedWithErrorMessage:<span class="string">@"Failed to open write stream"</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">CFErrorRef</span> error2 = <span class="built_in">CFWriteStreamCopyError</span>(writeStream);</span><br><span class="line"><span class="keyword">if</span> (error2 != <span class="literal">NULL</span>) &#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">CFErrorGetCode</span>(error2) != <span class="number">0</span>) &#123;</span><br><span class="line"><span class="built_in">NSString</span> * errorInfo = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"Failed to connect stream; error2 '%@' (code %ld)"</span>, (__bridge <span class="built_in">NSString</span>*)<span class="built_in">CFErrorGetDomain</span>(error2), <span class="built_in">CFErrorGetCode</span>(error2)];</span><br><span class="line">[<span class="keyword">self</span> networkFailedWithErrorMessage:errorInfo];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//释放</span></span><br><span class="line"><span class="built_in">CFRelease</span>(error2);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 开启进程</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CFRunLoopRun</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> socketCallbackCFWriteStreamRef(<span class="built_in">CFWriteStreamRef</span> stream, <span class="built_in">CFStreamEventType</span> event, <span class="keyword">void</span> * myPtr)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"socketCallbackCFWriteStreamRef &gt;&gt; in Thread %@"</span>, [<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">StreamViewController * controller = (__bridge  StreamViewController *)myPtr;</span><br><span class="line"><span class="keyword">switch</span>(event) &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//开启流</span></span><br><span class="line"><span class="keyword">case</span> kCFStreamEventOpenCompleted:</span><br><span class="line"><span class="keyword">break</span>; </span><br><span class="line"><span class="comment">//数据流可以接受数据,在这里你要把你的数据发送到服务器</span></span><br><span class="line"><span class="keyword">case</span> kCFStreamEventCanAcceptBytes:&#123;</span><br><span class="line"><span class="built_in">NSString</span> *testString = <span class="string">@"168353b1-6b6c-4ebd-891e-0b51d81be166|1|f4c1b518-80fe-47aa-8f87-58b5a062dcb9"</span>;</span><br><span class="line"><span class="built_in">NSData</span> *testData = [testString dataUsingEncoding: <span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line">Byte *testByte = (Byte *)[testData bytes];</span><br><span class="line"><span class="built_in">CFWriteStreamWrite</span>( stream,  testByte,   testData.length);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="comment">//发生意外调用,比如你发送了数据给服务器,服务器返回数据在这里读取</span></span><br><span class="line"><span class="keyword">case</span> kCFStreamEventErrorOccurred: &#123;</span><br><span class="line">[controller networkFailedWithErrorMessage:<span class="string">@"socketCallbackCFWriteStreamRef  写入失败"</span>];</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//读取服务器数据</span></span><br><span class="line"><span class="keyword">case</span> kCFStreamEventHasBytesAvailable:&#123;</span><br><span class="line"><span class="comment">//读取数据,直到无数据返回</span></span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">CFReadStreamHasBytesAvailable</span>(stream)) &#123;</span><br><span class="line"><span class="built_in">UInt8</span> buffer[kBufferSize];</span><br><span class="line"><span class="keyword">int</span> numBytesRead = <span class="built_in">CFReadStreamRead</span>(stream, buffer, kBufferSize);</span><br><span class="line"></span><br><span class="line">[controller didReceiveData:[<span class="built_in">NSData</span> dataWithBytes:buffer length:numBytesRead]];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="comment">//完成数据接收,关闭流</span></span><br><span class="line"><span class="keyword">case</span> kCFStreamEventEndEncountered:</span><br><span class="line">[controller didFinishReceivingData];</span><br><span class="line"><span class="comment">// 清理释放内存</span></span><br><span class="line"><span class="built_in">CFWriteStreamClose</span>(stream);</span><br><span class="line"><span class="built_in">CFWriteStreamUnscheduleFromRunLoop</span>(stream, <span class="built_in">CFRunLoopGetCurrent</span>(), kCFRunLoopCommonModes);</span><br><span class="line"><span class="built_in">CFRunLoopStop</span>(<span class="built_in">CFRunLoopGetCurrent</span>());</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="NSStream"><a href="#NSStream" class="headerlink" title="NSStream"></a>NSStream</h2><blockquote>
+<p><code>NSStream</code>是对上面CFReadStreamRef或者CFWriteStreamRef的简单的封装.<br><code>NSSream</code>分为输入流(<code>NSOutputStream</code>:这对于客户端而言的,来源于服务器端),输出流(<code>NSInputStream</code>:从客户端输出,发送至服务器端)</p>
+</blockquote>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//输出流</span></span><br><span class="line">uint8_t * buffer ;</span><br><span class="line"><span class="keyword">char</span> * str = <span class="string">"168353b1-6b6c-4ebd-891e-0b51d81be166|1|ddef2049-761a-45a0-9e77-ebf684c4b8f0"</span>;</span><br><span class="line"><span class="built_in">NSOutputStream</span> * outputStream = [<span class="built_in">NSOutputStream</span> outputStreamToBuffer:buffer capacity:<span class="keyword">sizeof</span>(buffer)];</span><br><span class="line"></span><br><span class="line"><span class="comment">//配置 HOST PORT 代理NSStreamDelegate</span></span><br><span class="line">[outputStream setProperty:<span class="string">@"123.123.118.67"</span> forKey:<span class="built_in">NSStreamSOCKSProxyHostKey</span>];</span><br><span class="line">[outputStream setProperty:<span class="string">@"4521"</span> forKey:<span class="built_in">NSStreamSOCKSProxyPortKey</span>];</span><br><span class="line">[outputStream setDelegate:<span class="keyword">self</span>];</span><br><span class="line"><span class="comment">//加入普通寻</span></span><br><span class="line">[outputStream scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> currentRunLoop] forMode:<span class="built_in">NSRunLoopCommonModes</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,  [outputStream propertyForKey:<span class="built_in">NSStreamSOCKSProxyHostKey</span>]);</span><br><span class="line"><span class="comment">//开启输出流</span></span><br><span class="line">[outputStream open];</span><br></pre></td></tr></table></figure>
+<p>代理回调<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#pragma mark -NSStreamDelegate</span></span><br><span class="line">- (<span class="keyword">void</span>)stream:(<span class="built_in">NSStream</span> *)aStream handleEvent:(<span class="built_in">NSStreamEvent</span>)eventCode&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这里和前面的十分类似,对比学习即可,此处不再做详细介绍</span></span><br><span class="line"><span class="keyword">switch</span> (eventCode) &#123;</span><br><span class="line"><span class="keyword">case</span> <span class="built_in">NSStreamEventOpenCompleted</span>:</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"NSStreamEventOpenCompleted"</span>);</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="built_in">NSStreamEventHasBytesAvailable</span>:</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"NSStreamEventHasBytesAvailable"</span>);</span><br><span class="line"></span><br><span class="line">uint8_t buf[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">len = [(<span class="built_in">NSInputStream</span> *)aStream read:buf maxLength:<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">if</span>(len) &#123;</span><br><span class="line">[_data appendBytes:(<span class="keyword">const</span> <span class="keyword">void</span> *)buf length:len];</span><br><span class="line"><span class="comment">// bytesRead is an instance variable of type NSNumber.</span></span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"no buffer!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//写入数据</span></span><br><span class="line"><span class="keyword">case</span> <span class="built_in">NSStreamEventHasSpaceAvailable</span>:</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="built_in">NSStreamEventErrorOccurred</span>:</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="built_in">NSStreamEventEndEncountered</span>:</span><br><span class="line"></span><br><span class="line">[aStream close];</span><br><span class="line">[aStream removeFromRunLoop:[<span class="built_in">NSRunLoop</span> currentRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</span><br><span class="line"></span><br><span class="line">aStream = <span class="literal">nil</span>; <span class="comment">// aStream是一个指针,避免野指针的产生,此处赋空值;</span></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="CocoaAsyncSocket"><a href="#CocoaAsyncSocket" class="headerlink" title="CocoaAsyncSocket"></a><a href="https://github.com/robbiehanson/CocoaAsyncSocket" target="_blank" rel="noopener">CocoaAsyncSocket</a></h2><h3>创建socket </h3>
+
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Socket = [[GCDAsyncSocket alloc] initWithDelegate:<span class="keyword">self</span> delegateQueue:dispatch_get_main_queue()];</span><br></pre></td></tr></table></figure>
+<p></p><h3>链接服务器或者中间件(物联网设备中间控制)</h3><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//断开连接</span></span><br><span class="line"><span class="keyword">if</span> (Socket.isConnected) &#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"链接已经断开,重新开启链接"</span>);</span><br><span class="line">[Socket disconnect];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//连接服务器  当然公司的ip和端口不能对外公布,请更换为自己的</span></span><br><span class="line"><span class="built_in">NSError</span> *err = <span class="literal">nil</span>;</span><br><span class="line"><span class="keyword">if</span> (![Socket connectToHost:<span class="string">@"123.155.118.167"</span> onPort:<span class="number">4521</span> error:&amp;err])  <span class="comment">//Asynchronous!</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//If there was an error, it's likely something like "already connected" or "no delegate set"</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"I goofed: %@"</span>, err);</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"正在链接"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+<p></p><h3>执行代理方法—GCDAsyncSocketDelegate</h3><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#pragma mark-GCDAsyncSocketDelegate</span></span><br><span class="line"><span class="comment">//成功链接服务器后调用</span></span><br><span class="line">- (<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sender didConnectToHost:(<span class="built_in">NSString</span> *)host port:(<span class="built_in">UInt16</span>)port</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"链接成功Cool, I'm connected! That was easy.%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line"><span class="comment">//在这里发数据给服务器</span></span><br><span class="line"><span class="built_in">NSString</span> *testString = <span class="string">@"168353B1-6B6C-4EBD-891E-0B51D81BE166|1|DDEF2049-761A-45A0-9E77-EBF684C4B8F0"</span>;</span><br><span class="line"><span class="built_in">NSString</span> * lowerString =testString.lowercaseString;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSData</span> *data = [lowerString dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line"><span class="comment">//发送数据 </span></span><br><span class="line">[Socket writeData:data withTimeout:<span class="number">-1</span> tag:<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//与服务器断开链接调用</span></span><br><span class="line">-(<span class="keyword">void</span>)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(<span class="built_in">NSError</span> *)err&#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"链接断开%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//发送数据后调用</span></span><br><span class="line">-(<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(<span class="keyword">long</span>)tag&#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"didWriteDataWithTag %@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line"><span class="keyword">switch</span> (tag) &#123;</span><br><span class="line"><span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"第一个写入请求发出"</span>);</span><br><span class="line"><span class="comment">//读取服务器返回信息(不调用这个不会回调下面的紧接着的这个方法)</span></span><br><span class="line">[sock readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">10</span> ];</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"第2个写入请求发出"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"第3个写入请求发出"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//服务器返回回数据调用</span></span><br><span class="line">-(<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didReadData:(<span class="built_in">NSData</span> *)data withTag:(<span class="keyword">long</span>)tag&#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"didReadData %@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (receiveData == <span class="literal">nil</span>) &#123;</span><br><span class="line"><span class="comment">//如果不存在，则创建一个新的</span></span><br><span class="line">receiveData = [[<span class="built_in">NSMutableData</span> alloc] init];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(data)&#123;</span><br><span class="line">[receiveData appendData:data];<span class="comment">//把接收到的数据添加上</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[Socket readDataToData:data withTimeout:<span class="number">-1</span> tag:TAG_MSG];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"data %@"</span>,[[<span class="built_in">NSString</span> alloc]initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>]);  </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">- (<span class="keyword">void</span>)socketDidCloseReadStream:(GCDAsyncSocket *)sock&#123;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%s"</span>,__func__);</span><br><span class="line">[sock disconnect];</span><br><span class="line">sock = <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://blog.csdn.net/column/details/cocoa.html" target="_blank" rel="noopener">深入浅出Cocoa</a></p>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><blockquote>
+<p>本文主要针对于发送数据到服务器,直接读取服务器内容的请参考自行更改</p>
+</blockquote>
+<p>——————————–写入3/21/2017 11:57</p>
+<p>转载请注明网址(<code>yanqinglove.xyz</code>)</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/socket/">socket</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2017/03/22/关于socket-使用实战总结/" data-title="关于socket 使用实战总结 | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/04/03/使用Theos创建第一个系统应用/" title="使用Theos创建第一个系统应用">
+  <strong>上一篇：</strong><br/>
+  <span>
+  使用Theos创建第一个系统应用</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/03/21/Hexo-博客搭建-迁移篇/"  title="Hexo 博客搭建(迁移篇)">
+ <strong>下一篇：</strong><br/> 
+ <span>Hexo 博客搭建(迁移篇)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/03/22/关于socket-使用实战总结/" data-title="关于socket 使用实战总结" data-url="https://lizhaojie001.github.io/2017/03/22/关于socket-使用实战总结/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C语言"><span class="toc-number">2.</span> <span class="toc-text">C语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BSDSocket"><span class="toc-number">3.</span> <span class="toc-text">BSDSocket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSStream"><span class="toc-number">4.</span> <span class="toc-text">NSStream</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CocoaAsyncSocket"><span class="toc-number">5.</span> <span class="toc-text">CocoaAsyncSocket</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.1.</span> <span class="toc-text">创建socket </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.2.</span> <span class="toc-text">链接服务器或者中间件(物联网设备中间控制)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">5.3.</span> <span class="toc-text">执行代理方法—GCDAsyncSocketDelegate</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">7.</span> <span class="toc-text">写在后面</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

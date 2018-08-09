@@ -1,0 +1,626 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于Key-Value Coding高级使用 | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="[TOC] 问题####1.valueForKey和valueForKeyPath区别?  键与键路径之间的区别在于,后者可以包含嵌套关系,用句点分开12[self.person valueForKey:@&quot;name&quot;];[self valueForKeyPath:@&quot;person.name&quot;];  Part II: KVC基础 II_3. 集合操作(Using Collection Operat">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Key-Value Coding高级使用">
+<meta property="og:url" content="https://lizhaojie001.github.io/2017/10/02/关于Key-Value Coding高级使用/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="[TOC] 问题####1.valueForKey和valueForKeyPath区别?  键与键路径之间的区别在于,后者可以包含嵌套关系,用句点分开12[self.person valueForKey:@&quot;name&quot;];[self valueForKeyPath:@&quot;person.name&quot;];  Part II: KVC基础 II_3. 集合操作(Using Collection Operat">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://7xux50.com2.z0.glb.clouddn.com/20180807153364505287811.png">
+<meta property="og:image" content=".http://7xux50.com2.z0.glb.clouddn.com/20180807153364506485788.png">
+<meta property="og:image" content="http://7xux50.com2.z0.glb.clouddn.com/20180807153364512161567.png">
+<meta property="og:updated_time" content="2018-08-07T12:33:32.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于Key-Value Coding高级使用">
+<meta name="twitter:description" content="[TOC] 问题####1.valueForKey和valueForKeyPath区别?  键与键路径之间的区别在于,后者可以包含嵌套关系,用句点分开12[self.person valueForKey:@&quot;name&quot;];[self valueForKeyPath:@&quot;person.name&quot;];  Part II: KVC基础 II_3. 集合操作(Using Collection Operat">
+<meta name="twitter:image" content="http://7xux50.com2.z0.glb.clouddn.com/20180807153364505287811.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/10/02/关于Key-Value Coding高级使用/" title="关于Key-Value Coding高级使用" itemprop="url">关于Key-Value Coding高级使用</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2017-10-02T07:16:32.000Z" itemprop="datePublished"> 发表于 2017-10-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Part-II-KVC基础"><span class="toc-number"></span> <span class="toc-text">Part II: KVC基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#II-3-集合操作-Using-Collection-Operators"><span class="toc-number">1.</span> <span class="toc-text"> II_3. 集合操作(Using Collection Operators)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-avg"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">1 . @avg</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-4-表示一个无对象值-Representing-Non-Object-Values"><span class="toc-number">2.</span> <span class="toc-text">II_4 . 表示一个无对象值(Representing Non-Object Values)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-5-验证属性-Validating-Properties"><span class="toc-number">3.</span> <span class="toc-text">II_5 .验证属性(Validating Properties)</span></a></li></ol>
+		
+		</div>
+		
+		<p>[TOC]</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>####1.<code>valueForKey</code>和<code>valueForKeyPath</code>区别?</p>
+<blockquote>
+<p>键与键路径之间的区别在于,后者可以包含嵌套关系,用句点分开<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span>.person valueForKey:<span class="string">@"name"</span>];</span><br><span class="line">[<span class="keyword">self</span> valueForKeyPath:<span class="string">@"person.name"</span>];</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="Part-II-KVC基础"><a href="#Part-II-KVC基础" class="headerlink" title="Part II: KVC基础"></a>Part II: KVC基础</h1><h2 id="II-3-集合操作-Using-Collection-Operators"><a href="#II-3-集合操作-Using-Collection-Operators" class="headerlink" title=" II_3. 集合操作(Using Collection Operators)"></a> II_3. 集合操作(Using Collection Operators)</h2><p><img src="http://7xux50.com2.z0.glb.clouddn.com/20180807153364505287811.png" alt="Alt text"></p>
+<p>###<strong>三种基本操作</strong></p>
+<p>#####(一) 聚合运算(<code>Aggregation Operators</code>)<br><img src=".http://7xux50.com2.z0.glb.clouddn.com/20180807153364506485788.png" alt="@下面使用的模型"></p>
+<h6 id="1-avg"><a href="#1-avg" class="headerlink" title="1 . @avg"></a>1 . <code>@avg</code></h6><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSNumber</span> *transactionAverage = [<span class="keyword">self</span>.transactions valueForKeyPath:<span class="string">@"@avg.amount"</span>];</span><br></pre></td></tr></table></figure>
+<p>当使用<code>@avg</code>操作时,集合中的每个属性被转成<code>double</code>类型,然后求得平均值,最后返回<code>NSNumber</code>类型</p>
+<p>######2. <code>@count</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSNumber</span> *numberOfTransactions = [<span class="keyword">self</span>.transactions valueForKeyPath:<span class="string">@"@count"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>返回对象的数量</p>
+<p>######3.<code>@max</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDate</span> *latestDate = [<span class="keyword">self</span>.transactions valueForKeyPath:<span class="string">@"@max.date"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>返回集合中最大的<code>date</code>对象,注意<code>集合中必须包含这个对象</code>,就如🌰中的<code>NSDate</code></p>
+<p>######4.<code>@min</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDate</span> *earliestDate = [<span class="keyword">self</span>.transactions valueForKeyPath:<span class="string">@"@min.date"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>返回最先的<code>date</code>对象</p>
+<p>######5.<code>@sum</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSNumber</span> *amountSum = [<span class="keyword">self</span>.transactions valueForKeyPath:<span class="string">@"@sum.amount"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>返回<code>amount</code>总和</p>
+<p>#####(二)数组操作(<code>Array Operators</code>)</p>
+<blockquote>
+<p>数组操作将根据<code>valueForKeyPath</code>的设置,返回一个特定的数组<br>当数组对象的操作时,任何一个对象为<code>nil</code>时,都会报错</p>
+</blockquote>
+<p>######1.     <code>@distinctUnionOfObjects</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *distinctPayees = [<span class="keyword">self</span>.transactions valueForKeyPath:<span class="string">@"@distinctUnionOfObjects.payee"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>返回一个字符串类型的集合<code>Car Loan, General Cable, Animal Hospital, Green Power, Mortgage.</code>,<strong>重复的对象将会被移除</strong></p>
+<p>######2. <code>@unionOfObjects</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *payees = [<span class="keyword">self</span>.transactions valueForKeyPath:<span class="string">@"@unionOfObjects.payee"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>重复的对象不会被移除,返回字符串数组:<code>Green Power, Green Power, Green Power, Car Loan, Car Loan, Car Loan, General Cable, General Cable, General Cable, Mortgage, Mortgage, Mortgage, Animal Hospital</code></p>
+<p>#####(三) 嵌套操作(<code>Nesting Operators</code>)<br><img src="http://7xux50.com2.z0.glb.clouddn.com/20180807153364512161567.png" alt="@moreTransactions的数据"></p>
+<blockquote>
+<p>嵌套操作针对于嵌套的集合使用,同样操作的集合中的对象不能为<code>nil</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span>* moreTransactions = @[&lt;<span class="meta"># transaction data #&gt;];</span></span><br><span class="line"><span class="built_in">NSArray</span>* arrayOfArrays = @[<span class="keyword">self</span>.transactions, moreTransactions];</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>######1. <code>@distinctUnionOfArrays</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *collectedDistinctPayees = [arrayOfArrays valueForKeyPath:<span class="string">@"@distinctUnionOfArrays.payee"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>返回两个数组中的<code>payee</code>对象:<code>: Hobby Shop, Mortgage, Animal Hospital, Second Mortgage, Car Loan, General Cable - Cottage, General Cable, Green Power</code>,<strong>注意,此操作已过滤相同元素</strong></p>
+<p>######2. <code>@unionOfArrays</code><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *collectedPayees = [arrayOfArrays valueForKeyPath:<span class="string">@"@unionOfArrays.payee"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>返回:<code>Green Power, Green Power, Green Power, Car Loan, Car Loan, Car Loan, General Cable, General Cable, General Cable, Mortgage, Mortgage, Mortgage, Animal Hospital, General Cable - Cottage, General Cable - Cottage, General Cable - Cottage, Second Mortgage, Second Mortgage, Second Mortgage, Hobby Shop.</code>,不过滤重复对象</p>
+<p>######3.<code>@distinctUnionOfSets</code><br>类比<code>@distinctUnionOfArrays</code></p>
+<h2 id="II-4-表示一个无对象值-Representing-Non-Object-Values"><a href="#II-4-表示一个无对象值-Representing-Non-Object-Values" class="headerlink" title="II_4 . 表示一个无对象值(Representing Non-Object Values)"></a>II_4 . 表示一个无对象值(Representing Non-Object Values)</h2><h2 id="II-5-验证属性-Validating-Properties"><a href="#II-5-验证属性-Validating-Properties" class="headerlink" title="II_5 .验证属性(Validating Properties)"></a>II_5 .验证属性(Validating Properties)</h2><p><strong>有趣的是验证过程中有三种结果</strong></p>
+<ol>
+<li>验证有效,返回<code>YES</code></li>
+<li>验证无效,返回<code>NO</code>,附带<code>error</code></li>
+<li>验证方法认为值对象无效，但创建一个新的有效的值对象作为替换。在这种情况下，方法返回<code>YES</code>，而将错误对象保持不变。在返回之前，该方法将修改值引用以指向新的值对象。当它进行修改时，方法总是创建一个新对象，而不是修改旧的对象，即使值对象是可变的。</li>
+</ol>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Person* person = [[Person alloc] init];</span><br><span class="line"><span class="built_in">NSError</span>* error;</span><br><span class="line"><span class="built_in">NSString</span>* name = <span class="string">@"John"</span>;</span><br><span class="line"><span class="keyword">if</span> (![person validateValue:&amp;name forKey:<span class="string">@"name"</span> error:&amp;error]) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,error);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/iOS/">iOS</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2017/10/02/关于Key-Value Coding高级使用/" data-title="关于Key-Value Coding高级使用 | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/10/02/jenkins打包脚本/" title="Jenkins打包脚本">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Jenkins打包脚本</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/10/固体对象/"  title="固体对象">
+ <strong>下一篇：</strong><br/> 
+ <span>固体对象
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/10/02/关于Key-Value Coding高级使用/" data-title="关于Key-Value Coding高级使用" data-url="https://lizhaojie001.github.io/2017/10/02/关于Key-Value Coding高级使用/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Part-II-KVC基础"><span class="toc-number"></span> <span class="toc-text">Part II: KVC基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#II-3-集合操作-Using-Collection-Operators"><span class="toc-number">1.</span> <span class="toc-text"> II_3. 集合操作(Using Collection Operators)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-avg"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">1 . @avg</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-4-表示一个无对象值-Representing-Non-Object-Values"><span class="toc-number">2.</span> <span class="toc-text">II_4 . 表示一个无对象值(Representing Non-Object Values)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-5-验证属性-Validating-Properties"><span class="toc-number">3.</span> <span class="toc-text">II_5 .验证属性(Validating Properties)</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

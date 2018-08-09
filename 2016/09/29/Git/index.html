@@ -1,0 +1,640 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Git | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="我是前言 目的:搭建好了博客,不可能每次发表博客的时候都带着我这台台式机乱跑吧,如果换到其他电脑怎么办,博客的部署文件都在这台电脑上,所以就想着同步到github上,又不想创建一个新的repo还单独存储源文件,就像在发布的网站的repo中创建一个分支来存储当前的blog源文件,于是风雨之路慢慢而来,因为这几天要过10.1,所以赶紧整理一下这两天git的学习内容  准备工作 创建repo然后创建本地">
+<meta name="keywords" content="Git使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git">
+<meta property="og:url" content="https://lizhaojie001.github.io/2016/09/29/Git/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="我是前言 目的:搭建好了博客,不可能每次发表博客的时候都带着我这台台式机乱跑吧,如果换到其他电脑怎么办,博客的部署文件都在这台电脑上,所以就想着同步到github上,又不想创建一个新的repo还单独存储源文件,就像在发布的网站的repo中创建一个分支来存储当前的blog源文件,于是风雨之路慢慢而来,因为这几天要过10.1,所以赶紧整理一下这两天git的学习内容  准备工作 创建repo然后创建本地">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200718719-1231424882.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200818594-455539894.png">
+<meta property="og:image" content="https://git-scm.com/figures/18333fig0311-tn.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200857656-1447502494.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200958063-1519334555.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929201031141-1463129236.png">
+<meta property="og:updated_time" content="2016-10-08T09:20:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git">
+<meta name="twitter:description" content="我是前言 目的:搭建好了博客,不可能每次发表博客的时候都带着我这台台式机乱跑吧,如果换到其他电脑怎么办,博客的部署文件都在这台电脑上,所以就想着同步到github上,又不想创建一个新的repo还单独存储源文件,就像在发布的网站的repo中创建一个分支来存储当前的blog源文件,于是风雨之路慢慢而来,因为这几天要过10.1,所以赶紧整理一下这两天git的学习内容  准备工作 创建repo然后创建本地">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200718719-1231424882.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/29/Git/" title="Git" itemprop="url">Git</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-29T05:26:57.000Z" itemprop="datePublished"> 发表于 2016-09-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#我是前言"><span class="toc-number">1.</span> <span class="toc-text">我是前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建分支￼"><span class="toc-number">3.</span> <span class="toc-text">创建分支￼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看本地分支："><span class="toc-number">4.</span> <span class="toc-text">查看本地分支：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看远程分支："><span class="toc-number">5.</span> <span class="toc-text">查看远程分支：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除分支"><span class="toc-number">6.</span> <span class="toc-text">删除分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切换分支"><span class="toc-number">7.</span> <span class="toc-text">切换分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将本地分支push到远程分支"><span class="toc-number">8.</span> <span class="toc-text">将本地分支push到远程分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充方法"><span class="toc-number">9.</span> <span class="toc-text">补充方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">10.</span> <span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">11.</span> <span class="toc-text">解决方案:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">12.</span> <span class="toc-text">参考</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="我是前言"><a href="#我是前言" class="headerlink" title="我是前言"></a>我是前言</h2><blockquote>
+<p>目的:搭建好了博客,不可能每次发表博客的时候都带着我这台台式机乱跑吧,如果换到其他电脑怎么办,博客的部署文件都在这台电脑上,所以就想着同步到github上,又不想创建一个新的repo还单独存储源文件,就像在发布的网站的repo中创建一个分支来存储当前的blog源文件,于是风雨之路慢慢而来,因为这几天要过10.1,所以赶紧整理一下这两天git的学习内容</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>创建repo然后创建本地库,git pull 远程库 如下图</li>
+</ul>
+<p><img src="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200718719-1231424882.png" alt=""></p>
+<h2 id="创建分支￼"><a href="#创建分支￼" class="headerlink" title="创建分支￼"></a>创建分支￼</h2><p>￼<img src="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200818594-455539894.png" alt=""></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git checkout - <span class="selector-tag">b</span> Hexo  <span class="comment">//Hexo 是分知名 创建并切换到当前分支</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//等价于下面</span></span><br><span class="line">git branch Hexo</span><br><span class="line"></span><br><span class="line">git checkout Hexo <span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<p><strong>示意图</strong></p>
+<p><img src="https://git-scm.com/figures/18333fig0311-tn.png" alt=""></p>
+<hr>
+<p><strong>远程repo上查看</strong></p>
+<p><img src="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200857656-1447502494.png" alt=""></p>
+<p><strong>本地命令行查看</strong></p>
+<h2 id="查看本地分支："><a href="#查看本地分支：" class="headerlink" title="查看本地分支："></a>查看本地分支：</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git branch</span></span><br></pre></td></tr></table></figure>
+<p><strong>如图</strong></p>
+<p><img src="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929200958063-1519334555.png" alt=""></p>
+<h2 id="查看远程分支："><a href="#查看远程分支：" class="headerlink" title="查看远程分支："></a>查看远程分支：</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">branch </span>-r</span><br></pre></td></tr></table></figure>
+<p><strong>如图</strong></p>
+<p><img src="http://images2015.cnblogs.com/blog/855758/201609/855758-20160929201031141-1463129236.png" alt=""></p>
+<h2 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h2><blockquote>
+<p>创建删除都是常用的,我就一并归纳了,虽然还没用到</p>
+</blockquote>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">branch </span>-d Hexo</span><br></pre></td></tr></table></figure>
+<h2 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="keyword">master</span> <span class="title">(前面提到的)切换到主分支</span></span><br></pre></td></tr></table></figure>
+<h2 id="将本地分支push到远程分支"><a href="#将本地分支push到远程分支" class="headerlink" title="将本地分支push到远程分支"></a>将本地分支push到远程分支</h2><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> <span class="built_in">origin</span> [name]</span><br></pre></td></tr></table></figure>
+<h2 id="补充方法"><a href="#补充方法" class="headerlink" title="补充方法"></a>补充方法</h2><hr>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">push</span> origin <span class="keyword">test</span> :master //将本地<span class="keyword">test</span>分支作为远程的master分支</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">git <span class="keyword">push</span> origin  <span class="keyword">test</span> : <span class="keyword">test</span> //将本地的<span class="keyword">test</span>分支作为远程的<span class="keyword">test</span> 分支</span><br></pre></td></tr></table></figure>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p><strong>1.hexo的两个主题 git commit 时无法提交<br>报错信息:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">On branch master</span><br><span class="line">Your branch is ahead of 'origin/master' by 1 commit.</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git push"</span> <span class="keyword">to</span> publish your <span class="keyword">local</span> commits)</span><br><span class="line">Changes <span class="keyword">not</span> staged <span class="keyword">for</span> <span class="keyword">commit</span>:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working <span class="keyword">directory</span>)</span><br><span class="line">  (<span class="keyword">commit</span> <span class="keyword">or</span> discard the untracked <span class="keyword">or</span> modified <span class="keyword">content</span> <span class="keyword">in</span> submodules)</span><br><span class="line"></span><br><span class="line">	modified:   themes/<span class="keyword">next</span> (modified <span class="keyword">content</span>)</span><br><span class="line"><span class="keyword">no</span> changes added <span class="keyword">to</span> <span class="keyword">commit</span> (<span class="keyword">use</span> <span class="string">"git add"</span> <span class="keyword">and</span>/<span class="keyword">or</span> <span class="string">"git commit -a"</span>)</span><br></pre></td></tr></table></figure>
+<p><code>`</code></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案:"></a>解决方案:</h2><p>   Bean HE <a href="http://kubiops.com/2015/09/06/ignore-dirty-status/" target="_blank" rel="noopener">http://kubiops.com/2015/09/06/ignore-dirty-status/</a></p>
+<hr>
+<blockquote>
+<p><strong>问题分析:</strong></p>
+</blockquote>
+<ul>
+<li>主要是看了解决方法,并不是真正的将主题提交,而是ignore dirty(肮脏的) info in git ,所以我断定应该是github上开源的项目在提交的时候会自动连接到github上的远程库,去查看了一下远程库的状态,如下图</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>springbarley的博客<a href="http://www.cnblogs.com/springbarley/archive/2012/11/03/2752984.html" target="_blank" rel="noopener">http://www.cnblogs.com/springbarley/archive/2012/11/03/2752984.html</a></li>
+<li>海岛心hey <a href="http://www.imooc.com/article/9707" target="_blank" rel="noopener">http://www.imooc.com/article/9707</a></li>
+<li>git中文官网<a href="https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6" target="_blank" rel="noopener">https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6</a></li>
+<li>segmentfault<a href="https://segmentfault.com/q/1010000000181403" target="_blank" rel="noopener">https://segmentfault.com/q/1010000000181403</a></li>
+<li>阮一峰网络日志<a href="http://www.ruanyifeng.com/blog/2012/07/git.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/07/git.html</a></li>
+<li>git提交问题参考Bean He <a href="http://kubiops.com/2015/09/06/ignore-dirty-status/" target="_blank" rel="noopener">http://kubiops.com/2015/09/06/ignore-dirty-status/</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/技术/">技术</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Git使用/">Git使用</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2016/09/29/Git/" data-title="Git | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/10/08/App-Thinnin(app 瘦身)g/" title="App Thinning (App 瘦身)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  App Thinning (App 瘦身)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/09/26/Hexo的搭建/"  title="Hexo的搭建">
+ <strong>下一篇：</strong><br/> 
+ <span>Hexo的搭建
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/09/29/Git/" data-title="Git" data-url="https://lizhaojie001.github.io/2016/09/29/Git/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#我是前言"><span class="toc-number">1.</span> <span class="toc-text">我是前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建分支￼"><span class="toc-number">3.</span> <span class="toc-text">创建分支￼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看本地分支："><span class="toc-number">4.</span> <span class="toc-text">查看本地分支：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看远程分支："><span class="toc-number">5.</span> <span class="toc-text">查看远程分支：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除分支"><span class="toc-number">6.</span> <span class="toc-text">删除分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切换分支"><span class="toc-number">7.</span> <span class="toc-text">切换分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将本地分支push到远程分支"><span class="toc-number">8.</span> <span class="toc-text">将本地分支push到远程分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充方法"><span class="toc-number">9.</span> <span class="toc-text">补充方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">10.</span> <span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">11.</span> <span class="toc-text">解决方案:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">12.</span> <span class="toc-text">参考</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

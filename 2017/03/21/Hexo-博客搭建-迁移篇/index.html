@@ -1,0 +1,670 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Hexo 博客搭建(迁移篇) | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="写在前面 之前懒,没好好整理blog搭建的步骤,因为打算挪窝,也把博客迁移到另一台机器上,所以有了下面的文章,前面和通常搭建的blog的步骤大同小异,这次迁移遇到两个问题1.npm版本冲突,高版本到低版本  2.重新链接远程仓库 都一一解决,特此记录.  1.环境配置安装Node 作用：用来生成静态页面的 到Node.js官网下载相应平台的最新版本，一路安装即可。   安装Git 作用：把本地的h">
+<meta name="keywords" content="搭建blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 博客搭建(迁移篇)">
+<meta property="og:url" content="https://lizhaojie001.github.io/2017/03/21/Hexo-博客搭建-迁移篇/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="写在前面 之前懒,没好好整理blog搭建的步骤,因为打算挪窝,也把博客迁移到另一台机器上,所以有了下面的文章,前面和通常搭建的blog的步骤大同小异,这次迁移遇到两个问题1.npm版本冲突,高版本到低版本  2.重新链接远程仓库 都一一解决,特此记录.  1.环境配置安装Node 作用：用来生成静态页面的 到Node.js官网下载相应平台的最新版本，一路安装即可。   安装Git 作用：把本地的h">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://7xux50.com2.z0.glb.clouddn.com/20170320149000732118363.jpg?imageView2/0/format/jpg">
+<meta property="og:updated_time" content="2017-08-06T09:58:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo 博客搭建(迁移篇)">
+<meta name="twitter:description" content="写在前面 之前懒,没好好整理blog搭建的步骤,因为打算挪窝,也把博客迁移到另一台机器上,所以有了下面的文章,前面和通常搭建的blog的步骤大同小异,这次迁移遇到两个问题1.npm版本冲突,高版本到低版本  2.重新链接远程仓库 都一一解决,特此记录.  1.环境配置安装Node 作用：用来生成静态页面的 到Node.js官网下载相应平台的最新版本，一路安装即可。   安装Git 作用：把本地的h">
+<meta name="twitter:image" content="http://7xux50.com2.z0.glb.clouddn.com/20170320149000732118363.jpg?imageView2/0/format/jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/03/21/Hexo-博客搭建-迁移篇/" title="Hexo 博客搭建(迁移篇)" itemprop="url">Hexo 博客搭建(迁移篇)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-20T16:51:55.000Z" itemprop="datePublished"> 发表于 2017-03-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-环境配置"><span class="toc-number">2.</span> <span class="toc-text">1.环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Node"><span class="toc-number">2.1.</span> <span class="toc-text">安装Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Git"><span class="toc-number">2.2.</span> <span class="toc-text"> 安装Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#申请Github"><span class="toc-number">2.3.</span> <span class="toc-text">申请Github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正式安装HEXO"><span class="toc-number">2.4.</span> <span class="toc-text">正式安装HEXO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化"><span class="toc-number">2.5.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成静态页面"><span class="toc-number">2.6.</span> <span class="toc-text">生成静态页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地启动"><span class="toc-number">2.7.</span> <span class="toc-text">本地启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Github"><span class="toc-number">2.8.</span> <span class="toc-text">配置Github</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置SSH-keys"><span class="toc-number">3.</span> <span class="toc-text">配置SSH keys</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim编辑器的基本操作指令见下面"><span class="toc-number">4.</span> <span class="toc-text">vim编辑器的基本操作指令见下面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-number">5.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
+<p>之前懒,没好好整理blog搭建的步骤,因为打算挪窝,也把博客迁移到另一台机器上,所以有了下面的文章,前面和通常搭建的blog的步骤大同小异,这次迁移遇到两个问题1.npm版本冲突,高版本到低版本  2.重新链接远程仓库 都一一解决,特此记录.</p>
+</blockquote>
+<h1 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1.环境配置"></a>1.环境配置</h1><h2 id="安装Node"><a href="#安装Node" class="headerlink" title="安装Node"></a>安装Node</h2><blockquote>
+<p>作用：用来生成静态页面的 到Node.js<a href="https://nodejs.org/en/" target="_blank" rel="noopener">官网</a>下载相应平台的最新版本，一路安装即可。</p>
+</blockquote>
+<h2 id="安装Git"><a href="#安装Git" class="headerlink" title=" 安装Git"></a> 安装Git</h2><blockquote>
+<p>作用：把本地的hexo内容提交到github上去. 安装Xcode就自带有Git</p>
+</blockquote>
+<h2 id="申请Github"><a href="#申请Github" class="headerlink" title="申请Github"></a>申请Github</h2><blockquote>
+<p>作用：是用来做博客的远程创库、域名、服务器之类的，怎么与本地hexo建立连接等下讲。 github账号 ,没有的话直接申请就行了，跟一般的注册账号差不多，SSH Keys配置下面单独讲解，如果没有配置SSH keys ，每次提交博客都需要输入账号密码进行验证。</p>
+</blockquote>
+<h2 id="正式安装HEXO"><a href="#正式安装HEXO" class="headerlink" title="正式安装HEXO"></a>正式安装HEXO</h2><p>Node和Git都安装好后，可执行如下命令安装hexo：终端输入：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm <span class="keyword">install</span> -g hexo</span><br></pre></td></tr></table></figure>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><blockquote>
+<p>创建一个文件夹，如：Blog，cd到Blog里执行hexo init的。命令：</p>
+</blockquote>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">hexo init</span></span><br></pre></td></tr></table></figure>
+<h2 id="生成静态页面"><a href="#生成静态页面" class="headerlink" title="生成静态页面"></a>生成静态页面</h2><blockquote>
+<p>继续再Blog目录下执行如下命令，生成静态页面</p>
+</blockquote>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g   #注释：g --&gt;<span class="keyword">generate</span></span><br></pre></td></tr></table></figure>
+<h2 id="本地启动"><a href="#本地启动" class="headerlink" title="本地启动"></a>本地启动</h2><blockquote>
+<p>启动本地服务，进行文章预览调试，命令</p>
+</blockquote>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s #注释: s--&gt;server</span><br></pre></td></tr></table></figure>
+<p>浏览器输入<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a>  ,进入本地预览,<br>结束预览:</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+<span class="keyword">C</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置Github"><a href="#配置Github" class="headerlink" title="配置Github"></a>配置Github</h2><blockquote>
+<p>建立与你用户名对应的仓库，仓库名必须为【your_user_name.github.io】，固定写法 然后建立关联，我的Blog在本地，Blog是我之前建的东西也全在这里面，有</p>
+</blockquote>
+<p><img src="http://7xux50.com2.z0.glb.clouddn.com/20170320149000732118363.jpg?imageView2/0/format/jpg" alt="20170320149000732118363.jpg"></p>
+<p>现在我们需要_config.yml文件，来建立关联，命令：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">vim</span> _<span class="selector-tag">config</span><span class="selector-class">.yml</span>  <span class="selector-id">#vim</span>编辑器的基本操作指令见下面</span><br></pre></td></tr></table></figure>
+<p>翻到最下面，改成我这样子的，注意： <code>:</code> 后面要有空格</p>
+<p><pre>deploy:<br>type: git<br>repository:  <a href="https://github.com/lizhaojie001/lizhaojie001.github.io" target="_blank" rel="noopener">https://github.com/lizhaojie001/lizhaojie001.github.io</a><br>branch: master<br></pre><br>或者</p>
+<p><pre><br>deploy:<br>type: git<br>repo: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:lizhaojie001/lizhaojie001.github.io.git<br>branch: master<br></pre><br>下面附上 我自己的<code>_config.yml</code>配置图</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">严青的博客</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">记录学习</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">走着走着就走丢了</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">严青</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span></span><br><span class="line"><span class="attr">url:</span> <span class="attr">https://lizhaojie001.github.io/</span></span><br><span class="line"><span class="attr">root:</span>  <span class="string">/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Directory</span></span><br><span class="line"><span class="attr">source_dir:</span> <span class="string">source</span></span><br><span class="line"><span class="attr">public_dir:</span> <span class="string">public</span></span><br><span class="line"><span class="attr">tag_dir:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">archive_dir:</span> <span class="string">archives</span></span><br><span class="line"><span class="attr">category_dir:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">code_dir:</span> <span class="string">downloads/code</span></span><br><span class="line"><span class="attr">i18n_dir:</span> <span class="string">:lang</span></span><br><span class="line"><span class="attr">skip_render:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into titlecase</span></span><br><span class="line"><span class="attr">external_link:</span> <span class="literal">true</span> <span class="comment"># Open external links in new tab</span></span><br><span class="line"><span class="attr">filename_case:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">relative_link:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">future:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">highlight:</span></span><br><span class="line"><span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">tab_replace:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Category &amp; Tag</span></span><br><span class="line"><span class="attr">default_category:</span> <span class="string">uncategorized</span></span><br><span class="line"><span class="attr">category_map:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">tag_map:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Date / Time format</span></span><br><span class="line"><span class="comment">## Hexo uses Moment.js to parse and display date</span></span><br><span class="line"><span class="comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="attr">date_format:</span> <span class="string">YYYY-MM-DD</span></span><br><span class="line"><span class="attr">time_format:</span> <span class="attr">HH:mm:ss</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Pagination</span></span><br><span class="line"><span class="comment">## Set per_page to 0 to disable pagination</span></span><br><span class="line"><span class="attr">per_page:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">pagination_dir:</span> <span class="string">page</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">jacman</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">repo:</span> <span class="string">git@github.com:lizhaojie001/lizhaojie001.github.io.git</span></span><br><span class="line"><span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<h1 id="配置SSH-keys"><a href="#配置SSH-keys" class="headerlink" title="配置SSH keys"></a>配置SSH keys</h1><blockquote>
+<p>前面的环境和基本设置完成了,如何把本地的文章同步到GitHub仓库呢,下面介绍SSH keys的使用,当然这也不是必须的,除非你希望每次同步的时候同输入账号密码</p>
+</blockquote>
+<p><strong>1.检查SSH keys的设置</strong></p>
+<blockquote>
+<p>首先我们需要检查你电脑上现有的ssh key：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~<span class="string">/.</span> ssh <span class="comment">#检查本机的ssh密钥</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>可能看到的结果有两种:</p>
+<ul>
+<li><code>Permission denied (publickey).  
+fatal: The remote end hung up unexpectedly</code></li>
+</ul>
+<hr>
+<ul>
+<li>一个钥匙名字(猜测,因为我的mac系统没有,不排除你的有)</li>
+</ul>
+<p>第二种情况比较好解决,先看第一种情况</p>
+<blockquote>
+<p><code>密钥</code>就是你访问GitHub那把说的<code>钥匙</code>,(这话听别扭的),GitHub就想把<code>锁</code>,密钥就是对应的钥匙,你有钥匙,GitHub也应该有同样的钥匙,这样他才能进行对比,判断你是不是你.(更饶了).</p>
+</blockquote>
+<hr>
+<p><em>前提</em></p>
+<ul>
+<li>本地有一份密钥</li>
+<li>GitHub有一份密钥</li>
+</ul>
+<hr>
+<ol>
+<li><p>制作密钥</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制 public key (id_rsa.pub)的内容 到你账户的 list of SSH keys</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">cat</span> <span class="selector-tag">id_rsa</span><span class="selector-class">.pub</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>密钥大概是这个样子的<br><code>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXAmlp0EmrRqiKm0l0Bo2Bm8VmXcY5NYj/9wHLfBGbIGEefV//rZzX0fwc2V1w9SKgSoACgiGBB/gH9EjkI32goapG/kOLlA0KU2VX/mxbFc8qNq9hsuCz9eVAzRgzJvQK6qUeZNd0ciJXVyl/q92k1tXqeAvvGFDdvaCdU3qx9cdI/DjFehRJcy3rLIUWSSHnDH4RNDldOCA7EBaO2WOXbH10SWqS5TS6213KPuPX6OQ6gK+brvwWJ/Jlrwq4RSo8cwmdaXFNnkrT+su4/tzGlG6zJIeUywwnx9cNSEWqcqg6Rl7PTsRBv+dfhoasfqcermITiRLr0goJbQwpxYXWjUL8G61 yanqing@yanqingdeiMac.local</code><br>为了防止有人使坏,我改变了其中的内容,切勿使用,每个机器生成的密钥是不同的</p>
+<p>至此,你就可以同步你的本地到GitHub了,并且发布你的博客.</p>
+<p>接下来会讲解一些关于更改域名的知识,<br>毕竟像GitHub给的<code>lizhaojie001.github.io</code>这样的域名一点也不个性化.</p>
+<h1 id="vim编辑器的基本操作指令见下面"><a href="#vim编辑器的基本操作指令见下面" class="headerlink" title="vim编辑器的基本操作指令见下面"></a>vim编辑器的基本操作指令见下面</h1><p><code>i</code>   进入编辑模式<br><code>Esc</code> 退出编辑模式<br><code>:</code> 进入命令航模式<br><code>w</code> 保存编辑<br><code>q</code> 退出编辑器</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>1.关于node版本冲突的问题</p>
+<blockquote>
+<p>产生原因，博客迁移，node版本不同</p>
+</blockquote>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install hexo-<span class="keyword">cli</span> -g</span><br></pre></td></tr></table></figure>
+<p>2.密钥每次都要输入密码,暂时未解决</p>
+<blockquote>
+<p>已解决…在设置的时候可以不设置密码的,,,,没仔细看说明</p>
+</blockquote>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://segmentfault.com/q/1010000006788195" target="_blank" rel="noopener">https://segmentfault.com/q/1010000006788195</a></p>
+<p><a href="http://blog.csdn.net/xzz_hust/article/details/8969090" target="_blank" rel="noopener">http://blog.csdn.net/xzz_hust/article/details/8969090</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/搭建blog/">搭建blog</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2017/03/21/Hexo-博客搭建-迁移篇/" data-title="Hexo 博客搭建(迁移篇) | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/03/22/关于socket-使用实战总结/" title="关于socket 使用实战总结">
+  <strong>上一篇：</strong><br/>
+  <span>
+  关于socket 使用实战总结</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/02/06/日期比较/"  title="日期比较">
+ <strong>下一篇：</strong><br/> 
+ <span>日期比较
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/03/21/Hexo-博客搭建-迁移篇/" data-title="Hexo 博客搭建(迁移篇)" data-url="https://lizhaojie001.github.io/2017/03/21/Hexo-博客搭建-迁移篇/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-环境配置"><span class="toc-number">2.</span> <span class="toc-text">1.环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Node"><span class="toc-number">2.1.</span> <span class="toc-text">安装Node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Git"><span class="toc-number">2.2.</span> <span class="toc-text"> 安装Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#申请Github"><span class="toc-number">2.3.</span> <span class="toc-text">申请Github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正式安装HEXO"><span class="toc-number">2.4.</span> <span class="toc-text">正式安装HEXO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化"><span class="toc-number">2.5.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成静态页面"><span class="toc-number">2.6.</span> <span class="toc-text">生成静态页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地启动"><span class="toc-number">2.7.</span> <span class="toc-text">本地启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Github"><span class="toc-number">2.8.</span> <span class="toc-text">配置Github</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置SSH-keys"><span class="toc-number">3.</span> <span class="toc-text">配置SSH keys</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim编辑器的基本操作指令见下面"><span class="toc-number">4.</span> <span class="toc-text">vim编辑器的基本操作指令见下面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-number">5.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

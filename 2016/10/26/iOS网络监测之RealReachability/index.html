@@ -1,0 +1,643 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>iOS下的实际网络连接状态检测(转) | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="序言 网络连接状态检测对于我们的iOS app开发来说是一个非常通用的需求。为了更好的用户体验，我们会在无网络时展现本地或者缓存的内容，并对用户进行合适的提示。对绝大部分iOS开发者来说，从苹果示例代码改变而来的各种Reachablity框架是实现这个需求的普遍选择,比如这个库。但事实上，基于此方案的所有实现，都无法帮助我们检测真正的网络连接状态，它们能检测的只是本地连接状态；这种情况包括但不限于">
+<meta name="keywords" content="网络状态">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS下的实际网络连接状态检测(转)">
+<meta property="og:url" content="https://lizhaojie001.github.io/2016/10/26/iOS网络监测之RealReachability/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="序言 网络连接状态检测对于我们的iOS app开发来说是一个非常通用的需求。为了更好的用户体验，我们会在无网络时展现本地或者缓存的内容，并对用户进行合适的提示。对绝大部分iOS开发者来说，从苹果示例代码改变而来的各种Reachablity框架是实现这个需求的普遍选择,比如这个库。但事实上，基于此方案的所有实现，都无法帮助我们检测真正的网络连接状态，它们能检测的只是本地连接状态；这种情况包括但不限于">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160223/1456215404428152.png">
+<meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160223/1456212358863328.png">
+<meta property="og:updated_time" content="2016-10-26T10:56:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS下的实际网络连接状态检测(转)">
+<meta name="twitter:description" content="序言 网络连接状态检测对于我们的iOS app开发来说是一个非常通用的需求。为了更好的用户体验，我们会在无网络时展现本地或者缓存的内容，并对用户进行合适的提示。对绝大部分iOS开发者来说，从苹果示例代码改变而来的各种Reachablity框架是实现这个需求的普遍选择,比如这个库。但事实上，基于此方案的所有实现，都无法帮助我们检测真正的网络连接状态，它们能检测的只是本地连接状态；这种情况包括但不限于">
+<meta name="twitter:image" content="http://cc.cocimg.com/api/uploads/20160223/1456215404428152.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/10/26/iOS网络监测之RealReachability/" title="iOS下的实际网络连接状态检测(转)" itemprop="url">iOS下的实际网络连接状态检测(转)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2016-10-26T02:30:57.000Z" itemprop="datePublished"> 发表于 2016-10-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#序言"><span class="toc-number">1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#集成和使用介绍"><span class="toc-number">2.</span> <span class="toc-text">集成和使用介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#集成"><span class="toc-number">2.1.</span> <span class="toc-text">集成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用介绍"><span class="toc-number">2.2.</span> <span class="toc-text">使用介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RealReachability的实现原理"><span class="toc-number">2.3.</span> <span class="toc-text">RealReachability的实现原理</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><blockquote>
+<p>网络连接状态检测对于我们的iOS app开发来说是一个非常通用的需求。为了更好的用户体验，我们会在无网络时展现本地或者缓存的内容，并对用户进行合适的提示。对绝大部分iOS开发者来说，从苹果示例代码改变而来的各种Reachablity框架是实现这个需求的普遍选择,比如这个库。但事实上，基于此方案的所有实现，都无法帮助我们检测真正的网络连接状态，它们能检测的只是本地连接状态；这种情况包括但不限于如下场景：</p>
+</blockquote>
+<ol>
+<li><p>现在很流行的公用wifi，需要网页鉴权，鉴权之前无法上网，但本地连接已经建立；</p>
+</li>
+<li><p>存在了本地网络连接，但信号很差，实际无法连接到服务器；</p>
+</li>
+<li><p>iOS连接的路由设备本身没有连接外网。</p>
+</li>
+</ol>
+<p>CocoaChina上已有很多网友对此进行提问和吐槽，比如：</p>
+<pre><code>如何判断设备是否真正连上互联网？而不是只有网络连接
+
+[Reachability reachabilityWithHostName:]完全没用！
+</code></pre><p>苹果的Reachability示例中有如下说明，告诉我们其能力受限于此：</p>
+<blockquote>
+<p>“Reachability cannot tell your application if you can connect to a particular host, only that an interface is available that might allow a connection, and whether that interface is the WWAN.”</p>
+</blockquote>
+<p>而苹果的SCNetworkReachability API则告诉了我们更多： “Reachability does not guarantee that the data packet will actually be received by the host. “</p>
+<p>Reachability相关的框架在底层都是通过SCNetworkReachability来实现网络检测的，所以无法检测实际网络连接情况。</p>
+<p>有鉴于此，笔者希望打造一个通用、简单、可靠的实际网络连接状态检测框架，于是RealReachability诞生了。</p>
+<p><strong>RealReachability简单介绍</strong></p>
+<blockquote>
+<p>RealReachability是笔者1个月之前发布到github的开源库，项目地址如下： <a href="https://github.com/dustturtle/RealReachability" target="_blank" rel="noopener">https://github.com/dustturtle/RealReachability</a> 短短1个月时间收获了100多个star，其中主要来自于外国友人，最近还上了github的OC板块趋势排行榜，着实令笔者相当惊喜。 此框架开发的初衷来源于项目实际需求，离线模式对网络连接状态的要求比较苛刻，且实际场景经常会遇到“伪连接”的情况，Reachability面对此场景力不从心。多方研究后引入了ping能力（此方案流量开销最小，也最简单），实现了简单的实际网络连接监测；后面经过提炼和优化，就有了这个框架。可以告诉大家的是，这个框架在appstore上架应用中已经经受了考验，且经过了长时间的测试，可以放心使用。</p>
+</blockquote>
+<h1 id="集成和使用介绍"><a href="#集成和使用介绍" class="headerlink" title="集成和使用介绍"></a>集成和使用介绍</h1><h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><ul>
+<li><p>最简便的集成方法当属pod: pod ‘RealReachability’。</p>
+</li>
+<li><p>手动集成：将RealReachability文件夹加入到工程即可。</p>
+</li>
+<li><p>依赖：Xcode5.0+，支持ARC, iOS6+.项目需要引入SystemConfiguration.framework. </p>
+</li>
+</ul>
+<h2 id="使用介绍"><a href="#使用介绍" class="headerlink" title="使用介绍"></a>使用介绍</h2><p>其接口的设计和调用方法和Reachability非常相似，大家可以无缝上手，非常方便。 开启网络监听：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-attr">[GLobalRealReachability startNotifier]</span>;</span><br><span class="line"></span><br><span class="line"> <span class="selector-attr">[[NSNotificationCenter defaultCenter]</span> <span class="selector-tag">addObserver</span><span class="selector-pseudo">:self</span></span><br><span class="line">                                          <span class="selector-tag">selector</span>:@<span class="selector-tag">selector</span>(<span class="attribute">networkChanged</span>:)</span><br><span class="line">                                              <span class="selector-tag">name</span><span class="selector-pseudo">:kRealReachabilityChangedNotification</span></span><br><span class="line">                                            <span class="selector-tag">object</span><span class="selector-pseudo">:nil</span>];</span><br></pre></td></tr></table></figure>
+<p>回调代码示例：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- <span class="params">(void)</span>networkChanged:<span class="params">(NSNotification *)</span>notification</span><br><span class="line">&#123;</span><br><span class="line">    RealReachability *reachability = <span class="params">(RealReachability *)</span>notification.object;</span><br><span class="line">    ReachabilityStatus status = [reachability currentReachabilityStatus];</span><br><span class="line">    NSLog(@<span class="string">"currentStatus:%@"</span>,@(status));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>触发实时网络状态查询代码示例：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">[GLobalRealReachability <span class="string">reachabilityWithBlock:</span>^(ReachabilityStatus status) &#123;</span><br><span class="line">        <span class="keyword">switch</span> (status)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">NotReachable:</span></span><br><span class="line">            &#123;</span><br><span class="line">            <span class="comment">//  case NotReachable handler</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">             </span><br><span class="line">            <span class="keyword">case</span> <span class="string">ReachableViaWiFi:</span></span><br><span class="line">            &#123;</span><br><span class="line">            <span class="comment">//  case ReachableViaWiFi handler</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">             </span><br><span class="line">            <span class="keyword">case</span> <span class="string">ReachableViaWWAN:</span></span><br><span class="line">            &#123;</span><br><span class="line">            <span class="comment">//  case ReachableViaWWAN handler</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="symbol">            default:</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br></pre></td></tr></table></figure>
+<p>查询当前实际网络连接状态：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attribute">ReachabilityStatus status</span> = [reachability currentReachabilityStatus];</span><br></pre></td></tr></table></figure>
+<p>Demo:</p>
+<p>我们在github的repository中已经包含了简单的Demo工程，直接下载运行即可。相关的Api调用也可以参考demo中的实现。<br>demo截图： </p>
+<p><img src="http://cc.cocimg.com/api/uploads/20160223/1456215404428152.png" alt=""></p>
+<h2 id="RealReachability的实现原理"><a href="#RealReachability的实现原理" class="headerlink" title="RealReachability的实现原理"></a><strong>RealReachability的实现原理</strong></h2><p><strong>RealReachability架构图：</strong></p>
+<p><img src="http://cc.cocimg.com/api/uploads/20160223/1456212358863328.png" alt=""></p>
+<blockquote>
+<p>realReachability架构概要图RealReachability主要包含3大模块：<strong>connection、ping、FSM</strong>； 其中Ping模块通过对同样是苹果提供的ping样例代码进行了封装，connection模块实现了基于SCNetworkReachability的本地状态检测，FSM模块是有限状态机。通过FSM的状态管理控制connection模块和Ping模块协同工作，并通过可配置的定时策略等业务逻辑优化，最终得到了我们的实现。</p>
+</blockquote>
+<p><strong>PS</strong>:其中connection模块和ping模块也可独立使用，分别提供本地网络检测和ping的能力，感兴趣的读者也可以尝试（调用方式请参考RealReachability开源代码）。</p>
+<p>结束语</p>
+<p>希望这个框架能够帮助到大家的iOS开发！ 遇到任何疑问或者使用上的问题，<a href="http://openglnewbee@163.com/" target="_blank" rel="noopener">都可以联系我</a>。</p>
+<p>对此框架我也会持续进行维护和优化，更希望感兴趣的朋友可以到github上pull request! 开源有你更精彩！ <a href="https://github.com/dustturtle/RealReachability" target="_blank" rel="noopener">https://github.com/dustturtle/RealReachability</a> 觉得有用就点个star喔！</p>
+<p>转自<a href="http://blog.csdn.net/openglnewbee/article/details/50705146" target="_blank" rel="noopener">openglnewbee</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/技术/">技术</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/网络状态/">网络状态</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2016/10/26/iOS网络监测之RealReachability/" data-title="iOS下的实际网络连接状态检测(转) | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/10/26/环信问题/" title="环信问题">
+  <strong>上一篇：</strong><br/>
+  <span>
+  环信问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/10/19/jQuery基础知识入门/"  title="jQuery基础知识入门---样式篇">
+ <strong>下一篇：</strong><br/> 
+ <span>jQuery基础知识入门---样式篇
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/10/26/iOS网络监测之RealReachability/" data-title="iOS下的实际网络连接状态检测(转)" data-url="https://lizhaojie001.github.io/2016/10/26/iOS网络监测之RealReachability/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#序言"><span class="toc-number">1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#集成和使用介绍"><span class="toc-number">2.</span> <span class="toc-text">集成和使用介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#集成"><span class="toc-number">2.1.</span> <span class="toc-text">集成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用介绍"><span class="toc-number">2.2.</span> <span class="toc-text">使用介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RealReachability的实现原理"><span class="toc-number">2.3.</span> <span class="toc-text">RealReachability的实现原理</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

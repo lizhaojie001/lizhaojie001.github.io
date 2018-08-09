@@ -1,0 +1,644 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>实时适配iOS真的很难吗? | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="说好的一周三次的翻译未能如期实现，借口可以列出一大堆，我也不再这里赘述。最难能可贵的就是，我还没有彻底放弃翻译这件事，它一直藏在我的心里深处，时刻铭记。  Coding中不断思考，重复设计不仅耗时而且令人生厌。笼统地讲，设计者在设计编辑软件中设计好，然后提交到平台给开发着去code。改善设计同样也需要大量的处理步骤。如果我们希望在我们的apps中有更丰富的主题，这样的要求就更难了。我们如何使用我">
+<meta name="keywords" content="swift,UI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实时适配iOS真的很难吗?">
+<meta property="og:url" content="https://lizhaojie001.github.io/2017/01/05/实时适配iOS真的很难吗/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="说好的一周三次的翻译未能如期实现，借口可以列出一大堆，我也不再这里赘述。最难能可贵的就是，我还没有彻底放弃翻译这件事，它一直藏在我的心里深处，时刻铭记。  Coding中不断思考，重复设计不仅耗时而且令人生厌。笼统地讲，设计者在设计编辑软件中设计好，然后提交到平台给开发着去code。改善设计同样也需要大量的处理步骤。如果我们希望在我们的apps中有更丰富的主题，这样的要求就更难了。我们如何使用我">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1277972-52536e95ba6f41fc.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1277972-d1d0be19931abc0b.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-01-05T06:44:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实时适配iOS真的很难吗?">
+<meta name="twitter:description" content="说好的一周三次的翻译未能如期实现，借口可以列出一大堆，我也不再这里赘述。最难能可贵的就是，我还没有彻底放弃翻译这件事，它一直藏在我的心里深处，时刻铭记。  Coding中不断思考，重复设计不仅耗时而且令人生厌。笼统地讲，设计者在设计编辑软件中设计好，然后提交到平台给开发着去code。改善设计同样也需要大量的处理步骤。如果我们希望在我们的apps中有更丰富的主题，这样的要求就更难了。我们如何使用我">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1277972-52536e95ba6f41fc.gif?imageMogr2/auto-orient/strip">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/05/实时适配iOS真的很难吗/" title="实时适配iOS真的很难吗?" itemprop="url">实时适配iOS真的很难吗?</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-05T06:39:16.000Z" itemprop="datePublished"> 发表于 2017-01-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#功能"><span class="toc-number">1.</span> <span class="toc-text">功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计"><span class="toc-number">2.</span> <span class="toc-text">设计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trait"><span class="toc-number">3.</span> <span class="toc-text">Trait</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#持久化"><span class="toc-number">4.</span> <span class="toc-text">持久化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实时重载"><span class="toc-number">5.</span> <span class="toc-text">实时重载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#识别traits-降低影响"><span class="toc-number">6.</span> <span class="toc-text">识别traits 降低影响</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#支持修改运行库自身"><span class="toc-number">7.</span> <span class="toc-text">支持修改运行库自身</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#不仅仅用在UI上"><span class="toc-number">8.</span> <span class="toc-text">不仅仅用在UI上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#追加：避免字符串的使用"><span class="toc-number">9.</span> <span class="toc-text">追加：避免字符串的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结论"><span class="toc-number">10.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#出处"><span class="toc-number">11.</span> <span class="toc-text">出处</span></a></li></ol>
+		
+		</div>
+		
+		<blockquote>
+<p>说好的一周三次的翻译未能如期实现，借口可以列出一大堆，我也不再这里赘述。最难能可贵的就是，我还没有彻底放弃翻译这件事，它一直藏在我的心里深处，时刻铭记。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1277972-52536e95ba6f41fc.gif?imageMogr2/auto-orient/strip" alt=""><br>Coding中不断思考，重复设计不仅耗时而且令人生厌。<br>笼统地讲，设计者在设计编辑软件中设计好，然后提交到平台给开发着去code。改善设计同样也需要大量的处理步骤。<br>如果我们希望在我们的apps中有更丰富的主题，这样的要求就更难了。我们如何使用我们的编译器来处理这个问题呢？<br>让我们来看看一个可以处理这个问题的库是怎么做到的。</p>
+<h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><p>首先，我们要考虑到我们需要的所有功能。</p>
+<ul>
+<li><p><strong>及时反馈</strong> -我们做出更改时不用重新的编译，就应该立刻看到更改所造成的影响。</p>
+</li>
+<li><p><em>能够更新使用中的应用</em>-我敢说没有比这个更酷的了</p>
+</li>
+<li>支持代码和Xib</li>
+<li>他不仅仅可以更新UI，甚至可以对内部的数据稍加调整。</li>
+<li>集成简单 - 使用这个库，影响将是最小的。</li>
+<li>希望可以测试Everything，生活又美好了。</li>
+<li>在Xcode8使用时可以代码注入，瞬时的写入库，无需重新编译。</li>
+</ul>
+<h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><p>尽管我喜欢用swift编写app，但还是借用了不少OC中runtime的能力，但是这是值得的。<br>我经常认为突变是邪恶的源泉，尽管这是正确的。<br>如果我想在一个正在运行的应用中执行瞬时的更改，<br>同时对基础的代码造成最低的影响我们就需要便面不必要的状态改变。<br>在<a href="https://en.wikipedia.org/wiki/Trait_(computer_programming" target="_blank" rel="noopener">Trait</a>)中有这些观点，它允许我们去延伸已经存在的事物，为它增加更多的功能。让我们来模仿一下。</p>
+<h1 id="Trait"><a href="#Trait" class="headerlink" title="Trait"></a>Trait</h1><p>如果库的使用者有一些自定义的类，我们可以以一种可恢复的方式更改它们。<br>在这个库中，Trait包含了一些单一的功能，可以通过一个实体改变它的状态，他还有一个功能就是撤销这些改变。<br>所以我们使用撤销功能是就可以在结束时回到最初的状态。</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> sourceView = <span class="built_in">view</span>.<span class="built_in">copy</span></span><br><span class="line"><span class="built_in">let</span> <span class="built_in">reverse</span> =Trait.<span class="built_in">apply</span>(<span class="built_in">view</span>)</span><br><span class="line"><span class="built_in">reverse</span>(<span class="built_in">view</span>)</span><br><span class="line">sourceView == <span class="built_in">view</span></span><br></pre></td></tr></table></figure>
+<p>这种模式不仅可以轻易的更改运行中的应用而且还可以控制它的副作用，而不是任由其随意的更改。</p>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><p>使用这些功能非常有利于对代码的理解。<br>然而，可能在执行的时候存在一些不确定的错误，因为<code>Trait</code>是一个基于元数据的定制功能。<br>让我们看看功能列表，我们看到的最为特别的能力及就是在使用时更新，所以我们需要持久化这样我们就可以通过网络设置。</p>
+<p>因为JSON是行业标准我们可以使用Object—Mapper,所以我们的要求指令支持2种方式转换（连续的或者是并发的）。</p>
+<blockquote>
+<p>Outside of prototype scope, I would highly recommend using something easier to read/modify by humans e.g. YAML, JSON is better for machine than humans</p>
+</blockquote>
+<p>我们将持久换这些功能配置，这样即使在不同的Traits中也会同样的标准。例如：DropShadow。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">mapping</span><span class="params">(<span class="built_in">map</span>: Map)</span></span> &#123; <span class="keyword">super</span>.mapping(<span class="built_in">map</span>: <span class="built_in">map</span>)</span><br><span class="line"> color &lt;- (<span class="built_in">map</span>[<span class="string">"color"</span>], <span class="type">ColorTransform</span>())</span><br><span class="line"> offset &lt;- (<span class="built_in">map</span>[<span class="string">"offset"</span>], <span class="type">SizeTransform</span>()) </span><br><span class="line">opacity &lt;- <span class="built_in">map</span>[<span class="string">"opacity"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="实时重载"><a href="#实时重载" class="headerlink" title="实时重载"></a>实时重载</h1><p>借用我们的数据转化为JSON格式，我们可以支持本地或者远程重载。<br>首先，我们需要一个后台进程去监测改变，在这里使用<a href="https://github.com/krzysztofzablocki/KZFileWatchers" target="_blank" rel="noopener">KZFileWatchers</a>监测本地或者远程。<br>下一步，我们需要一种方法将并发的Traits注入到正在运行的App中，这就是<code>TraitsProvider</code>.<br><code>TraitsProvider</code>的功能很简单：</p>
+<ul>
+<li>找到已存在的tarits<ul>
+<li>使用它的监察功能一处所有的副作用返回到出事状态。</li>
+<li>使用新的traits,存储哪些监察者为将来使用。<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">traits<span class="selector-class">.forEach</span> &#123; </span><br><span class="line"><span class="selector-tag">var</span> removeClosure = &#123;&#125; </span><br><span class="line">$<span class="number">0</span>.apply(to: target, remove: &amp;removeClosure) </span><br><span class="line"><span class="selector-tag">var</span> stack = target<span class="selector-class">.traitsReversal</span> stack.append(RemoveClosureWrapper(block: removeClosure)) </span><br><span class="line">target<span class="selector-class">.traitsReversal</span> = stack&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>I have had to introduce inout param for remove closure because when migrating to Swift3 I discovered compiler bug with my previous approach of just returning closure</p>
+</blockquote>
+<h1 id="识别traits-降低影响"><a href="#识别traits-降低影响" class="headerlink" title="识别traits 降低影响"></a>识别traits 降低影响</h1><p>每个视图都有不同的traits，所以我们需要辨别哪个Traits要应用到哪个实体呢？简而言之，我们可以引入关联对象标识符。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">extension</span> <span class="title">NSObject</span> </span>&#123; </span><br><span class="line"><span class="keyword">var</span> traitSpec: <span class="type">String</span>? &#123; </span><br><span class="line"><span class="keyword">get</span> &#123; <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, &amp;<span class="type">Keys</span>.specKey) <span class="keyword">as</span>? <span class="type">String</span> &#125; </span><br><span class="line"><span class="keyword">set</span> &#123;</span><br><span class="line"> <span class="keyword">if</span> <span class="keyword">let</span> key = newValue &#123; <span class="type">TraitsProvider</span>.loadSpecForKey(key, target: <span class="keyword">self</span>)</span><br><span class="line"> &#125;</span><br><span class="line"> objc_setAssociatedObject(<span class="keyword">self</span>, &amp;<span class="type">Keys</span>.specKey, newValue, .<span class="type">OBJC_ASSOCIATION_COPY_NONATOMIC</span>) </span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">extension</span> <span class="title">UIView</span> </span>&#123;</span><br><span class="line"> <span class="comment">/// Defines an identifier for trait specification. @IBInspectable override var traitSpec: String? &#123; get &#123; return super.traitSpec &#125; set &#123; super.traitSpec = newValue &#125; &#125;&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>设置好标识符，询问<code>TraitsProvider</code> 去加载Trait的规格。<br>这功能可同样在IB和代码中使用。</p>
+<h1 id="支持修改运行库自身"><a href="#支持修改运行库自身" class="headerlink" title="支持修改运行库自身"></a>支持修改运行库自身</h1><p>我们希望写完一个新的Trait就能马上获得支持无需重新编译工程。</p>
+<p>第一步：代码注入。第二部：设计我们的系统这样不需要我们手动注册Traits。<br>我们可以使用runtime直接找出所有继承自<code>Trait</code>的类。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typealias</span> <span class="type">Factory</span> = (<span class="number">_</span> <span class="built_in">map</span>: <span class="type">Map</span>) -&gt; <span class="type">Trait</span>?</span><br><span class="line"><span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">getTraitFactories</span><span class="params">()</span></span> -&gt; [<span class="type">String</span>: <span class="type">Factory</span>] &#123; <span class="keyword">let</span> classes = classList() </span><br><span class="line"><span class="keyword">var</span> ret = [<span class="type">String</span>: <span class="type">Factory</span>]() </span><br><span class="line"><span class="keyword">for</span> cls <span class="keyword">in</span> classes &#123; </span><br><span class="line"><span class="keyword">var</span> current: <span class="type">AnyClass</span>? = cls</span><br><span class="line"> <span class="keyword">repeat</span> &#123;</span><br><span class="line"> current = class_getSuperclass(current) </span><br><span class="line">&#125; <span class="keyword">while</span> (current != <span class="literal">nil</span> &amp;&amp; current != <span class="type">Trait</span>.<span class="keyword">self</span>)</span><br><span class="line"> <span class="keyword">if</span> current == <span class="literal">nil</span> &#123; <span class="keyword">continue</span> &#125; </span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> typed = cls <span class="keyword">as</span>? <span class="type">Trait</span>.<span class="type">Type</span> &#123; ret[<span class="type">String</span>(describing: cls)] = typed.<span class="keyword">init</span> </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们只需要自动冲洗注入已经存在的<code>Traits</code>：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// This function will be called on code injection, thus allowing us to load new Trait classes as they appear.</span></span><br><span class="line">class <span class="function"><span class="keyword">func</span> <span class="title">injected</span><span class="params">()</span></span> &#123; </span><br><span class="line">Trait.factories = Trait.getTraitFactories()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1277972-d1d0be19931abc0b.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<h1 id="不仅仅用在UI上"><a href="#不仅仅用在UI上" class="headerlink" title="不仅仅用在UI上"></a>不仅仅用在UI上</h1><p>这种模式不只用在UI上，借用runtime的能力，我们可以用到app的其他地方。我们该如何安全的使用它呢。<br>我们想避免一些可以使用DropShadow 处理数据模型，那么我们如何定义支持哪种类型的<code>Trait</code>呢？</p>
+<p>我们可以支持所有的Trait列表中的类：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> restrictedTypes: [AnyClass]? &#123; <span class="keyword">return</span> [UIView.self] &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在应用<code>Trait</code>之前，<code>TraitsProvider</code>会核实类型要求，确保每个<code>apply</code>只会运用在支持的targets中。</p>
+<h1 id="追加：避免字符串的使用"><a href="#追加：避免字符串的使用" class="headerlink" title="追加：避免字符串的使用"></a>追加：避免字符串的使用</h1><p>字符串是丑陋的，除了在代码中我们也应该在IB中避免使用它们。我们可以写一个简单的脚本浏览所有的SB/xib，创建一个相应类型的索引。然后添加为构建阶段，这样我们就可以使用更加安全的API。</p>
+<p>以上就是我在Demo中使用到的。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p><a href="https://github.com/krzysztofzablocki/Traits" target="_blank" rel="noopener">源码、文档、test</a>都在GitHub上。</p>
+<p>使用这个库唯一做的事就是指定为你的对象标识符，这样就可以调整运行我们的后台程序了。</p>
+<p>我们设计的架构允许再不重新编译工程的情况下快速的创建新的Traits，或者远程修改实体中的Traits（通过JSON数据）或者通过本地代码实时修改。</p>
+<p>在应用中的Views中或者IB中配置它们都是一样的，这个库就是这么的帅。</p>
+<h1 id="出处"><a href="#出处" class="headerlink" title="出处"></a>出处</h1><p>翻译原文<a href="http://merowing.info/2017/01/how-hard-would-it-be-to-adjust-your-ios-app-in-real-time/" target="_blank" rel="noopener">How hard would it be to adjust your iOS app in real-time?</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/翻译/">翻译</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/swift-UI/">swift,UI</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2017/01/05/实时适配iOS真的很难吗/" data-title="实时适配iOS真的很难吗? | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/02/06/日期比较/" title="日期比较">
+  <strong>上一篇：</strong><br/>
+  <span>
+  日期比较</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/12/29/iOS开发引入自定字体/"  title="iOS开发引入自定字体">
+ <strong>下一篇：</strong><br/> 
+ <span>iOS开发引入自定字体
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/01/05/实时适配iOS真的很难吗/" data-title="实时适配iOS真的很难吗?" data-url="https://lizhaojie001.github.io/2017/01/05/实时适配iOS真的很难吗/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#功能"><span class="toc-number">1.</span> <span class="toc-text">功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计"><span class="toc-number">2.</span> <span class="toc-text">设计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trait"><span class="toc-number">3.</span> <span class="toc-text">Trait</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#持久化"><span class="toc-number">4.</span> <span class="toc-text">持久化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实时重载"><span class="toc-number">5.</span> <span class="toc-text">实时重载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#识别traits-降低影响"><span class="toc-number">6.</span> <span class="toc-text">识别traits 降低影响</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#支持修改运行库自身"><span class="toc-number">7.</span> <span class="toc-text">支持修改运行库自身</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#不仅仅用在UI上"><span class="toc-number">8.</span> <span class="toc-text">不仅仅用在UI上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#追加：避免字符串的使用"><span class="toc-number">9.</span> <span class="toc-text">追加：避免字符串的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结论"><span class="toc-number">10.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#出处"><span class="toc-number">11.</span> <span class="toc-text">出处</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

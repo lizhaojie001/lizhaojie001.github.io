@@ -1,0 +1,731 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>正则学习 | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
+
+    
+    <meta name="description" content="正则表达式初始元字符 \b 是正则表达式规定的一个特殊代码（好吧，某些人叫它元字符，metacharacter），代表着单词的开头或结尾，也就是单词的分界处  1\bhi\b.*\bLucy\b  . 是另一个元字符，匹配除了换行符以外的任意字符。 *同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，. 连在一起就意味着">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则学习">
+<meta property="og:url" content="https://lizhaojie001.github.io/2016/11/21/正则学习/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="正则表达式初始元字符 \b 是正则表达式规定的一个特殊代码（好吧，某些人叫它元字符，metacharacter），代表着单词的开头或结尾，也就是单词的分界处  1\bhi\b.*\bLucy\b  . 是另一个元字符，匹配除了换行符以外的任意字符。 *同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，. 连在一起就意味着">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://qiniupicbed.qiniudn.com/upload/b419e66d01d6532223e44e76772ea956.png">
+<meta property="og:updated_time" content="2016-11-22T06:29:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则学习">
+<meta name="twitter:description" content="正则表达式初始元字符 \b 是正则表达式规定的一个特殊代码（好吧，某些人叫它元字符，metacharacter），代表着单词的开头或结尾，也就是单词的分界处  1\bhi\b.*\bLucy\b  . 是另一个元字符，匹配除了换行符以外的任意字符。 *同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，. 连在一起就意味着">
+<meta name="twitter:image" content="http://qiniupicbed.qiniudn.com/upload/b419e66d01d6532223e44e76772ea956.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">记录学习</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/21/正则学习/" title="正则学习" itemprop="url">正则学习</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-21T02:03:25.000Z" itemprop="datePublished"> 发表于 2016-11-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式初始"><span class="toc-number">1.</span> <span class="toc-text">正则表达式初始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#元字符"><span class="toc-number">1.1.</span> <span class="toc-text">元字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分枝条件"><span class="toc-number">1.2.</span> <span class="toc-text">分枝条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符类"><span class="toc-number">1.3.</span> <span class="toc-text">字符类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组"><span class="toc-number">1.4.</span> <span class="toc-text">分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反义"><span class="toc-number">1.5.</span> <span class="toc-text">反义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后向引用"><span class="toc-number">1.6.</span> <span class="toc-text">后向引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#零宽断言"><span class="toc-number">2.</span> <span class="toc-text">零宽断言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#负向零宽断言"><span class="toc-number">3.</span> <span class="toc-text">负向零宽断言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注释"><span class="toc-number">4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#贪婪与懒惰贪婪与懒惰"><span class="toc-number">5.</span> <span class="toc-text">贪婪与懒惰贪婪与懒惰</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#平衡组-递归匹配"><span class="toc-number">6.</span> <span class="toc-text">平衡组/递归匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式匹配HTML标签或标记"><span class="toc-number">7.</span> <span class="toc-text">正则表达式匹配HTML标签或标记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习参考"><span class="toc-number">8.</span> <span class="toc-text">学习参考</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="正则表达式初始"><a href="#正则表达式初始" class="headerlink" title="正则表达式初始"></a>正则表达式初始</h1><h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><ul>
+<li>\b 是正则表达式规定的一个特殊代码（好吧，某些人叫它元字符，metacharacter），代表着单词的开头或结尾，也就是单词的分界处</li>
+</ul>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">\b</span>hi<span class="symbol">\b</span>.*<span class="symbol">\b</span>Lucy<span class="symbol">\b</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>.</code> 是另一个元字符，匹配除了换行符以外的任意字符。</li>
+<li><code>*</code>同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定<em>前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，. </em>连在一起就意味着任意数量的不包含换行的字符。</li>
+</ul>
+<blockquote>
+<p>换行符就是’\n’,ASCII编码为10(十六进制0x0A)的字符。</p>
+</blockquote>
+<ul>
+<li>\d是个新的元字符，匹配一位数字(0，或1，或2，或……)</li>
+</ul>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0<span class="tag">\<span class="name">d</span><span class="string">&#123;2&#125;</span></span>-<span class="tag">\<span class="name">d</span><span class="string">&#123;8&#125;</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里\d后面的{2}({8})的意思是前面\d必须连续重复匹配2次(8次)。</p>
+</blockquote>
+<p>表1.常用的元字符 </p>
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>说明 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>匹配除换行符以外的任意字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配字母或数字或下划线或汉字</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任意的空白符</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配数字</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配单词的开始或结束</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串的开始</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串的结束</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>\</code>转义符</li>
+</ul>
+<p>表2.常用的限定符 （都是修饰前面的元字符）</p>
+<table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>重复零次或更多次</td>
+</tr>
+<tr>
+<td>+</td>
+<td>重复一次或更多次</td>
+</tr>
+<tr>
+<td>?</td>
+<td>重复零次或一次  <code>?</code>前面的元字符重复零次或一次</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>重复n次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>重复n次或更多次</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>重复n到m次 </td>
+</tr>
+</tbody>
+</table>
+<h2 id="分枝条件"><a href="#分枝条件" class="headerlink" title="分枝条件"></a>分枝条件</h2><blockquote>
+<p>正则表达式里的分枝条件指的是有几种规则，如果满足其中任意一种规则都应该当成匹配，具体方法是用|把不同的规则分隔开</p>
+</blockquote>
+<p><code>0\d{2}-\d{8}|0\d{3}-\d{7}</code>这个表达式能匹配两种以连字号分隔的电话号码：一种是三位区号，8位本地号(如010-12345678)，一种是4位区号，7位本地号(0376-2233445)。</p>
+<h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><blockquote>
+<p>要想查找数字，字母或数字，空白是很简单的，因为已经有了对应这些字符集合的元字符，但是如果你想匹配没有预定义元字符的字符集合(比如元音字母a,e,i,o,u),应该怎么办？你只需要在方括号里列出它们就行了，像[aeiou]就匹配任何一个英文元音字母，[.?!]匹配标点符号(.或?或!)。</p>
+</blockquote>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><blockquote>
+<p>用小括号来指定子表达式(也叫做分组)</p>
+</blockquote>
+<p>描述一个正确的IP地址：<code>((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)</code></p>
+<h2 id="反义"><a href="#反义" class="headerlink" title="反义"></a>反义</h2><blockquote>
+<p>有时需要查找不属于某个能简单定义的字符类的字符</p>
+</blockquote>
+<p>代码/语法     说明<br>———|———–<br>\W       |    匹配任意不是字母，数字，下划线，汉字的字符<br>\S       |    匹配任意不是空白符的字符<br>\D       |    匹配任意非数字的字符<br>\B       |    匹配不是单词开头或结束的位置<br>[^x]      |  匹配除了x以外的任意字符<br>[^aeiou] |    匹配除了aeiou这几个字母以外的任意字符</p>
+<p>例子：\S+匹配不包含空白符的字符串。</p>
+<h2 id="后向引用"><a href="#后向引用" class="headerlink" title="后向引用"></a>后向引用</h2><blockquote>
+<p>后向引用用于重复搜索前面某个分组匹配的文本。</p>
+</blockquote>
+<p><strong>语法</strong></p>
+<blockquote>
+<p> <code>(?&lt;Word&gt;\w+)</code> (或者把尖括号换成’也行：<code>(?&#39;Word&#39;\w+))</code>,这样就把\w+的组名指定为Word了</p>
+</blockquote>
+<p><img src="http://qiniupicbed.qiniudn.com/upload/b419e66d01d6532223e44e76772ea956.png" alt=""> </p>
+<h1 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h1><blockquote>
+<p>接下来的四个用于查找在某些内容(但并不包括这些内容)之前或之后的东西，也就是说它们像\b,^,$那样用于指定一个位置，这个位置应该满足一定的条件(即断言)，</p>
+</blockquote>
+<p><code>(?=exp)</code>也叫<strong>零宽度正预测先行断言</strong>，它断言自身出现的位置的后面能匹配表达式exp。比如<code>\b\w+(?=ing\b)</code>，匹配以ing结尾的单词的前面部分(除了ing以外的部分)</p>
+<p><code>(?&lt;=exp)</code>也叫<strong>零宽度正回顾后发断言</strong>，它断言自身出现的位置的前面能匹配表达式exp。比如<code>(?&lt;=\bre)\w+\b</code>会匹配以re开头的单词的后半部分(除了re以外的部分)</p>
+<h1 id="负向零宽断言"><a href="#负向零宽断言" class="headerlink" title="负向零宽断言"></a>负向零宽断言</h1><blockquote>
+<p>奇葩名字啥意思<br>确保某个字符没有出现，但并不想去匹配它</p>
+</blockquote>
+<p><code>\b\w*q[^u]\w*\b</code>匹配包含后面不是字母u的字母q的单词。但是如果多做测试(或者你思维足够敏锐，直接就观察出来了)，你会发现，如果q出现在单词的结尾的话，像Iraq,Benq，这个表达式就会出错。这是因为[^u]总要匹配一个字符，所以如果q是单词的最后一个字符的话，后面的[^u]将会匹配q后面的单词分隔符(可能是空格，或者是句号或其它的什么)，后面的<code>\w*\b</code>将会匹配下一个单词，于是<code>\b\w*q[^u]\w*\b</code>就能匹配整个Iraq fighting。<strong>负向零宽断言</strong>能解决这样的问题，因为<em>它只匹配一个位置，并不消费任何字符</em>。现在，我们可以这样来解决这个问题：<code>\b\w*q(?!u)\w*\b</code>。</p>
+<p><strong>零宽度负预测先行断言</strong><code>(?!exp)</code>，断言此位置的后面不能匹配表达式exp</p>
+<p>用<code>(?&lt;!exp)</code>,<strong>零宽度负回顾后发断言</strong>来断言此位置的前面不能匹配表达式exp：<code>(?&lt;![a-z])\d{7}</code>匹配前面不是小写字母的七位数字</p>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>1 小括号的另一种用途是通过语法<code>(?#comment)</code>来包含注释。例如：<code>2[0-4]\d(?#200-249)|25[0-5](?#250-255)|[01]?\d\d?(?#0-199)</code>。<br>2 <strong>忽略模式里的空白符</strong></p>
+<p>(?&lt;=    # 断言要匹配的文本的前缀<br>&lt;(\w+)&gt; # 查找尖括号括起来的字母或数字(即HTML/XML标签)<br>)       # 前缀结束<br>.*      # 匹配任意文本<br>(?=     # 断言要匹配的文本的后缀<br>&lt;\/\1&gt;  # 查找尖括号括起来的内容：前面是一个”/“，后面是先前捕获的标签<br>)       # 后缀结束</p>
+<h1 id="贪婪与懒惰贪婪与懒惰"><a href="#贪婪与懒惰贪婪与懒惰" class="headerlink" title="贪婪与懒惰贪婪与懒惰"></a>贪婪与懒惰贪婪与懒惰</h1><h1 id="平衡组-递归匹配"><a href="#平衡组-递归匹配" class="headerlink" title="平衡组/递归匹配"></a>平衡组/递归匹配</h1><blockquote>
+<p>语法构造</p>
+</blockquote>
+<ul>
+<li>(?’group’) 把捕获的内容命名为group,并压入堆栈(Stack)</li>
+<li>(?’-group’) 从堆栈上弹出最后压入堆栈的名为group的捕获内容，如果堆栈本来为空，则本分组的匹配失败</li>
+<li>(?(group)yes|no) 如果堆栈上存在以名为group的捕获内容的话，继续匹配yes部分的表达式，否则继续匹配no部分</li>
+<li>(?!) 零宽负向先行断言，由于没有后缀表达式，试图匹配总是失败</li>
+</ul>
+<h1 id="正则表达式匹配HTML标签或标记"><a href="#正则表达式匹配HTML标签或标记" class="headerlink" title="正则表达式匹配HTML标签或标记"></a>正则表达式匹配HTML标签或标记</h1><blockquote>
+<p>详情见<a href="http://c.biancheng.net/cpp/html/1402.html" target="_blank" rel="noopener">http://c.biancheng.net/cpp/html/1402.html</a></p>
+</blockquote>
+<h1 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h1><ul>
+<li><p>以上只是概念的简单介绍c初步认识，可以去<strong><a href="http://deerchao.net/tutorials/regex/regex.htm#mission" target="_blank" rel="noopener">正则表达式30分钟入门教程</a></strong></p>
+</li>
+<li><p><strong><a href="http://c.biancheng.net/cpp/html/1402.html" target="_blank" rel="noopener">正则表达式</a>–这里面还有一些常见正则用法</strong></p>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/正则/">正则</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2016/11/21/正则学习/" data-title="正则学习 | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/21/转之新界面的网络操作/" title="转之新界面的网络操作">
+  <strong>上一篇：</strong><br/>
+  <span>
+  转之新界面的网络操作</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/11/21/使用WKWebView加载本地html文件/"  title="使用WKWebView加载本地html文件">
+ <strong>下一篇：</strong><br/> 
+ <span>使用WKWebView加载本地html文件
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/21/正则学习/" data-title="正则学习" data-url="https://lizhaojie001.github.io/2016/11/21/正则学习/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式初始"><span class="toc-number">1.</span> <span class="toc-text">正则表达式初始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#元字符"><span class="toc-number">1.1.</span> <span class="toc-text">元字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分枝条件"><span class="toc-number">1.2.</span> <span class="toc-text">分枝条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符类"><span class="toc-number">1.3.</span> <span class="toc-text">字符类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组"><span class="toc-number">1.4.</span> <span class="toc-text">分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反义"><span class="toc-number">1.5.</span> <span class="toc-text">反义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后向引用"><span class="toc-number">1.6.</span> <span class="toc-text">后向引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#零宽断言"><span class="toc-number">2.</span> <span class="toc-text">零宽断言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#负向零宽断言"><span class="toc-number">3.</span> <span class="toc-text">负向零宽断言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注释"><span class="toc-number">4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#贪婪与懒惰贪婪与懒惰"><span class="toc-number">5.</span> <span class="toc-text">贪婪与懒惰贪婪与懒惰</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#平衡组-递归匹配"><span class="toc-number">6.</span> <span class="toc-text">平衡组/递归匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式匹配HTML标签或标记"><span class="toc-number">7.</span> <span class="toc-text">正则表达式匹配HTML标签或标记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习参考"><span class="toc-number">8.</span> <span class="toc-text">学习参考</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
