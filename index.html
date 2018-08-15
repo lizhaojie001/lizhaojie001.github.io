@@ -1056,18 +1056,15 @@ IOS开发之使用UIWebView实现图文混排
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2016/11/14/ASDK使用一些问题-ASTabView/" title="ASDK使用一些问题 ASTableView" itemprop="url">
+    <a href="/2016/11/14/AFNetworking   重复请求  取消请求/" title="AFNetworking   重复请求  取消请求" itemprop="url">
   
-    <h1 itemprop="name">ASDK使用一些问题 ASTableView</h1>
+    <h1 itemprop="name">AFNetworking   重复请求  取消请求</h1>
     
      
-           <p itemprop="description" >我是前言
-俗话说nozuonodie,采用了ASDK,所以踩了一✔️坑
+           <p itemprop="description" >场景一 避免重复发送请求 
+判断是否是同一次请求
 
-开门见山布局
-相对布局
-
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495</p>
+123456789101112131415161718// 发送请求给服务器, 加载右侧的数据      NSMutableDictionary *params = [NSMutableDictionary dictionary</p>
         
     
     <time datetime="2016-11-14T11:09:04.000Z" itemprop="datePublished">2016-11-14</time>
@@ -1082,15 +1079,18 @@ IOS开发之使用UIWebView实现图文混排
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2016/11/14/AFNetworking   重复请求  取消请求/" title="AFNetworking   重复请求  取消请求" itemprop="url">
+    <a href="/2016/11/14/ASDK使用一些问题-ASTabView/" title="ASDK使用一些问题 ASTableView" itemprop="url">
   
-    <h1 itemprop="name">AFNetworking   重复请求  取消请求</h1>
+    <h1 itemprop="name">ASDK使用一些问题 ASTableView</h1>
     
      
-           <p itemprop="description" >场景一 避免重复发送请求 
-判断是否是同一次请求
+           <p itemprop="description" >我是前言
+俗话说nozuonodie,采用了ASDK,所以踩了一✔️坑
 
-123456789101112131415161718// 发送请求给服务器, 加载右侧的数据      NSMutableDictionary *params = [NSMutableDictionary dictionary</p>
+开门见山布局
+相对布局
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495</p>
         
     
     <time datetime="2016-11-14T11:09:04.000Z" itemprop="datePublished">2016-11-14</time>
@@ -1274,13 +1274,13 @@ JavaScript </p>
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2016/10/26/iOS网络监测之RealReachability/" title="iOS下的实际网络连接状态检测(转)" itemprop="url">
+    <a href="/2016/10/26/环信问题/" title="环信问题" itemprop="url">
   
-    <h1 itemprop="name">iOS下的实际网络连接状态检测(转)</h1>
+    <h1 itemprop="name">环信问题</h1>
     
      
-           <p itemprop="description" >序言
-网络连接状态检测对于我们的iOS app开发来说是一个非常通用的需求。为了更好的用户体验，我们会在无网络时展现本地或者缓存的内容，并对用户进行合适的提示。对绝大部分iOS开发者来说，从苹果示例代码改变而来的各种Reachablity框架是实现这个需求的普遍选择,比如这个库。</p>
+           <p itemprop="description" >项目里面不需要环信SDK的太多功能，只是想要聊天和好友功能，其他都不用，那SDK一定要总是跟着更新么？a.环信SDK版本都是向前兼容并且稳定的，每次更新安卓只要更新.a包即可。b.每次更新的版本都是稳定可靠性的，可以放心使用。
+A用户通过Rest接口添加B为好友，B的客户端上好友</p>
         
     
     <time datetime="2016-10-26T02:30:57.000Z" itemprop="datePublished">2016-10-26</time>
@@ -1295,13 +1295,13 @@ JavaScript </p>
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2016/10/26/环信问题/" title="环信问题" itemprop="url">
+    <a href="/2016/10/26/iOS网络监测之RealReachability/" title="iOS下的实际网络连接状态检测(转)" itemprop="url">
   
-    <h1 itemprop="name">环信问题</h1>
+    <h1 itemprop="name">iOS下的实际网络连接状态检测(转)</h1>
     
      
-           <p itemprop="description" >项目里面不需要环信SDK的太多功能，只是想要聊天和好友功能，其他都不用，那SDK一定要总是跟着更新么？a.环信SDK版本都是向前兼容并且稳定的，每次更新安卓只要更新.a包即可。b.每次更新的版本都是稳定可靠性的，可以放心使用。
-A用户通过Rest接口添加B为好友，B的客户端上好友</p>
+           <p itemprop="description" >序言
+网络连接状态检测对于我们的iOS app开发来说是一个非常通用的需求。为了更好的用户体验，我们会在无网络时展现本地或者缓存的内容，并对用户进行合适的提示。对绝大部分iOS开发者来说，从苹果示例代码改变而来的各种Reachablity框架是实现这个需求的普遍选择,比如这个库。</p>
         
     
     <time datetime="2016-10-26T02:30:57.000Z" itemprop="datePublished">2016-10-26</time>
@@ -1750,11 +1750,15 @@ iOS 去掉导航栏的边界灰线;去掉搜索框的边界灰线和其中文本
 			
 		
 			
-				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
 			
 		
 			
@@ -1766,10 +1770,6 @@ iOS 去掉导航栏的边界灰线;去掉搜索框的边界灰线和其中文本
 			
 		
 			
-				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
 			
 		
@@ -1778,35 +1778,7 @@ iOS 去掉导航栏的边界灰线;去掉搜索框的边界灰线和其中文本
 			
 		
 			
-				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+				<li><a href="/tags/书签集合/" title="书签集合">书签集合<sup>1</sup></a></li>
 			
 		
 			
@@ -1814,7 +1786,35 @@ iOS 去掉导航栏的边界灰线;去掉搜索框的边界灰线和其中文本
 			
 		
 			
-				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/xib/" title="xib">xib<sup>1</sup></a></li>
 			
 		
 		</ul>
