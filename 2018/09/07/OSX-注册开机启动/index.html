@@ -4,28 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>App Thinning (App 瘦身) | 严青的博客</title>
+    <title>OSX 注册开机启动 | 严青的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="严青">
     
 
     
-    <meta name="description" content="前言在这  针对于iOS,TVOS和watchOS设备上APP的安装和下载问题,通过削减APP提交下载到特有设备的容量,使你的app适配大部分设备,占用更少的存储空间,并适应你的更新需求.苹果公司推出了一种下载速度快,空间大,内容更好的用户体验手段,就是App Thinning 技术.  This chapter describes the three components of app thin">
-<meta name="keywords" content="技术">
+    <meta name="description" content="本文目的是将你的程序添加为开机启动,效果如下图   具体实现如下  虽然API提醒为过期,但是在WWDC中提到过依旧可以使用,具体出处忘记了,值得注意的是这种方式好像是不可以上架App Store的,具体原因见Designing for App Sandbox-&amp;gt;Creating a Login Item for Your App  注册开机启动12345678910+(void)Logi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="App Thinning (App 瘦身)">
-<meta property="og:url" content="https://lizhaojie001.github.io/2016/10/08/App-Thinnin(app 瘦身)g/index.html">
+<meta property="og:title" content="OSX 注册开机启动">
+<meta property="og:url" content="https://lizhaojie001.github.io/2018/09/07/OSX-注册开机启动/index.html">
 <meta property="og:site_name" content="严青的博客">
-<meta property="og:description" content="前言在这  针对于iOS,TVOS和watchOS设备上APP的安装和下载问题,通过削减APP提交下载到特有设备的容量,使你的app适配大部分设备,占用更少的存储空间,并适应你的更新需求.苹果公司推出了一种下载速度快,空间大,内容更好的用户体验手段,就是App Thinning 技术.  This chapter describes the three components of app thin">
+<meta property="og:description" content="本文目的是将你的程序添加为开机启动,效果如下图   具体实现如下  虽然API提醒为过期,但是在WWDC中提到过依旧可以使用,具体出处忘记了,值得注意的是这种方式好像是不可以上架App Store的,具体原因见Designing for App Sandbox-&amp;gt;Creating a Login Item for Your App  注册开机启动12345678910+(void)Logi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/Art/app_thinning_2x.png">
-<meta property="og:image" content="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/Art/on_demand_resources_2x.png">
-<meta property="og:updated_time" content="2016-10-09T11:34:06.000Z">
+<meta property="og:image" content="http://7xux50.com2.z0.glb.clouddn.com/20180907153628611321462.png">
+<meta property="og:updated_time" content="2018-09-07T02:31:31.543Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="App Thinning (App 瘦身)">
-<meta name="twitter:description" content="前言在这  针对于iOS,TVOS和watchOS设备上APP的安装和下载问题,通过削减APP提交下载到特有设备的容量,使你的app适配大部分设备,占用更少的存储空间,并适应你的更新需求.苹果公司推出了一种下载速度快,空间大,内容更好的用户体验手段,就是App Thinning 技术.  This chapter describes the three components of app thin">
-<meta name="twitter:image" content="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/Art/app_thinning_2x.png">
+<meta name="twitter:title" content="OSX 注册开机启动">
+<meta name="twitter:description" content="本文目的是将你的程序添加为开机启动,效果如下图   具体实现如下  虽然API提醒为过期,但是在WWDC中提到过依旧可以使用,具体出处忘记了,值得注意的是这种方式好像是不可以上架App Store的,具体原因见Designing for App Sandbox-&amp;gt;Creating a Login Item for Your App  注册开机启动12345678910+(void)Logi">
+<meta name="twitter:image" content="http://7xux50.com2.z0.glb.clouddn.com/20180907153628611321462.png">
 
     
     <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
@@ -89,14 +87,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/08/App-Thinnin(app 瘦身)g/" title="App Thinning (App 瘦身)" itemprop="url">App Thinning (App 瘦身)</a>
+      <a href="/2018/09/07/OSX-注册开机启动/" title="OSX 注册开机启动" itemprop="url">OSX 注册开机启动</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
 		
   <p class="article-time">
-    <time datetime="2016-10-08T09:26:02.000Z" itemprop="datePublished"> 发表于 2016-10-08</time>
+    <time datetime="2018-09-07T02:07:02.000Z" itemprop="datePublished"> 发表于 2018-09-07</time>
     
   </p>
 </header>
@@ -105,57 +103,26 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言在这"><span class="toc-number">1.</span> <span class="toc-text">前言在这</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slicing-切片-iOS-tvOS"><span class="toc-number">2.</span> <span class="toc-text">Slicing(切片) (iOS, tvOS)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bitcode-字节码"><span class="toc-number">3.</span> <span class="toc-text">Bitcode(字节码)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#On-Demand-响应式-Resources-iOS-tvOS"><span class="toc-number">4.</span> <span class="toc-text">On-Demand(响应式) Resources (iOS, tvOS)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原文出处"><span class="toc-number">5.</span> <span class="toc-text">原文出处</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册开机启动"><span class="toc-number">1.</span> <span class="toc-text">注册开机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#取消开机启动"><span class="toc-number">2.</span> <span class="toc-text">取消开机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-number">3.</span> <span class="toc-text">索引</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="前言在这"><a href="#前言在这" class="headerlink" title="前言在这"></a>前言在这</h2><blockquote>
-<p> 针对于iOS,TVOS和watchOS设备上APP的安装和下载问题,通过削减APP提交下载到特有设备的容量,使你的app适配大部分设备,占用更少的存储空间,并适应你的更新需求.苹果公司推出了一种下载速度快,空间大,内容更好的用户体验手段,就是App Thinning 技术.</p>
+		<blockquote>
+<p>本文目的是将你的程序添加为开机启动,效果如下图</p>
 </blockquote>
-<p>This chapter describes the three components of app thinning:<strong> slicing, bitcode, and on-demand resources
-</strong></p>
-<h2 id="Slicing-切片-iOS-tvOS"><a href="#Slicing-切片-iOS-tvOS" class="headerlink" title="Slicing(切片) (iOS, tvOS)"></a>Slicing(切片) (iOS, tvOS)</h2><blockquote>
-<p>Scling技术是对不同终端设备下创建和传递的app bundle的变量的一种方式.一个变量体只包含一种终端设备所需要的执行架构和资源文件.你可以继续开发和上传完整版的app到iTunes Connect . app store 将会根据你的设备创建和传递不同的变量.图片资源也会根据他们的解决方案和设备家族来剪裁图片.GPU资源也会根据你的设备容量进行裁剪.对于tvOS apps ,在iOS和tvOStargets 目录中被共享的assets也会被剪裁 较大的app icons也会移除掉.<br>xcode模拟器在你看法创建本地测试版本是也会slicing.当你build run 你的app 在你设备上时,xcode也会slicing.当你创建一个存档,Xcode包括应用程序的完整版,但允许你从存档中输出变体版本。</p>
-</blockquote>
-<p><strong>注意</strong>: Sliced apps are supported on devices running 9.0 and later; otherwise, the store delivers universal apps to customers.<br><img src="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/Art/app_thinning_2x.png" alt=""></p>
+<p><img src="http://7xux50.com2.z0.glb.clouddn.com/20180907153628611321462.png" alt="@添加为登录项中"></p>
+<p>具体实现如下</p>
 <blockquote>
-<p>slicing在你执行正常开发和发布的工作流,通常进行如下:</p>
+<p>虽然API提醒为过期,但是在WWDC中提到过依旧可以使用,具体出处忘记了,值得注意的是这种方式好像是不可以上架App Store的,具体原因见<a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/AppSandboxDesignGuide/DesigningYourSandbox/DesigningYourSandbox.html#//apple_ref/doc/uid/TP40011183-CH4-SW6" target="_blank" rel="noopener">Designing for App Sandbox-&gt;Creating a Login Item for Your App</a></p>
 </blockquote>
-<ul>
-<li>1.在xcode中,针对于特有的设备在asset的图片目录中提供多重解决方案.但是你必须使用asset catalog存储资源 这样才会被sliced.</li>
-<li>2.创建并运行在你的虚拟机或者设备上.xcode将会创建一个版本,针对你的测试设备,提高你的测试创建时间,允许你本地化测试.</li>
-<li>3.为你选择的设备创建一个你的app存档.测试你输出的所有版本提前发现问题.</li>
-<li>4.上传你的app到iTunes Connect.app store 将会根据不同的归档文件创建多个版本.版本的数量是根据xcode工程中的规定的框架和资源来确定的.</li>
-<li>5.在iTunes中,发布一个抢先版为你指定的测试者.测试者可以用TestFlight(蒲公英)安装抢先版到支持的设备上.蒲公英将会下载一个支持的版本到测试者的设备上.<br><strong>注意:</strong>在你发布之前,邀请一些测试者,如果你邀请了一些外部测试者,那么这些外部测试者在下载之前必须等到Beta App Review 的批准.</li>
-<li>6.在iTunes中,发布你的app.用户安装app,商店就会针对于他们的设备为之提供相应的下载版本.</li>
-</ul>
-<h2 id="Bitcode-字节码"><a href="#Bitcode-字节码" class="headerlink" title="Bitcode(字节码)"></a>Bitcode(字节码)</h2><blockquote>
-<p>Bitcode是一种编译文件的中间产物.当你上传app到iTunes时 , 你的app将会包含编译连接到app store 的bitcode.包含bitcode的app,你不需要重新提交一个新的版本苹果公司重新优化你的app的二进制文件.</p>
-</blockquote>
-<blockquote>
-<p>Xcode默认你创建时隐藏了这种集成,因此他们是不可读的.也只有你选择了这种特性,在你上传到iTunes时,苹果才会收到这种信号进一步优化你的应用.你也必须包含这种标志来接受苹果给出的crash报告.</p>
-</blockquote>
-<p><strong>注意</strong>:对于iOS来说,bitcode是默认的,也可以选择.对于watchOS和tvOS应用,bitcode是必须的.如果你提供bitcode,你app的bundle中的所有应用和框架都必须包含bitcode.</p>
-<h2 id="On-Demand-响应式-Resources-iOS-tvOS"><a href="#On-Demand-响应式-Resources-iOS-tvOS" class="headerlink" title="On-Demand(响应式) Resources (iOS, tvOS)"></a>On-Demand(响应式) Resources (iOS, tvOS)</h2><blockquote>
-<p>On-Demand Resources就好比是:图片/声音 你可以标记关键字和请求的通过tag值.苹果服务器上将为你提供存储主机资源和管理下载的服务.On-Demand(请求式) Resources 能够提高下载速度,减小 app体积,提供瞬时安装的快感.比如,一个游戏app可能被分为游戏级别的资源,而只有你在提前测试app时,才能到达这个级别高度的请求.类似的,你的app可能在用户使用内购的时候才会请求ln-APP Purchase 资源.<br>当他们的不在使用或者硬盘空间比较少的时候,操作系统就会清除on-demand resources.如果你你在store外进行测试和发布,你就不得不自己提供on-demand resources功能的服务器.值得注意的是,可执行的on-demand resources 是不支持的.正如<a href="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/AppThinning/AppThinning.html#//apple_ref/doc/uid/TP40012582-CH35-SW1" target="_blank" rel="noopener">Slicing(iOS,tvOS)</a>store 也会裁剪on-demand resources,来更快提高用户体验.<br>对于用户想而易见,当用户探究app的新功能时就必须提供新的资源,on-demand resources 是就会在后台工作的.</p>
-</blockquote>
-<p><img src="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/Art/on_demand_resources_2x.png" alt=""></p>
-<p>为了在你的app中使用on-demand resources,请阅读<a href="https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/On_Demand_Resources_Guide/index.html#//apple_ref/doc/uid/TP40015083" target="_blank" rel="noopener">On-Demand Resources Guide</a> 和 <a href="https://developer.apple.com/reference/foundation/nsbundleresourcerequest" target="_blank" rel="noopener">NSBundleResourceRequest Class Reference.</a></p>
-<h2 id="原文出处"><a href="#原文出处" class="headerlink" title="原文出处"></a><strong><a href="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/AppThinning/AppThinning.html#//apple_ref/doc/uid/TP40012582-CH35-SW3" target="_blank" rel="noopener">原文出处</a></strong></h2>  
+<h2 id="注册开机启动"><a href="#注册开机启动" class="headerlink" title="注册开机启动"></a>注册开机启动</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+(<span class="keyword">void</span>)LoginItem&#123;</span><br><span class="line">LSSharedFileListRef loginItems = LSSharedFileListCreate(<span class="literal">NULL</span>, kLSSharedFileListSessionLoginItems, <span class="literal">NULL</span>);</span><br><span class="line"><span class="comment">//url为app所在的目录</span></span><br><span class="line"><span class="built_in">NSString</span> * appPath = [<span class="built_in">NSBundle</span> mainBundle].bundlePath;</span><br><span class="line"><span class="built_in">CFURLRef</span> url = (__bridge <span class="built_in">CFURLRef</span>)[<span class="built_in">NSURL</span> fileURLWithPath:appPath];</span><br><span class="line">LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemLast, <span class="literal">NULL</span>, <span class="literal">NULL</span>, url, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line"><span class="built_in">CFRelease</span>(item);</span><br><span class="line"><span class="built_in">CFRelease</span>(loginItems);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="取消开机启动"><a href="#取消开机启动" class="headerlink" title="取消开机启动"></a>取消开机启动</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+(<span class="keyword">void</span>)cancleLoginItem&#123;</span><br><span class="line"><span class="built_in">UInt32</span> seedValue;</span><br><span class="line"><span class="built_in">CFURLRef</span> thePath;</span><br><span class="line"><span class="built_in">NSString</span> * appPath = [<span class="built_in">NSBundle</span> mainBundle].bundlePath;</span><br><span class="line">LSSharedFileListRef loginItems = LSSharedFileListCreate(<span class="literal">NULL</span>, kLSSharedFileListSessionLoginItems, <span class="literal">NULL</span>);</span><br><span class="line"><span class="built_in">CFArrayRef</span> loginItemsArray = LSSharedFileListCopySnapshot(loginItems, &amp;seedValue);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">id</span> item <span class="keyword">in</span> (__bridge <span class="built_in">NSArray</span> *)loginItemsArray) &#123;</span><br><span class="line">LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)item;</span><br><span class="line"><span class="keyword">if</span> (LSSharedFileListItemResolve(itemRef, <span class="number">0</span>, (<span class="built_in">CFURLRef</span>*) &amp;thePath, <span class="literal">NULL</span>) == noErr) &#123;</span><br><span class="line"><span class="comment">//appPath目录为要取消开机启动app的路径</span></span><br><span class="line"><span class="keyword">if</span> ([[(__bridge <span class="built_in">NSURL</span> *)thePath path] hasPrefix:appPath]) &#123;</span><br><span class="line">LSSharedFileListItemRemove(loginItems, itemRef); <span class="comment">// Deleting the item</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">CFRelease</span>(thePath);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">CFRelease</span>(loginItemsArray);</span><br><span class="line"><span class="built_in">CFRelease</span>(loginItems);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p><a href="https://gist.github.com/plapier/f8e1dde1b1624dfbb3e4" target="_blank" rel="noopener">plapier/LaunchStarter.swift</a><br><a href="http://adolsai.com/index.php/archives/File-System-Programming-Guide.html" target="_blank" rel="noopener">File System Programming Guide(iOS)</a><br><a href="http://www.tanhao.me/talk/1287.html/" target="_blank" rel="noopener">Mac OSX的开机启动配置 </a><br><a href="http://www.tanhao.me/pieces/380.html/" target="_blank" rel="noopener">注册程序为开机自启动 </a><br><a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/AppSandboxDesignGuide/DesigningYourSandbox/DesigningYourSandbox.html#//apple_ref/doc/uid/TP40011183-CH4-SW6" target="_blank" rel="noopener">App Sandbox Design Guide</a><br><a href="http://idup.club/file_system_programming_guide" target="_blank" rel="noopener">file_system_programming_guide</a></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/翻译/">翻译</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/技术/">技术</a>
-  </div>
 
 </div>
 
@@ -163,7 +130,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://lizhaojie001.github.io/2016/10/08/App-Thinnin(app 瘦身)g/" data-title="App Thinning (App 瘦身) | 严青的博客" data-tsina="" class="share clearfix">
+	  <div data-url="https://lizhaojie001.github.io/2018/09/07/OSX-注册开机启动/" data-title="OSX 注册开机启动 | 严青的博客" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -176,19 +143,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/09/CoreText-入门/" title="CoreText 入门">
-  <strong>上一篇：</strong><br/>
-  <span>
-  CoreText 入门</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/09/29/Git/"  title="Git">
+<a href="/2018/01/01/2017年总结/"  title="2017年总结">
  <strong>下一篇：</strong><br/> 
- <span>Git
+ <span>2017年总结
 </span>
 </a>
 </div>
@@ -197,7 +156,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/10/08/App-Thinnin(app 瘦身)g/" data-title="App Thinning (App 瘦身)" data-url="https://lizhaojie001.github.io/2016/10/08/App-Thinnin(app 瘦身)g/"></div>
+	<div class="ds-thread" data-thread-key="2018/09/07/OSX-注册开机启动/" data-title="OSX 注册开机启动" data-url="https://lizhaojie001.github.io/2018/09/07/OSX-注册开机启动/"></div>
 </section>
 
 
@@ -207,7 +166,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言在这"><span class="toc-number">1.</span> <span class="toc-text">前言在这</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slicing-切片-iOS-tvOS"><span class="toc-number">2.</span> <span class="toc-text">Slicing(切片) (iOS, tvOS)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bitcode-字节码"><span class="toc-number">3.</span> <span class="toc-text">Bitcode(字节码)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#On-Demand-响应式-Resources-iOS-tvOS"><span class="toc-number">4.</span> <span class="toc-text">On-Demand(响应式) Resources (iOS, tvOS)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原文出处"><span class="toc-number">5.</span> <span class="toc-text">原文出处</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册开机启动"><span class="toc-number">1.</span> <span class="toc-text">注册开机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#取消开机启动"><span class="toc-number">2.</span> <span class="toc-text">取消开机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-number">3.</span> <span class="toc-text">索引</span></a></li></ol>
  
   </div>
 
