@@ -1,114 +1,143 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  
-    <title>iOS获取图片附加信息 | 严青的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="严青">
-    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="严青的博客">
+    <meta name="keyword"  content="中科创达">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    
-    <meta name="description" content="前言 为了提供更好的体验，iOS上的App通常都会在条件允许的情况下尽可能多地获取用户信息（说好的隐私呢？！）。比如说，在用户选取了相册中的某张图片后，自动补充图片的拍摄日期、时间、地点等等，给用户一个非常智能的感觉。当然，前提是用户给予了我们这样做的权限。  那么问题来了如何获得这些信息呢？  稍微查一下可以知道，有一种叫做EXIF(Exchangeable image file format)">
-<meta name="keywords" content="照片框架,Photokit">
-<meta property="og:type" content="article">
-<meta property="og:title" content="iOS获取图片附加信息">
-<meta property="og:url" content="https://lizhaojie001.github.io/2016/12/01/iOS获取图片附加信息/index.html">
-<meta property="og:site_name" content="严青的博客">
-<meta property="og:description" content="前言 为了提供更好的体验，iOS上的App通常都会在条件允许的情况下尽可能多地获取用户信息（说好的隐私呢？！）。比如说，在用户选取了相册中的某张图片后，自动补充图片的拍摄日期、时间、地点等等，给用户一个非常智能的感觉。当然，前提是用户给予了我们这样做的权限。  那么问题来了如何获得这些信息呢？  稍微查一下可以知道，有一种叫做EXIF(Exchangeable image file format)">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://davidleee.com/uploads/iOS%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E9%99%84%E5%8A%A0%E4%BF%A1%E6%81%AF/focus.png">
-<meta property="og:updated_time" content="2016-12-01T03:01:12.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS获取图片附加信息">
-<meta name="twitter:description" content="前言 为了提供更好的体验，iOS上的App通常都会在条件允许的情况下尽可能多地获取用户信息（说好的隐私呢？！）。比如说，在用户选取了相册中的某张图片后，自动补充图片的拍摄日期、时间、地点等等，给用户一个非常智能的感觉。当然，前提是用户给予了我们这样做的权限。  那么问题来了如何获得这些信息呢？  稍微查一下可以知道，有一种叫做EXIF(Exchangeable image file format)">
-<meta name="twitter:image" content="http://davidleee.com/uploads/iOS%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E9%99%84%E5%8A%A0%E4%BF%A1%E6%81%AF/focus.png">
+    <title>
+        
+        iOS获取图片附加信息 - 严青的博客 | YQ&#39;s Blog
+        
+    </title>
 
-    
-    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
 </head>
 
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
-				<h2 class="blog-motto">记录学习</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">主页</a></li>
-					
-						<li><a href="/archives">归档</a></li>
-					
-						<li><a href="/categories">分类</a></li>
-					
-						<li><a href="/tags">标签</a></li>
-					
-						<li><a href="/about">关于</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
 </div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+
+<div class="index-about">
+    <i> 记录生活学习 </i>
+</div>
+
+<div class="index-container">
     
-      <a href="/2016/12/01/iOS获取图片附加信息/" title="iOS获取图片附加信息" itemprop="url">iOS获取图片附加信息</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
-		
-  <p class="article-time">
-    <time datetime="2016-12-01T02:17:38.000Z" itemprop="datePublished"> 发表于 2016-12-01</time>
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/author.jpg" />
+        </div>
+        <div class="name">
+            <i>严青</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>SEARCH</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
     
-  </p>
-</header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那么问题来了"><span class="toc-number">2.</span> <span class="toc-text">那么问题来了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前提"><span class="toc-number">3.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#照片哪里来"><span class="toc-number">4.</span> <span class="toc-text">照片哪里来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动手吧！"><span class="toc-number">5.</span> <span class="toc-text">动手吧！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">6.</span> <span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充"><span class="toc-number">7.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PhotoKit补充资料"><span class="toc-number">8.</span> <span class="toc-text">PhotoKit补充资料</span></a></li></ol>
-		
-		</div>
-		
-		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那么问题来了"><span class="toc-text">那么问题来了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前提"><span class="toc-text">前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#照片哪里来"><span class="toc-text">照片哪里来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动手吧！"><span class="toc-text">动手吧！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充"><span class="toc-text">补充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PhotoKit补充资料"><span class="toc-text">PhotoKit补充资料</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> 记录生活学习 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        iOS获取图片附加信息
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2016-12-01 10:17:38</span></span>
+        
+        <span class="attr">Tags：/
+        
+        <a class="tag" href="/tags/#照片框架,Photokit" title="照片框架,Photokit">照片框架,Photokit</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>为了提供更好的体验，iOS上的App通常都会在条件允许的情况下尽可能多地获取用户信息（说好的隐私呢？！）。比如说，在用户选取了相册中的某张图片后，自动补充图片的拍摄日期、时间、地点等等，给用户一个非常智能的感觉。当然，前提是用户给予了我们这样做的权限。</p>
 </blockquote>
 <h2 id="那么问题来了"><a href="#那么问题来了" class="headerlink" title="那么问题来了"></a>那么问题来了</h2><p><strong>如何获得这些信息呢？</strong></p>
@@ -154,480 +183,94 @@
 <p>原demo地址:<a href="https://github.com/davidleee/GetExifInfoDemo" target="_blank" rel="noopener">https://github.com/davidleee/GetExifInfoDemo</a><br>原创作者博客<a href="http://davidleee.com/2016/04/21/get-exif-from-image-ios/" target="_blank" rel="noopener">Lee的笔记本</a><br>iOS10之后info.plist中添加访问相册的字段<code>Privacy - Photo Library Usage Description : 允许访问图册?</code></p>
 </blockquote>
 <p><strong>信息打印:</strong></p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ColorModel = RGB<span class="comment">;</span></span><br><span class="line">    DPIHeight = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">    DPIWidth = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">    Depth = <span class="number">8</span><span class="comment">;</span></span><br><span class="line">    <span class="keyword">Orientation </span>= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">    PixelHeight = <span class="number">2002</span><span class="comment">;</span></span><br><span class="line">    PixelWidth = <span class="number">3000</span><span class="comment">;</span></span><br><span class="line">    ProfileName = <span class="string">"sRGB IEC61966-2.1"</span><span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;ExifAux&#125;"</span> =     &#123;</span><br><span class="line">        ImageNumber = <span class="number">8458</span><span class="comment">;</span></span><br><span class="line">        LensID = <span class="number">170</span><span class="comment">;</span></span><br><span class="line">        LensInfo =         (</span><br><span class="line">            <span class="number">24</span>,</span><br><span class="line">            <span class="number">120</span>,</span><br><span class="line">            <span class="number">4</span>,</span><br><span class="line">            <span class="number">4</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        LensModel = <span class="string">"24.0-120.0 mm f/4.0"</span><span class="comment">;</span></span><br><span class="line">        SerialNumber = <span class="number">6001440</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;Exif&#125;"</span> =     &#123;</span><br><span class="line">        ApertureValue = <span class="string">"6.643855776306108"</span><span class="comment">;</span></span><br><span class="line">        ColorSpace = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ComponentsConfiguration =         (</span><br><span class="line">            <span class="number">1</span>,</span><br><span class="line">            <span class="number">2</span>,</span><br><span class="line">            <span class="number">3</span>,</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        Contrast = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        CustomRendered = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        DateTimeDigitized = <span class="string">"2012:08:08 11:52:11"</span><span class="comment">;</span></span><br><span class="line">        DateTimeOriginal = <span class="string">"2012:08:08 11:52:11"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">DigitalZoomRatio </span>= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ExifVersion =         (</span><br><span class="line">            <span class="number">2</span>,</span><br><span class="line">            <span class="number">3</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        ExposureBiasValue = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        ExposureMode = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ExposureProgram = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ExposureTime = <span class="number">4</span><span class="comment">;</span></span><br><span class="line">        FNumber = <span class="number">10</span><span class="comment">;</span></span><br><span class="line">        FileSource = <span class="number">3</span><span class="comment">;</span></span><br><span class="line">        Flash = <span class="number">16</span><span class="comment">;</span></span><br><span class="line">        FlashPixVersion =         (</span><br><span class="line">            <span class="number">1</span>,</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        FocalLenIn35mmFilm = <span class="number">24</span><span class="comment">;</span></span><br><span class="line">        FocalLength = <span class="number">24</span><span class="comment">;</span></span><br><span class="line">        FocalPlaneResolutionUnit = <span class="number">4</span><span class="comment">;</span></span><br><span class="line">        FocalPlaneXResolution = <span class="string">"204.840206185567"</span><span class="comment">;</span></span><br><span class="line">        FocalPlaneYResolution = <span class="string">"204.840206185567"</span><span class="comment">;</span></span><br><span class="line">        GainControl = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        ISOSpeedRatings =         (</span><br><span class="line">            <span class="number">200</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        LightSource = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        MaxApertureValue = <span class="number">4</span><span class="comment">;</span></span><br><span class="line">        MeteringMode = <span class="number">5</span><span class="comment">;</span></span><br><span class="line">        PixelXDimension = <span class="number">3000</span><span class="comment">;</span></span><br><span class="line">        PixelYDimension = <span class="number">2002</span><span class="comment">;</span></span><br><span class="line">        Saturation = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SceneCaptureType </span>= <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        SensingMethod = <span class="number">2</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">Sharpness </span>= <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">ShutterSpeedValue </span>= <span class="string">"-2"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubjectDistRange </span>= <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubjectDistance </span>= <span class="string">"2.99"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubsecTimeDigitized </span>= <span class="number">9</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubsecTimeOriginal </span>= <span class="number">9</span><span class="comment">;</span></span><br><span class="line">        WhiteBalance = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;GPS&#125;"</span> =     &#123;</span><br><span class="line">        Altitude = <span class="number">103</span><span class="comment">;</span></span><br><span class="line">        GPSVersion =         (</span><br><span class="line">            <span class="number">2</span>,</span><br><span class="line">            <span class="number">3</span>,</span><br><span class="line">            <span class="number">0</span>,</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        ImgDirection = <span class="string">"302.4"</span><span class="comment">;</span></span><br><span class="line">        ImgDirectionRef = T<span class="comment">;</span></span><br><span class="line">        Latitude = <span class="string">"65.682895"</span><span class="comment">;</span></span><br><span class="line">        LatitudeRef = N<span class="comment">;</span></span><br><span class="line">        Longitude = <span class="string">"17.54892833333333"</span><span class="comment">;</span></span><br><span class="line">        LongitudeRef = W<span class="comment">;</span></span><br><span class="line">        MapDatum = <span class="string">"WGS-84"</span><span class="comment">;</span></span><br><span class="line">        Speed = <span class="string">"1.6"</span><span class="comment">;</span></span><br><span class="line">        SpeedRef = K<span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;IPTC&#125;"</span> =     &#123;</span><br><span class="line">        <span class="keyword">Byline </span>=         (</span><br><span class="line">            <span class="string">"Nicolas Cornet"</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        City = <span class="string">"Lj\U00f3savatn"</span><span class="comment">;</span></span><br><span class="line">        CopyrightNotice = <span class="string">"Nicolas Cornet"</span><span class="comment">;</span></span><br><span class="line">        <span class="string">"Country/PrimaryLocationName"</span> = Iceland<span class="comment">;</span></span><br><span class="line">        DateCreated = <span class="number">20120808</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">DigitalCreationDate </span>= <span class="number">20120808</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">DigitalCreationTime </span>= <span class="number">115211</span><span class="comment">;</span></span><br><span class="line">        ObjectName = Godafoss<span class="comment">;</span></span><br><span class="line">        <span class="string">"Province/State"</span> = <span class="keyword">Northeast;</span></span><br><span class="line"><span class="keyword"> </span>       <span class="keyword">SubLocation </span>= Godafoss<span class="comment">;</span></span><br><span class="line">        TimeCreated = <span class="number">115211</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;TIFF&#125;"</span> =     &#123;</span><br><span class="line">        Artist = <span class="string">"Nicolas Cornet"</span><span class="comment">;</span></span><br><span class="line">        Copyright = <span class="string">"Nicolas Cornet"</span><span class="comment">;</span></span><br><span class="line">        DateTime = <span class="string">"2012:08:08 11:52:11"</span><span class="comment">;</span></span><br><span class="line">        Make = <span class="string">"NIKON CORPORATION"</span><span class="comment">;</span></span><br><span class="line">        Model = <span class="string">"NIKON D800E"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">Orientation </span>= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ResolutionUnit = <span class="number">2</span><span class="comment">;</span></span><br><span class="line">        Software = <span class="string">"Aperture 3.4.5"</span><span class="comment">;</span></span><br><span class="line">        XResolution = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">        YResolution = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/照片框架-Photokit/">照片框架,Photokit</a>
-  </div>
-
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="https://lizhaojie001.github.io/2016/12/01/iOS获取图片附加信息/" data-title="iOS获取图片附加信息 | 严青的博客" data-tsina="" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2016/12/05/常用软件/" title="常用软件">
-  <strong>上一篇：</strong><br/>
-  <span>
-  常用软件</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2016/11/22/图片处理/"  title="图片处理">
- <strong>下一篇：</strong><br/> 
- <span>图片处理
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/12/01/iOS获取图片附加信息/" data-title="iOS获取图片附加信息" data-url="https://lizhaojie001.github.io/2016/12/01/iOS获取图片附加信息/"></div>
-</section>
-
-
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那么问题来了"><span class="toc-number">2.</span> <span class="toc-text">那么问题来了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前提"><span class="toc-number">3.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#照片哪里来"><span class="toc-number">4.</span> <span class="toc-text">照片哪里来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动手吧！"><span class="toc-number">5.</span> <span class="toc-text">动手吧！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">6.</span> <span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充"><span class="toc-number">7.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PhotoKit补充资料"><span class="toc-number">8.</span> <span class="toc-text">PhotoKit补充资料</span></a></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-		  
-			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
-		  
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/navigationBar/" title="navigationBar">navigationBar<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ColorModel = RGB<span class="comment">;</span></span><br><span class="line">    DPIHeight = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">    DPIWidth = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">    Depth = <span class="number">8</span><span class="comment">;</span></span><br><span class="line">    <span class="keyword">Orientation </span>= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">    PixelHeight = <span class="number">2002</span><span class="comment">;</span></span><br><span class="line">    PixelWidth = <span class="number">3000</span><span class="comment">;</span></span><br><span class="line">    ProfileName = <span class="string">"sRGB IEC61966-2.1"</span><span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;ExifAux&#125;"</span> =     &#123;</span><br><span class="line">        ImageNumber = <span class="number">8458</span><span class="comment">;</span></span><br><span class="line">        LensID = <span class="number">170</span><span class="comment">;</span></span><br><span class="line">        LensInfo =         (</span><br><span class="line">            <span class="number">24</span>,</span><br><span class="line">            <span class="number">120</span>,</span><br><span class="line">            <span class="number">4</span>,</span><br><span class="line">            <span class="number">4</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        LensModel = <span class="string">"24.0-120.0 mm f/4.0"</span><span class="comment">;</span></span><br><span class="line">        SerialNumber = <span class="number">6001440</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;Exif&#125;"</span> =     &#123;</span><br><span class="line">        ApertureValue = <span class="string">"6.643855776306108"</span><span class="comment">;</span></span><br><span class="line">        ColorSpace = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ComponentsConfiguration =         (</span><br><span class="line">            <span class="number">1</span>,</span><br><span class="line">            <span class="number">2</span>,</span><br><span class="line">            <span class="number">3</span>,</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        Contrast = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        CustomRendered = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        DateTimeDigitized = <span class="string">"2012:08:08 11:52:11"</span><span class="comment">;</span></span><br><span class="line">        DateTimeOriginal = <span class="string">"2012:08:08 11:52:11"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">DigitalZoomRatio </span>= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ExifVersion =         (</span><br><span class="line">            <span class="number">2</span>,</span><br><span class="line">            <span class="number">3</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        ExposureBiasValue = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        ExposureMode = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ExposureProgram = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ExposureTime = <span class="number">4</span><span class="comment">;</span></span><br><span class="line">        FNumber = <span class="number">10</span><span class="comment">;</span></span><br><span class="line">        FileSource = <span class="number">3</span><span class="comment">;</span></span><br><span class="line">        Flash = <span class="number">16</span><span class="comment">;</span></span><br><span class="line">        FlashPixVersion =         (</span><br><span class="line">            <span class="number">1</span>,</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        FocalLenIn35mmFilm = <span class="number">24</span><span class="comment">;</span></span><br><span class="line">        FocalLength = <span class="number">24</span><span class="comment">;</span></span><br><span class="line">        FocalPlaneResolutionUnit = <span class="number">4</span><span class="comment">;</span></span><br><span class="line">        FocalPlaneXResolution = <span class="string">"204.840206185567"</span><span class="comment">;</span></span><br><span class="line">        FocalPlaneYResolution = <span class="string">"204.840206185567"</span><span class="comment">;</span></span><br><span class="line">        GainControl = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        ISOSpeedRatings =         (</span><br><span class="line">            <span class="number">200</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        LightSource = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        MaxApertureValue = <span class="number">4</span><span class="comment">;</span></span><br><span class="line">        MeteringMode = <span class="number">5</span><span class="comment">;</span></span><br><span class="line">        PixelXDimension = <span class="number">3000</span><span class="comment">;</span></span><br><span class="line">        PixelYDimension = <span class="number">2002</span><span class="comment">;</span></span><br><span class="line">        Saturation = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SceneCaptureType </span>= <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        SensingMethod = <span class="number">2</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">Sharpness </span>= <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">ShutterSpeedValue </span>= <span class="string">"-2"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubjectDistRange </span>= <span class="number">0</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubjectDistance </span>= <span class="string">"2.99"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubsecTimeDigitized </span>= <span class="number">9</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">SubsecTimeOriginal </span>= <span class="number">9</span><span class="comment">;</span></span><br><span class="line">        WhiteBalance = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;GPS&#125;"</span> =     &#123;</span><br><span class="line">        Altitude = <span class="number">103</span><span class="comment">;</span></span><br><span class="line">        GPSVersion =         (</span><br><span class="line">            <span class="number">2</span>,</span><br><span class="line">            <span class="number">3</span>,</span><br><span class="line">            <span class="number">0</span>,</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        ImgDirection = <span class="string">"302.4"</span><span class="comment">;</span></span><br><span class="line">        ImgDirectionRef = T<span class="comment">;</span></span><br><span class="line">        Latitude = <span class="string">"65.682895"</span><span class="comment">;</span></span><br><span class="line">        LatitudeRef = N<span class="comment">;</span></span><br><span class="line">        Longitude = <span class="string">"17.54892833333333"</span><span class="comment">;</span></span><br><span class="line">        LongitudeRef = W<span class="comment">;</span></span><br><span class="line">        MapDatum = <span class="string">"WGS-84"</span><span class="comment">;</span></span><br><span class="line">        Speed = <span class="string">"1.6"</span><span class="comment">;</span></span><br><span class="line">        SpeedRef = K<span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;IPTC&#125;"</span> =     &#123;</span><br><span class="line">        <span class="keyword">Byline </span>=         (</span><br><span class="line">            <span class="string">"Nicolas Cornet"</span></span><br><span class="line">        )<span class="comment">;</span></span><br><span class="line">        City = <span class="string">"Lj\U00f3savatn"</span><span class="comment">;</span></span><br><span class="line">        CopyrightNotice = <span class="string">"Nicolas Cornet"</span><span class="comment">;</span></span><br><span class="line">        <span class="string">"Country/PrimaryLocationName"</span> = Iceland<span class="comment">;</span></span><br><span class="line">        DateCreated = <span class="number">20120808</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">DigitalCreationDate </span>= <span class="number">20120808</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">DigitalCreationTime </span>= <span class="number">115211</span><span class="comment">;</span></span><br><span class="line">        ObjectName = Godafoss<span class="comment">;</span></span><br><span class="line">        <span class="string">"Province/State"</span> = <span class="keyword">Northeast;</span></span><br><span class="line"><span class="keyword"> </span>       <span class="keyword">SubLocation </span>= Godafoss<span class="comment">;</span></span><br><span class="line">        TimeCreated = <span class="number">115211</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">    <span class="string">"&#123;TIFF&#125;"</span> =     &#123;</span><br><span class="line">        Artist = <span class="string">"Nicolas Cornet"</span><span class="comment">;</span></span><br><span class="line">        Copyright = <span class="string">"Nicolas Cornet"</span><span class="comment">;</span></span><br><span class="line">        DateTime = <span class="string">"2012:08:08 11:52:11"</span><span class="comment">;</span></span><br><span class="line">        Make = <span class="string">"NIKON CORPORATION"</span><span class="comment">;</span></span><br><span class="line">        Model = <span class="string">"NIKON D800E"</span><span class="comment">;</span></span><br><span class="line">        <span class="keyword">Orientation </span>= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">        ResolutionUnit = <span class="number">2</span><span class="comment">;</span></span><br><span class="line">        Software = <span class="string">"Aperture 3.4.5"</span><span class="comment">;</span></span><br><span class="line">        XResolution = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">        YResolution = <span class="number">72</span><span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
-          <li>
-            
-            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
-            
-          </li>
-        
-    </ul>
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">donate</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
 </div>
-
-</aside>
+        
+        <div id="comment-container">
+        </div>
+    </div>
 </div>
     </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
-		
-		<a href="/about" target="_blank" title="严青">严青</a>
-		
-		
-		</p>
 </div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
+
+<footer class="footer">
+    <ul class="list-inline text-center">
         
-    }
-  });
-});
-</script>
+        
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  c.click(function(){
-    ta.css('display', 'block').addClass('fadeIn');
-  });
-  o.click(function(){
-    ta.css('display', 'none');
-  });
-  $(window).scroll(function(){
-    ta.css("top",Math.max(140,320-$(this).scrollTop()));
-  });
-});
-</script>
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3293104657">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
 
+        
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
+        
+        <li>
+            <a target="_blank"  href="https://github.com/lizhaojie001">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
 
-  $('.hoverqrcode').hide();
+        
 
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
-
-
-
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"abclzj"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
 
 
 
 
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
-</script>
-
-
-
-<!-- Analytics Begin -->
-
-
+</body>
 
 <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'iOS获取图片附加信息',
+        owner: '严青',
+        repo: 'hexo-aircloud-blog',
+        oauth: {
+            client_id: '1ec42b02a0e9e84bfe10',
+            client_secret: 'f6fc589ccc3f6ce440143bcf753609977ce63e52',
+        },
+    })
+    gitment.render('comment-container')
 </script>
 
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  </body>
 </html>

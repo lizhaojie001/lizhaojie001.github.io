@@ -1,115 +1,137 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  
-    <title>认识UIScrollView | 严青的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="严青">
-    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="严青的博客">
+    <meta name="keyword"  content="中科创达">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    
-    <meta name="description" content="ScorllView的简单介绍123456789101112@property(nonatomic) BOOL bounces;设置UIScrollView是否需要弹簧效果@property(nonatomic,getter=isScrollEnabled) BOOL scrollEnabled; 设置UIScrollView是否能滚动@property(nonatomic) BOOL show">
-<meta property="og:type" content="article">
-<meta property="og:title" content="认识UIScrollView">
-<meta property="og:url" content="https://lizhaojie001.github.io/2016/03/21/认识UIScrollView/index.html">
-<meta property="og:site_name" content="严青的博客">
-<meta property="og:description" content="ScorllView的简单介绍123456789101112@property(nonatomic) BOOL bounces;设置UIScrollView是否需要弹簧效果@property(nonatomic,getter=isScrollEnabled) BOOL scrollEnabled; 设置UIScrollView是否能滚动@property(nonatomic) BOOL show">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="blob:https://www.gitbook.com/5043c316-f8f7-244b-a6aa-859f22a3de7c">
-<meta property="og:image" content="blob:https://www.gitbook.com/072d0a32-e7d0-7e4c-b8c9-6c480fcf110f">
-<meta property="og:image" content="blob:https://www.gitbook.com/52e2daaa-606c-a94e-8d06-6db109d0a1e5">
-<meta property="og:updated_time" content="2016-11-21T01:56:45.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="认识UIScrollView">
-<meta name="twitter:description" content="ScorllView的简单介绍123456789101112@property(nonatomic) BOOL bounces;设置UIScrollView是否需要弹簧效果@property(nonatomic,getter=isScrollEnabled) BOOL scrollEnabled; 设置UIScrollView是否能滚动@property(nonatomic) BOOL show">
-<meta name="twitter:image" content="blob:https://www.gitbook.com/5043c316-f8f7-244b-a6aa-859f22a3de7c">
+    <title>
+        
+        认识UIScrollView - 严青的博客 | YQ&#39;s Blog
+        
+    </title>
 
-    
-    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
 </head>
 
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
-				<h2 class="blog-motto">记录学习</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">主页</a></li>
-					
-						<li><a href="/archives">归档</a></li>
-					
-						<li><a href="/categories">分类</a></li>
-					
-						<li><a href="/tags">标签</a></li>
-					
-						<li><a href="/about">关于</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
 </div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+
+<div class="index-about">
+    <i> 记录生活学习 </i>
+</div>
+
+<div class="index-container">
     
-      <a href="/2016/03/21/认识UIScrollView/" title="认识UIScrollView" itemprop="url">认识UIScrollView</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-21T01:54:23.000Z" itemprop="datePublished"> 发表于 2016-03-21</time>
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/author.jpg" />
+        </div>
+        <div class="name">
+            <i>严青</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>SEARCH</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
     
-  </p>
-</header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ScorllView的简单介绍"><span class="toc-number">1.</span> <span class="toc-text"> ScorllView的简单介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UIScrollView和delegate的通信"><span class="toc-number">2.</span> <span class="toc-text"> UIScrollView和delegate的通信</span></a></li></ol>
-		
-		</div>
-		
-		<h1 id="ScorllView的简单介绍"><a href="#ScorllView的简单介绍" class="headerlink" title=" ScorllView的简单介绍"></a> ScorllView的简单介绍</h1><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> bounces;</span><br><span class="line">设置<span class="built_in">UIScrollView</span>是否需要弹簧效果</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">getter</span>=isScrollEnabled) <span class="built_in">BOOL</span> scrollEnabled; </span><br><span class="line">设置<span class="built_in">UIScrollView</span>是否能滚动</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> showsHorizontalScrollIndicator;</span><br><span class="line">是否显示水平滚动条</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> showsVerticalScrollIndicator;</span><br><span class="line">是否显示垂直滚动条</span><br></pre></td></tr></table></figure>
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ScorllView的简单介绍"><span class="toc-text"> ScorllView的简单介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UIScrollView和delegate的通信"><span class="toc-text"> UIScrollView和delegate的通信</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> 记录生活学习 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        认识UIScrollView
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2016-03-21 09:54:23</span></span>
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h1 id="ScorllView的简单介绍"><a href="#ScorllView的简单介绍" class="headerlink" title=" ScorllView的简单介绍"></a> ScorllView的简单介绍</h1><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> bounces;</span><br><span class="line">设置<span class="built_in">UIScrollView</span>是否需要弹簧效果</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">getter</span>=isScrollEnabled) <span class="built_in">BOOL</span> scrollEnabled; </span><br><span class="line">设置<span class="built_in">UIScrollView</span>是否能滚动</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> showsHorizontalScrollIndicator;</span><br><span class="line">是否显示水平滚动条</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> showsVerticalScrollIndicator;</span><br><span class="line">是否显示垂直滚动条</span><br></pre></td></tr></table></figure>
 <p><img src="blob:https://www.gitbook.com/5043c316-f8f7-244b-a6aa-859f22a3de7c" alt=""></p>
 <h1 id="UIScrollView和delegate的通信"><a href="#UIScrollView和delegate的通信" class="headerlink" title=" UIScrollView和delegate的通信"></a> UIScrollView和delegate的通信</h1><blockquote>
 <p>再精确一点，UIScrollView和delegate的通信应该为下图所示</p>
@@ -120,475 +142,94 @@
 </blockquote>
 <p><img src="blob:https://www.gitbook.com/52e2daaa-606c-a94e-8d06-6db109d0a1e5" alt=""><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1.</span>  设置<span class="built_in">UIScrollView</span>的<span class="keyword">id</span>&lt;<span class="built_in">UISCrollViewDelegate</span>&gt; delegate代理对象</span><br><span class="line">设置minimumZoomScale ：缩小的最小比例</span><br><span class="line">设置maximumZoomScale ：放大的最大比例</span><br><span class="line">让代理对象实现下面的方法，返回需要缩放的视图控件</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>- (<span class="built_in">UIView</span> *)viewForZoomingInScrollView:(<span class="built_in">UIScrollView</span> *)scrollView;</span><br></pre></td></tr></table></figure></p>
 <p><strong> 只要将UIScrollView的pageEnabled属性设置为YES，UIScrollView会被分割成多个独立页面，里面的内容就能进行分页展示</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">一般会配合<span class="built_in">UIPageControl</span>增强分页效果，<span class="built_in">UIPageControl</span>常用属性如下 </span><br><span class="line">一共有多少页</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">NSInteger</span> numberOfPages;</span><br><span class="line">当前显示的页码</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">NSInteger</span> currentPage; </span><br><span class="line">只有一页时，是否需要隐藏页码指示器</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> hidesForSinglePage; </span><br><span class="line">其他页码指示器的颜色</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">retain</span>) <span class="built_in">UIColor</span> *pageIndicatorTintColor;</span><br><span class="line">当前页码指示器的颜色</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">retain</span>) <span class="built_in">UIColor</span> *currentPageIndicatorTintColor;</span><br></pre></td></tr></table></figure></p>
-  
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/UI/">UI</a>
-</div>
-
-
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="https://lizhaojie001.github.io/2016/03/21/认识UIScrollView/" data-title="认识UIScrollView | 严青的博客" data-tsina="" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2016/03/23/断言使用NSAssert()/" title="断言使用NSAssert()">
-  <strong>上一篇：</strong><br/>
-  <span>
-  断言使用NSAssert()</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2016/03/05/交换方法 swizzing/"  title="交换方法 swizzing">
- <strong>下一篇：</strong><br/> 
- <span>交换方法 swizzing
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/03/21/认识UIScrollView/" data-title="认识UIScrollView" data-url="https://lizhaojie001.github.io/2016/03/21/认识UIScrollView/"></div>
-</section>
-
-
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ScorllView的简单介绍"><span class="toc-number">1.</span> <span class="toc-text"> ScorllView的简单介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UIScrollView和delegate的通信"><span class="toc-number">2.</span> <span class="toc-text"> UIScrollView和delegate的通信</span></a></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-		  
-			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
-		  
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/navigationBar/" title="navigationBar">navigationBar<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
         
-          <li>
-            
-            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
-            
-          </li>
-        
-    </ul>
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">donate</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
 </div>
-
-</aside>
+        
+        <div id="comment-container">
+        </div>
+    </div>
 </div>
     </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
-		
-		<a href="/about" target="_blank" title="严青">严青</a>
-		
-		
-		</p>
 </div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
+
+<footer class="footer">
+    <ul class="list-inline text-center">
         
-    }
-  });
-});
-</script>
+        
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  c.click(function(){
-    ta.css('display', 'block').addClass('fadeIn');
-  });
-  o.click(function(){
-    ta.css('display', 'none');
-  });
-  $(window).scroll(function(){
-    ta.css("top",Math.max(140,320-$(this).scrollTop()));
-  });
-});
-</script>
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3293104657">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
 
+        
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
+        
+        <li>
+            <a target="_blank"  href="https://github.com/lizhaojie001">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
 
-  $('.hoverqrcode').hide();
+        
 
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
-
-
-
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"abclzj"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
 
 
 
 
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
-</script>
-
-
-
-<!-- Analytics Begin -->
-
-
+</body>
 
 <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '认识UIScrollView',
+        owner: '严青',
+        repo: 'hexo-aircloud-blog',
+        oauth: {
+            client_id: '1ec42b02a0e9e84bfe10',
+            client_secret: 'f6fc589ccc3f6ce440143bcf753609977ce63e52',
+        },
+    })
+    gitment.render('comment-container')
 </script>
 
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  </body>
 </html>
