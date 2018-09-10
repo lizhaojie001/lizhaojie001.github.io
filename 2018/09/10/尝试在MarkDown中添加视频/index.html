@@ -11,7 +11,7 @@
 
     <title>
         
-        严青的博客 | YQ&#39;s Blog
+        尝试在MarkDown中添加视频 - 严青的博客 | YQ&#39;s Blog
         
     </title>
 
@@ -53,7 +53,7 @@
     </div>
     <div class="contents" id="nav-content">
         <ul>
-            <li  class=active >
+            <li >
                 <a href="/">
                     <i class="iconfont icon-shouye1"></i>
                     <span>HOME</span>
@@ -88,6 +88,10 @@
         </ul>
     </div>
     
+        <div id="toc" class="toc-article">
+    
+</div>
+    
 </div>
 
 
@@ -111,112 +115,39 @@
     <div class="index-middle">
         <!-- Main Content -->
         
-<div class="post-preview-container" style="min-height: 576px">
-    
-    <div class="post-preview">
-        <div class="post-time">2016-03-23</div>
-        <div class="post-info">
-            <a href="/2016/03/23/断言使用NSAssert()/">
-                <h3>
-                    断言使用NSAssert()
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2016-03-21</div>
-        <div class="post-info">
-            <a href="/2016/03/21/认识UIScrollView/">
-                <h3>
-                    认识UIScrollView
-                </h3>
-            </a>
-            <p>
-                
-            </p>
-        </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2016-03-05</div>
-        <div class="post-info">
-            <a href="/2016/03/05/交换方法 swizzing/">
-                <h3>
-                    交换方法 swizzing
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2016-01-13</div>
-        <div class="post-info">
-            <a href="/2016/01/13/navigationBar小结/">
-                <h3>
-                    navigationBar小结
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#navigationBar" title="navigationBar">navigationBar</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2015-12-12</div>
-        <div class="post-info">
-            <a href="/2015/12/12/如何为NSMutableArray添加KVO/">
-                <h3>
-                    如何为NSMutableArray添加KVO
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#核心动画" title="核心动画">核心动画</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
-    </div>
-    
-</div>
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page/8/">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
 
+
+<div class="post-container">
+    <div class="post-title">
+        尝试在MarkDown中添加视频
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2018-09-10 18:34:29</span></span>
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>Idina Menze和Caleb Hyles激情对唱Let It Go：<iframe height="498" width="510" src="http://player.youku.com/embed/XNjcyMDU4Njg0" frameborder="0" allowfullscreen></iframe></p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">donate</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
     </div>
 </div>
 
@@ -271,10 +202,24 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '尝试在MarkDown中添加视频',
+        owner: '严青',
+        repo: 'hexo-aircloud-blog',
+        oauth: {
+            client_id: '1ec42b02a0e9e84bfe10',
+            client_secret: 'f6fc589ccc3f6ce440143bcf753609977ce63e52',
+        },
+    })
+    gitment.render('comment-container')
+</script>
 
 </html>
