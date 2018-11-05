@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="严青的博客">
+    <meta name="keyword"  content="中科创达">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        加密学习 - 严青的博客 | YQ&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> Half measures are as bad as nothing at all </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/author.jpg" />
+        </div>
+        <div class="name">
+            <i>严青</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>SEARCH</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#加密"><span class="toc-text">加密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#非对称加密"><span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希-散列-函数"><span class="toc-text">哈希(散列)函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案列"><span class="toc-text">案列</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> Half measures are as bad as nothing at all </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        加密学习
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2018-10-22 17:47:43</span></span>
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h1 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h1><blockquote>
+<p><code>原则</code> </p>
+<ol>
+<li>不允许明文传输密码</li>
+<li>不允许本地明文保存密码</li>
+</ol>
+</blockquote>
+<h2 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h2><p>-公钥加密,私钥解密<br>-私钥加密,公钥解密</p>
+<p>KEY:加密实用的一串数字<br>破解方法: 只能通过因式分解破解</p>
+<h2 id="哈希-散列-函数"><a href="#哈希-散列-函数" class="headerlink" title="哈希(散列)函数"></a>哈希(散列)函数</h2><ul>
+<li>MD5</li>
+<li>SHA1</li>
+<li>SHA256/512<br>####散列函数 特点</li>
+<li>算法公开</li>
+<li>相同的数据加密，结果一直</li>
+<li>不同的数据加密结果定长 32位（a–b  0–9）</li>
+<li>信息摘要，信息“指纹“，用来做识别使用</li>
+<li>不能反算<br>####用途</li>
+<li>传输密码加密</li>
+<li>搜索</li>
+<li>版权<br>####破解</li>
+<li>目前只有MD5 SHA1</li>
+<li>散列碰撞 不同的数据使用MD5得到相同的散列结果<br>对称加密算法</li>
+</ul>
+<hr>
+<ul>
+<li>DES</li>
+<li>3DES</li>
+<li>AES高级密码标准，美国国家安全局实用，iOS操作系统内部使用</li>
+</ul>
+<p>——登录逻辑—–<br>MD5的基本安全<br>1.加盐<br>2 HMAC<br>加密后的密码 == （原始密码 + KEY）HMAC</p>
+<p>HMAC加密算法   KEY：秘钥，服务器给的</p>
+<p>HMAC登录思路：</p>
+<ol>
+<li>用户输入账号 密码</li>
+<li>本地查找秘钥 没有向服务器获取 向服务器发送账号获取秘钥（设备锁实现 判断本地秘钥是否存在来判断是否本设备）</li>
+</ol>
+<h2 id="案列"><a href="#案列" class="headerlink" title="案列"></a>案列</h2><p>客户端<br>(pwd+KEY+”201810210822”).md5</p>
+<p>服务器： </p>
+<ol>
+<li>账号 ：秘钥：加密后的密码</li>
+<li>(加密后的密码+“2018102108222”).md5 ||  (加密后的密码+“201810210821”).md5 ||  (加密后的密码+“201810210823”).md5</li>
+</ol>
+<hr>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">donate</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3293104657">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/lizhaojie001">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '加密学习',
+        owner: '严青',
+        repo: 'hexo-aircloud-blog',
+        oauth: {
+            client_id: '1ec42b02a0e9e84bfe10',
+            client_secret: 'f6fc589ccc3f6ce440143bcf753609977ce63e52',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+</html>
