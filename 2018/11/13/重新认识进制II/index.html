@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="严青的博客">
+    <meta name="keyword"  content="中科创达">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        重新认识进制II - 严青的博客 | YQ&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> Half measures are as bad as nothing at all </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/author.jpg" />
+        </div>
+        <div class="name">
+            <i>严青</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>SEARCH</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> Half measures are as bad as nothing at all </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        重新认识进制II
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2018-11-13 16:03:48</span></span>
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>上篇认识了进制的本质,但是进制的本质我认识到了吗?</p>
+<p>做一次自我测验</p>
+<p>看一组进制数</p>
+<table>
+<thead>
+<tr>
+<th>2</th>
+<th>0</th>
+<th>6</th>
+<th>8</th>
+<th>9</th>
+<th>1</th>
+<th>3</th>
+<th>5</th>
+<th style="text-align:right">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>下面我们来计算进制表</p>
+<table>
+<thead>
+<tr>
+<th>2</th>
+<th>0</th>
+<th>6</th>
+<th>8</th>
+<th>9</th>
+<th>1</th>
+<th>3</th>
+<th>5</th>
+<th style="text-align:right">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<p>这个问号?是多少呢    首先 我们 第一个问号是2没疑问    4 进一位 是   2 </p>
+<p>从之前我们学到的 4进一位应该最右位为2    , 2进一位 是0  ,所以 ? 就应该是 02</p>
+<table>
+<thead>
+<tr>
+<th>2</th>
+<th>0</th>
+<th>6</th>
+<th>8</th>
+<th>9</th>
+<th>1</th>
+<th>3</th>
+<th>5</th>
+<th style="text-align:right">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>02</td>
+<td>00</td>
+<td>06</td>
+<td>08</td>
+<td>09</td>
+<td>01</td>
+<td>03</td>
+<td>05</td>
+<td style="text-align:right">04</td>
+</tr>
+</tbody>
+</table>
+<p>如此我们不难写出?后面的数字</p>
+<table>
+<thead>
+<tr>
+<th>2</th>
+<th>0</th>
+<th>6</th>
+<th>8</th>
+<th>9</th>
+<th>1</th>
+<th>3</th>
+<th>5</th>
+<th style="text-align:right">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>02</td>
+<td>00</td>
+<td>06</td>
+<td>08</td>
+<td>09</td>
+<td>01</td>
+<td>03</td>
+<td>05</td>
+<td style="text-align:right">04</td>
+</tr>
+<tr>
+<td>??</td>
+</tr>
+</tbody>
+</table>
+<p>??是多少呢<br>按照之前的逻辑  我么可以知道最右位为2,0进一位是6,所以??应该是62</p>
+<table>
+<thead>
+<tr>
+<th>2</th>
+<th>0</th>
+<th>6</th>
+<th>8</th>
+<th>9</th>
+<th>1</th>
+<th>3</th>
+<th>5</th>
+<th style="text-align:right">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>02</td>
+<td>00</td>
+<td>06</td>
+<td>08</td>
+<td>09</td>
+<td>01</td>
+<td>03</td>
+<td>05</td>
+<td style="text-align:right">04</td>
+</tr>
+<tr>
+<td>62</td>
+<td>60</td>
+<td>66</td>
+<td>68</td>
+<td>69</td>
+<td>61</td>
+<td>63</td>
+<td>65</td>
+<td style="text-align:right">64</td>
+</tr>
+</tbody>
+</table>
+<p>如此我们不妨多些几行</p>
+<table>
+<thead>
+<tr>
+<th>2</th>
+<th>0</th>
+<th>6</th>
+<th>8</th>
+<th>9</th>
+<th>1</th>
+<th>3</th>
+<th>5</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>02</td>
+<td>00</td>
+<td>06</td>
+<td>08</td>
+<td>09</td>
+<td>01</td>
+<td>03</td>
+<td>05</td>
+<td>04</td>
+</tr>
+<tr>
+<td>62</td>
+<td>60</td>
+<td>66</td>
+<td>68</td>
+<td>69</td>
+<td>61</td>
+<td>63</td>
+<td>65</td>
+<td>64</td>
+</tr>
+<tr>
+<td>82</td>
+<td>80</td>
+<td>86</td>
+<td>88</td>
+<td>89</td>
+<td>81</td>
+<td>83</td>
+<td>85</td>
+<td>84</td>
+</tr>
+<tr>
+<td>92</td>
+<td>90</td>
+<td>96</td>
+<td>98</td>
+<td>99</td>
+<td>91</td>
+<td>93</td>
+<td>95</td>
+<td>94</td>
+</tr>
+<tr>
+<td>12</td>
+<td>10</td>
+<td>16</td>
+<td>18</td>
+<td>19</td>
+<td>11</td>
+<td>13</td>
+<td>15</td>
+<td>14</td>
+</tr>
+<tr>
+<td>32</td>
+<td>30</td>
+<td>36</td>
+<td>38</td>
+<td>39</td>
+<td>31</td>
+<td>33</td>
+<td>35</td>
+<td>34</td>
+</tr>
+<tr>
+<td>52</td>
+<td>50</td>
+<td>56</td>
+<td>58</td>
+<td>59</td>
+<td>51</td>
+<td>53</td>
+<td>55</td>
+<td>54</td>
+</tr>
+<tr>
+<td>42</td>
+<td>20</td>
+<td>46</td>
+<td>48</td>
+<td>49</td>
+<td>41</td>
+<td>43</td>
+<td>45</td>
+<td>44</td>
+</tr>
+<tr>
+<td>022</td>
+<td>020</td>
+<td>026</td>
+<td>028</td>
+<td>029</td>
+<td>021</td>
+<td>023</td>
+<td>025</td>
+<td>024</td>
+</tr>
+<tr>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>下面更多的感兴趣的可以自己加上去,更有兴趣的可以尝试写一下加法表和乘法表</p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">donate</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3293104657">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/lizhaojie001">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '重新认识进制II',
+        owner: '严青',
+        repo: 'hexo-aircloud-blog',
+        oauth: {
+            client_id: '1ec42b02a0e9e84bfe10',
+            client_secret: 'f6fc589ccc3f6ce440143bcf753609977ce63e52',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+</html>
