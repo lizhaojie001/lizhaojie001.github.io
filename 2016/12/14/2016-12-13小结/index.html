@@ -1,143 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="严青的博客">
-    <meta name="keyword"  content="中科创达">
-    <link rel="shortcut icon" href="/img/favicon.ico">
+  <meta charset="UTF-8">
+  
+    <title>使用点阵图形上下文创建Image对象 | 严青的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="严青">
+    
 
-    <title>
-        
-        使用点阵图形上下文创建Image对象 - 严青的博客 | YQ&#39;s Blog
-        
-    </title>
+    
+    <meta name="description" content="前言 大多情况下,我们绘图只是为了在屏幕上展示.但是有时候绘制一些离屏渲染是很有用的.比如,创建一个已存在图片的缩略图,将他写进缓存存成文件等等.为了满足这个需要,你创建一个使用点阵图形上下文,使用UIKit或者Core Craphics功能去绘制它,然后从上下文中获取这个image对象.  在UIKit库中,步骤如下:调用UIGraphicsBeginImageContextWithOption">
+<meta name="keywords" content="翻译,UIKit,Core Graphics">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用点阵图形上下文创建Image对象">
+<meta property="og:url" content="https://lizhaojie001.github.io/2016/12/14/2016-12-13小结/index.html">
+<meta property="og:site_name" content="严青的博客">
+<meta property="og:description" content="前言 大多情况下,我们绘图只是为了在屏幕上展示.但是有时候绘制一些离屏渲染是很有用的.比如,创建一个已存在图片的缩略图,将他写进缓存存成文件等等.为了满足这个需要,你创建一个使用点阵图形上下文,使用UIKit或者Core Craphics功能去绘制它,然后从上下文中获取这个image对象.  在UIKit库中,步骤如下:调用UIGraphicsBeginImageContextWithOption">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2016-12-19T02:09:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用点阵图形上下文创建Image对象">
+<meta name="twitter:description" content="前言 大多情况下,我们绘图只是为了在屏幕上展示.但是有时候绘制一些离屏渲染是很有用的.比如,创建一个已存在图片的缩略图,将他写进缓存存成文件等等.为了满足这个需要,你创建一个使用点阵图形上下文,使用UIKit或者Core Craphics功能去绘制它,然后从上下文中获取这个image对象.  在UIKit库中,步骤如下:调用UIGraphicsBeginImageContextWithOption">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/aircloud.css">
-    <link rel="stylesheet" href="/css/gitment.css">
-    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
-    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
-    <!-- ga & ba script hoook -->
-    <script></script>
+    
+    <link rel="alternative" href="/atom.xml" title="严青的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body>
-
-<div class="site-nav-toggle" id="site-nav-toggle">
-    <button>
-        <span class="btn-bar"></span>
-        <span class="btn-bar"></span>
-        <span class="btn-bar"></span>
-    </button>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="严青的博客" title="严青的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="严青的博客">严青的博客</a></h1>
+				<h2 class="blog-motto">Half measures are as bad as nothing at all</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lizhaojie001.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
 </div>
-
-<div class="index-about">
-    <i> Half measures are as bad as nothing at all </i>
-</div>
-
-<div class="index-container">
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
     
-    <div class="index-left">
-        
-<div class="nav" id="nav">
-    <div class="avatar-name">
-        <div class="avatar">
-            <img src="/img/author.jpg" />
-        </div>
-        <div class="name">
-            <i>严青</i>
-        </div>
-    </div>
-    <div class="contents" id="nav-content">
-        <ul>
-            <li >
-                <a href="/">
-                    <i class="iconfont icon-shouye1"></i>
-                    <span>HOME</span>
-                </a>
-            </li>
-            <li >
-                <a href="/tags">
-                    <i class="iconfont icon-biaoqian1"></i>
-                    <span>TAGS</span>
-                </a>
-            </li>
-            <li >
-                <a href="/archives">
-                    <i class="iconfont icon-guidang2"></i>
-                    <span>ARCHIVES</span>
-                </a>
-            </li>
-            <li >
-                <a href="/about/">
-                    <i class="iconfont icon-guanyu2"></i>
-                    <span>ABOUT</span>
-                </a>
-            </li>
-            
-            <li>
-                <a id="search">
-                    <i class="iconfont icon-sousuo1"></i>
-                    <span>SEARCH</span>
-                </a>
-            </li>
-            
-        </ul>
-    </div>
+      <a href="/2016/12/14/2016-12-13小结/" title="使用点阵图形上下文创建Image对象" itemprop="url">使用点阵图形上下文创建Image对象</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="严青" target="_blank" itemprop="author">严青</a>
+		
+  <p class="article-time">
+    <time datetime="2016-12-14T10:41:22.000Z" itemprop="datePublished"> 发表于 2016-12-14</time>
     
-        <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在UIKit库中-步骤如下"><span class="toc-text">在UIKit库中,步骤如下:</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文-然后压入图像栈中"><span class="toc-text">调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文,然后压入图像栈中.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通常使用UIKit或者Core-Graphics去绘制图片内容到图像上下文中"><span class="toc-text">通常使用UIKit或者Core Graphics去绘制图片内容到图像上下文中.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsGetImageFromCurrentImageContext方法-获取你当前创建的UIImage对象-如果需要的话-你还可以继续绘制-然后再调用此方法获取最新的图片"><span class="toc-text">调用UIGraphicsGetImageFromCurrentImageContext方法,获取你当前创建的UIImage对象,如果需要的话,你还可以继续绘制,然后再调用此方法获取最新的图片.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsEndImageContext-退出graphics堆栈"><span class="toc-text">调用UIGraphicsEndImageContext 退出graphics堆栈.</span></a></li></ol></li></ol>
-</div>
-    
-</div>
-
-
-<div class="search-field" id="search-field">
-    <div class="search-container">
-        <div class="search-input">
-            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
-            <input id="search-input"/>
-            <span id="begin-search">search</span>
-        </div>
-        <div class="search-result-container" id="search-result-container">
-
-        </div>
-    </div>
-</div>
-        <div class="index-about-mobile">
-            <i> Half measures are as bad as nothing at all </i>
-        </div>
-    </div>
-    
-    <div class="index-middle">
-        <!-- Main Content -->
-        
-
-
-<div class="post-container">
-    <div class="post-title">
-        使用点阵图形上下文创建Image对象
-    </div>
-
-    <div class="post-meta">
-        <span class="attr">Post：<span>2016-12-14 18:41:22</span></span>
-        
-        <span class="attr">Tags：/
-        
-        <a class="tag" href="/tags/#翻译,UIKit,Core Graphics" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics</a>
-        <span>/</span>
-        
-        
-        </span>
-        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
-</span>
-</span>
-    </div>
-    <div class="post-content ">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在UIKit库中-步骤如下"><span class="toc-number">2.</span> <span class="toc-text">在UIKit库中,步骤如下:</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文-然后压入图像栈中"><span class="toc-number">2.1.</span> <span class="toc-text">调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文,然后压入图像栈中.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通常使用UIKit或者Core-Graphics去绘制图片内容到图像上下文中"><span class="toc-number">2.2.</span> <span class="toc-text">通常使用UIKit或者Core Graphics去绘制图片内容到图像上下文中.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsGetImageFromCurrentImageContext方法-获取你当前创建的UIImage对象-如果需要的话-你还可以继续绘制-然后再调用此方法获取最新的图片"><span class="toc-number">2.3.</span> <span class="toc-text">调用UIGraphicsGetImageFromCurrentImageContext方法,获取你当前创建的UIImage对象,如果需要的话,你还可以继续绘制,然后再调用此方法获取最新的图片.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsEndImageContext-退出graphics堆栈"><span class="toc-number">2.4.</span> <span class="toc-text">调用UIGraphicsEndImageContext 退出graphics堆栈.</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
 <p>大多情况下,我们绘图只是为了在屏幕上展示.但是有时候绘制一些离屏渲染是很有用的.比如,创建一个已存在图片的缩略图,将他写进缓存存成文件等等.为了满足这个需要,你创建一个使用点阵图形上下文,使用UIKit或者Core Craphics功能去绘制它,然后从上下文中获取这个image对象.</p>
 </blockquote>
 <h1 id="在UIKit库中-步骤如下"><a href="#在UIKit库中-步骤如下" class="headerlink" title="在UIKit库中,步骤如下:"></a>在UIKit库中,步骤如下:</h1><h2 id="调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文-然后压入图像栈中"><a href="#调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文-然后压入图像栈中" class="headerlink" title="调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文,然后压入图像栈中."></a>调用<code>UIGraphicsBeginImageContextWithOptions</code>创建一个点阵图像上下文,然后压入图像栈中.</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(<span class="built_in">CGSize</span> size, <span class="built_in">BOOL</span> opaque, <span class="built_in">CGFloat</span> scale);</span><br></pre></td></tr></table></figure>
@@ -154,94 +123,480 @@
 <p><strong>🌰3-1</strong><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIImage</span> *image = [[<span class="built_in">UIImage</span> alloc] initWithData:<span class="keyword">self</span>.activeDownload];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (image != <span class="literal">nil</span> &amp;&amp; image.size.width != kAppIconHeight &amp;&amp; image.size.height != kAppIconHeight) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">CGRect</span> imageRect = <span class="built_in">CGRectMake</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, kAppIconHeight, kAppIconHeight);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(itemSize, <span class="literal">NO</span>, [<span class="built_in">UIScreen</span> mainScreen].scale);</span><br><span class="line"></span><br><span class="line">        [image drawInRect:imageRect];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.appRecord.appIcon = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();  <span class="comment">// UIImage returned.</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.appRecord.appIcon = image;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.activeDownload = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    [image release];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.imageConnection = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    [delegate appImageDidLoad:<span class="keyword">self</span>.indexPathInTableView];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>当然,你也可以使用Core Cgraphics功能来绘制图片内容.代码碎片如🌰3-2,绘制一个PDF图片,如下.注意:代码之前翻转图形上下文调用CGContextDrawPDFPage使绘制的图像与默认UIKit的坐标系统。<br><strong>🌰 3-2  用Core Graphics</strong><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Other code precedes...</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">CGRect</span> pageRect = <span class="built_in">CGPDFPageGetBoxRect</span>(page, kCGPDFMediaBox);</span><br><span class="line"></span><br><span class="line">pdfScale = <span class="keyword">self</span>.frame.size.width/pageRect.size.width;</span><br><span class="line"></span><br><span class="line">pageRect.size = <span class="built_in">CGSizeMake</span>(pageRect.size.width * pdfScale, pageRect.size.height * pdfScale);</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(pageRect.size, <span class="literal">YES</span>, pdfScale);</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">// First fill the background with white.</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextSetRGBFillColor</span>(context, <span class="number">1.0</span>,<span class="number">1.0</span>,<span class="number">1.0</span>,<span class="number">1.0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextFillRect</span>(context,pageRect);</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextSaveGState</span>(context);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">// Flip the context so that the PDF page is rendered right side up</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextTranslateCTM</span>(context, <span class="number">0.0</span>, pageRect.size.height);</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextScaleCTM</span>(context, <span class="number">1.0</span>, <span class="number">-1.0</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">// Scale the context so that the PDF page is rendered at the</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// correct size for the zoom level.</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextScaleCTM</span>(context, pdfScale,pdfScale);</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextDrawPDFPage</span>(context, page);</span><br><span class="line"></span><br><span class="line"><span class="built_in">CGContextRestoreGState</span>(context);</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span> *backgroundImage = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line"></span><br><span class="line">backgroundImageView = [[<span class="built_in">UIImageView</span> alloc] initWithImage:backgroundImage];</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">// Other code follows...</span></span><br></pre></td></tr></table></figure></p>
 <p>如果你更喜欢使用Core Graphics 来绘制图形上下文,你可以使用<code>CGBitmapContextCreate</code>来创建上下文,然后将image绘制进去.绘制结束,调用<code>CGBitmapContextCreateImage</code>来获取<code>CGImageRef</code>对象.你可以直接绘制Core Graphics image或者使用这个CGImageRef对象初始化一个UIImage对象.完成时,别人忘记调用<code>CGContextRelease</code>来释放上下文.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
 
-        
-            <div class="donate-container">
-    <div class="donate-button">
-        <button id="donate-button">donate</button>
-    </div>
-    <div class="donate-img-container hide" id="donate-img-container">
-        <img id="donate-img" src="" data-src="/img/donate.jpg">
-        <p> 感谢鼓励 </p>
-    </div>
-</div>
-        
-        <div id="comment-container">
-        </div>
-    </div>
-</div>
-    </div>
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/UI/">UI</a>
 </div>
 
 
-<footer class="footer">
-    <ul class="list-inline text-center">
-        
-        
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/翻译-UIKit-Core-Graphics/">翻译,UIKit,Core Graphics</a>
+  </div>
 
-        
-        <li>
-            <a target="_blank" href="http://weibo.com/3293104657">
-                            <span class="fa-stack fa-lg">
-                                  <i class="iconfont icon-weibo"></i>
-                            </span>
-            </a>
-        </li>
-        
+</div>
 
-        
 
-        
-        <li>
-            <a target="_blank"  href="https://github.com/lizhaojie001">
-                            <span class="fa-stack fa-lg">
-                                <i class="iconfont icon-github"></i>
-                            </span>
-            </a>
-        </li>
-        
 
-        
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://lizhaojie001.github.io/2016/12/14/2016-12-13小结/" data-title="使用点阵图形上下文创建Image对象 | 严青的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
 
-    </ul>
-    
-    <p>
-        <span id="busuanzi_container_site_pv">
-            <span id="busuanzi_value_site_pv"></span>PV
-        </span>
-        <span id="busuanzi_container_site_uv">
-            <span id="busuanzi_value_site_uv"></span>UV
-        </span>
-        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+
 </footer>
 
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/12/19/如何获取OSX中的Postscript-name/" title="如何获取OSX中的Postscript name">
+  <strong>上一篇：</strong><br/>
+  <span>
+  如何获取OSX中的Postscript name</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/12/06/http权威指南读书总结/"  title="http权威指南读书总结">
+ <strong>下一篇：</strong><br/> 
+ <span>http权威指南读书总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/12/14/2016-12-13小结/" data-title="使用点阵图形上下文创建Image对象" data-url="https://lizhaojie001.github.io/2016/12/14/2016-12-13小结/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在UIKit库中-步骤如下"><span class="toc-number">2.</span> <span class="toc-text">在UIKit库中,步骤如下:</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文-然后压入图像栈中"><span class="toc-number">2.1.</span> <span class="toc-text">调用UIGraphicsBeginImageContextWithOptions创建一个点阵图像上下文,然后压入图像栈中.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通常使用UIKit或者Core-Graphics去绘制图片内容到图像上下文中"><span class="toc-number">2.2.</span> <span class="toc-text">通常使用UIKit或者Core Graphics去绘制图片内容到图像上下文中.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsGetImageFromCurrentImageContext方法-获取你当前创建的UIImage对象-如果需要的话-你还可以继续绘制-然后再调用此方法获取最新的图片"><span class="toc-number">2.3.</span> <span class="toc-text">调用UIGraphicsGetImageFromCurrentImageContext方法,获取你当前创建的UIImage对象,如果需要的话,你还可以继续绘制,然后再调用此方法获取最新的图片.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用UIGraphicsEndImageContext-退出graphics堆栈"><span class="toc-number">2.4.</span> <span class="toc-text">调用UIGraphicsEndImageContext 退出graphics堆栈.</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/UI/" title="UI">UI<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/正则/" title="正则">正则<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/网络/" title="网络">网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/翻译/" title="翻译">翻译<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资料整理/" title="资料整理">资料整理<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/软件/" title="软件">软件<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/核心动画/" title="核心动画">核心动画<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络状态/" title="网络状态">网络状态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/技术/" title="技术">技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreText-翻译/" title="CoreText,翻译">CoreText,翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git使用/" title="Git使用">Git使用<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/搭建blog/" title="搭建blog">搭建blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建/" title="博客搭建">博客搭建<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译-UIKit-Core-Graphics/" title="翻译,UIKit,Core Graphics">翻译,UIKit,Core Graphics<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/AFNetworking/" title="AFNetworking">AFNetworking<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/通知/" title="通知">通知<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ing/" title="ing">ing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CoreData/" title="CoreData">CoreData<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/字体-UI/" title="字体,UI">字体,UI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/照片框架-Photokit/" title="照片框架,Photokit">照片框架,Photokit<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ASDK/" title="ASDK">ASDK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jQuery基础/" title="jQuery基础">jQuery基础<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://onevcat.com/" target="_blank" title="喵神">喵神</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧">唐巧</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://southpeak.github.io/" target="_blank" title="南峰子">南峰子</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="严青">严青</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
-</body>
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"abclzj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
 
 <script>
-    // We expose some of the variables needed by the front end
-    window.hexo_search_path = "search.json"
-    window.hexo_root = "/"
-    window.isPost = true
-</script>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<script src="/js/gitment.js"></script>
-<script>
-    var gitment = new Gitment({
-        id: '使用点阵图形上下文创建Image对象',
-        owner: '严青',
-        repo: 'hexo-aircloud-blog',
-        oauth: {
-            client_id: '1ec42b02a0e9e84bfe10',
-            client_secret: 'f6fc589ccc3f6ce440143bcf753609977ce63e52',
-        },
-    })
-    gitment.render('comment-container')
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?15eb05846c27f89873bbc51f5751758a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>
 
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
 </html>
