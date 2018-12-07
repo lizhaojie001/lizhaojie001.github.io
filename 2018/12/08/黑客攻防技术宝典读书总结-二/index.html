@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="严青的博客">
+    <meta name="keyword"  content="中科创达">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        黑客攻防技术宝典读书总结(二) - 严青的博客 | YQ&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> Half measures are as bad as nothing at all </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/author.jpg" />
+        </div>
+        <div class="name">
+            <i>严青</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>SEARCH</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第三章-加密"><span class="toc-text">第三章 加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-对数据的攻击"><span class="toc-text">3.2  对数据的攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第四章-代码签名-和-内存保护"><span class="toc-text">第四章 代码签名 和 内存保护</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> Half measures are as bad as nothing at all </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        黑客攻防技术宝典读书总结(二)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2018-12-08 01:57:09</span></span>
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>[TOC]</p>
+<h2 id="第三章-加密"><a href="#第三章-加密" class="headerlink" title="第三章 加密"></a>第三章 加密</h2><p>###3. 1 数据保护</p>
+<blockquote>
+<p>静态数据保护(<code>data-at-reset</code>): Data Protection API<br><img src="http://7xux50.com2.z0.glb.clouddn.com/20171109151023029894602.png" alt="@数据保护秘钥分级"></p>
+</blockquote>
+<p>####3.1.1.如何实现数据保护<br>1&gt;知道保护是分级别的</p>
+<p><strong>文件保护级别</strong><br>|级别|描述|<br>|:—- |—–:|<br>|NSFileProtectionComplete|文件受保护,设备未锁定才可访问|<br>|NSFileProtectionCompleteUnlessOpen|文件受保护,设备未锁定是可打开,不过即使设备锁定已经打开的文件还可以继续读写|<br>|NSFileProtectionCompleteUntilFirstUserAuthentication|文件受到保护明知道设备启动且用户第一次输入密码|<br>|NSFileProtectionNone |文件未收保护,随时可读写(<code>默认</code>)|</p>
+<p><em>实例 1— file</em>`<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建NSProtectionComplete 属性</span></span><br><span class="line"><span class="built_in">NSDictionary</span> *protectionComplete =</span><br><span class="line">[<span class="built_in">NSDictionary</span> dictionaryWithObject:<span class="built_in">NSFileProtectionComplete</span></span><br><span class="line">forKey:<span class="built_in">NSFileProtectionKey</span>];</span><br><span class="line"><span class="comment">// 为&lt;filePath&gt;处的文件或者文件夹设置属性</span></span><br><span class="line">[[<span class="built_in">NSFileManager</span> defaultManager] setAttributes:protectionComplete</span><br><span class="line">ofItemAtPath:filePath error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></p>
+<p><strong>keychain项保护级别</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">保护级别</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">kSecAttrAccessibleWhenUnlocked</td>
+<td>keychain项受保护,只在设备未锁定时访问</td>
+</tr>
+<tr>
+<td style="text-align:left">kSecAttrAccessibleAfterFirstUnlock</td>
+<td>keychain项受保护,用户启动并且一定次输入密码</td>
+</tr>
+<tr>
+<td style="text-align:left">kSecAttrAccessibleAlways</td>
+<td>keychain项未受保护,可随意访问(<code>默认</code>)</td>
+</tr>
+<tr>
+<td style="text-align:left">kSecAttrAccessibleWhenUnlockedThisDeviceOnly</td>
+<td>keychain项受保护,设备未锁定才可以访问,而且不可转移其他设备,此时使用的设备秘钥加密</td>
+</tr>
+<tr>
+<td style="text-align:left">kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly</td>
+<td>keychain项受保护,直到设备启动并且用户第一次输入密码,而且不可以转移到其他设备</td>
+</tr>
+<tr>
+<td style="text-align:left">kSecAttrAccessibleAlwaysThisDeviceOnly</td>
+<td>keychain项未受保护,但不能转移到其他设备</td>
+</tr>
+</tbody>
+</table>
+<p><em>实例 2— keychain</em><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableDictionary</span> *query =</span><br><span class="line">[<span class="built_in">NSMutableDictionary</span> dictionaryWithObjectsAndKeys:</span><br><span class="line">(<span class="keyword">id</span>)kSecClassGenericPassword, (<span class="keyword">id</span>)kSecClass,</span><br><span class="line"><span class="string">@"MyItem"</span>, (<span class="keyword">id</span>)kSecAttrGeneric,</span><br><span class="line">username, (<span class="keyword">id</span>)kSecAttrAccount,</span><br><span class="line">password, (<span class="keyword">id</span>)kSecValueData,</span><br><span class="line">[[<span class="built_in">NSBundle</span> mainBundle] bundleIdentifier], (<span class="keyword">id</span>)kSecAttrService,</span><br><span class="line"><span class="string">@""</span>, (<span class="keyword">id</span>)kSecAttrLabel,</span><br><span class="line"><span class="string">@""</span>, (<span class="keyword">id</span>)kSecAttrDescription,</span><br><span class="line">(<span class="keyword">id</span>)kSecAttrAccessibleWhenUnlocked, (<span class="keyword">id</span>)kSecAttrAccessible, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">OSStatus result = SecItemAdd((<span class="built_in">CFDictionaryRef</span>)query, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-2-对数据的攻击"><a href="#3-2-对数据的攻击" class="headerlink" title="3.2  对数据的攻击"></a>3.2  对数据的攻击</h3><p>####3.2.1 对用户密码的攻击</p>
+<p>具体破解细节见文章</p>
+<p>破解的keychain<br><img src="./1510401821407.png" alt="Alt text"></p>
+<p>从越狱设备中可读取数据.</p>
+<ol>
+<li>如果用户只设置了4位数字密码或者为设置密码,iOS中的数据很容易恢复.</li>
+<li>如果用户设置了强密码,n那么只有保护级别为<code>NSFileProtectionNone</code>的文件和保护级别的<code>kSecAttrAccessibleAlways</code>的keychain项可以访问的.</li>
+<li>目前iOS内置应用只有邮件使用了<code>Data Protection API</code>保护数据</li>
+</ol>
+<h2 id="第四章-代码签名-和-内存保护"><a href="#第四章-代码签名-和-内存保护" class="headerlink" title="第四章 代码签名 和 内存保护"></a>第四章 代码签名 和 内存保护</h2><blockquote>
+<p><code>Mandatory Code Signing</code>强制代码签名<br>主要讨论 签名证书 授权描述文件(provisioning profile) 已签名代码 特权 以及对攻击者的影响</p>
+</blockquote>
+<p>###4.1强制访问控制    </p>
+<blockquote>
+<p>iOS注册两项MAC策略:<code>AMFI和沙盒</code></p>
+</blockquote>
+<p>####4.1.1 AMFI钩子</p>
+<blockquote>
+<p>AMFI代表AppleMobileFileIntegrity(苹果移动设备文件完整性)</p>
+</blockquote>
+<p>###4.2 授权原理</p>
+<ul>
+<li>获取app签名信息<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//,app是ipa解压后的包</span></span><br><span class="line">codesign -dvvv <span class="keyword">test</span>.<span class="keyword">app</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>查看到的数据</strong><br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Identifier=com.brtc.brtcggyysss</span></span><br><span class="line"><span class="attr">Format=app</span> bundle <span class="keyword">with</span> Mach-O universal (armv7 arm64)</span><br><span class="line">CodeDirectory <span class="attr">v=20200</span> <span class="attr">size=660</span> <span class="attr">flags=0x0(none)</span> <span class="attr">hashes=13+5</span> <span class="attr">location=embedded</span></span><br><span class="line">Hash <span class="attr">type=sha256</span> <span class="attr">size=32</span></span><br><span class="line">CandidateCDHash <span class="attr">sha1=b91d7849cb099b4ba8be77df43c65ba8eb9d6b0a</span></span><br><span class="line">CandidateCDHash <span class="attr">sha256=159eaaefc64f2c7cca5f9c8a6367cd3da63f0ffc</span></span><br><span class="line">Hash <span class="attr">choices=sha1,sha256</span></span><br><span class="line"><span class="attr">CDHash=159eaaefc64f2c7cca5f9c8a6367cd3da63f0ffc</span></span><br><span class="line">Signature <span class="attr">size=4716</span></span><br><span class="line"><span class="attr">Authority=iPhone</span> Distribution: Thundersoft America Corporation //签名机构</span><br><span class="line"><span class="attr">Authority=Apple</span> Worldwide Developer Relations Certification Authority  </span><br><span class="line"><span class="attr">Authority=Apple</span> Root CA</span><br><span class="line">Signed <span class="attr">Time=2017年11月9日</span> 下午<span class="number">5</span>:<span class="number">21</span>:<span class="number">53</span></span><br><span class="line">Info.plist <span class="attr">entries=26</span></span><br><span class="line"><span class="attr">TeamIdentifier=5AKB523DZ4</span></span><br><span class="line">Sealed Resources <span class="attr">version=2</span> <span class="attr">rules=13</span> <span class="attr">files=8</span></span><br><span class="line">Internal requirements <span class="attr">count=1</span> <span class="attr">size=188</span></span><br></pre></td></tr></table></figure></p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">donate</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3293104657">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/lizhaojie001">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '黑客攻防技术宝典读书总结(二)',
+        owner: '严青',
+        repo: 'hexo-aircloud-blog',
+        oauth: {
+            client_id: '1ec42b02a0e9e84bfe10',
+            client_secret: 'f6fc589ccc3f6ce440143bcf753609977ce63e52',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+</html>
