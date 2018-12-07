@@ -134,7 +134,7 @@
         <p>[TOC]</p>
 <h2 id="第三章-加密"><a href="#第三章-加密" class="headerlink" title="第三章 加密"></a>第三章 加密</h2><p>###3. 1 数据保护</p>
 <blockquote>
-<p>静态数据保护(<code>data-at-reset</code>): Data Protection API<br><img src="http://7xux50.com2.z0.glb.clouddn.com/20171109151023029894602.png" alt="@数据保护秘钥分级"></p>
+<p>静态数据保护(<code>data-at-reset</code>): Data Protection API<br><img src="https://maxiang.io/cf1cb0b6-9b68-4249-ac4f-b5d4e0899bb5" alt="@数据保护秘钥分级"></p>
 </blockquote>
 <p>####3.1.1.如何实现数据保护<br>1&gt;知道保护是分级别的</p>
 <p><strong>文件保护级别</strong><br>|级别|描述|<br>|:—- |—–:|<br>|NSFileProtectionComplete|文件受保护,设备未锁定才可访问|<br>|NSFileProtectionCompleteUnlessOpen|文件受保护,设备未锁定是可打开,不过即使设备锁定已经打开的文件还可以继续读写|<br>|NSFileProtectionCompleteUntilFirstUserAuthentication|文件受到保护明知道设备启动且用户第一次输入密码|<br>|NSFileProtectionNone |文件未收保护,随时可读写(<code>默认</code>)|</p>
@@ -177,7 +177,7 @@
 <p><em>实例 2— keychain</em><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableDictionary</span> *query =</span><br><span class="line">[<span class="built_in">NSMutableDictionary</span> dictionaryWithObjectsAndKeys:</span><br><span class="line">(<span class="keyword">id</span>)kSecClassGenericPassword, (<span class="keyword">id</span>)kSecClass,</span><br><span class="line"><span class="string">@"MyItem"</span>, (<span class="keyword">id</span>)kSecAttrGeneric,</span><br><span class="line">username, (<span class="keyword">id</span>)kSecAttrAccount,</span><br><span class="line">password, (<span class="keyword">id</span>)kSecValueData,</span><br><span class="line">[[<span class="built_in">NSBundle</span> mainBundle] bundleIdentifier], (<span class="keyword">id</span>)kSecAttrService,</span><br><span class="line"><span class="string">@""</span>, (<span class="keyword">id</span>)kSecAttrLabel,</span><br><span class="line"><span class="string">@""</span>, (<span class="keyword">id</span>)kSecAttrDescription,</span><br><span class="line">(<span class="keyword">id</span>)kSecAttrAccessibleWhenUnlocked, (<span class="keyword">id</span>)kSecAttrAccessible, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">OSStatus result = SecItemAdd((<span class="built_in">CFDictionaryRef</span>)query, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure></p>
 <h3 id="3-2-对数据的攻击"><a href="#3-2-对数据的攻击" class="headerlink" title="3.2  对数据的攻击"></a>3.2  对数据的攻击</h3><p>####3.2.1 对用户密码的攻击</p>
 <p>具体破解细节见文章</p>
-<p>破解的keychain<br><img src="./1510401821407.png" alt="Alt text"></p>
+<p>破解的keychain<br><img src="https://maxiang.io/540bc57d-cb94-45f4-a9e3-ee2bed67d637" alt="Alt text"></p>
 <p>从越狱设备中可读取数据.</p>
 <ol>
 <li>如果用户只设置了4位数字密码或者为设置密码,iOS中的数据很容易恢复.</li>
